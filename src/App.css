@@ -1,0 +1,107 @@
+@import url("https://fonts.googleapis.com/css2?family=Quantico:wght@400;700&display=swap");
+@import "antd/dist/antd.css";
+@import "react-toastify/dist/ReactToastify.css";
+:root {
+  height: 100%;
+  --textGray: #757575;
+}
+@media only screen and (max-width: 1200px) {
+  html {
+    font-size: 45% !important;
+  }
+}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Quantico", sans-serif !important;
+  font-style: normal;
+  letter-spacing: 0.0025em;
+  position: relative;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  font-size: 1.6rem;
+  line-height: 1.5;
+  text-rendering: optimizeSpeed;
+}
+
+body {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  overflow-y: scroll;
+}
+
+body::-webkit-scrollbar {
+  display: none;
+}
+
+button,
+input,
+[tabindex] {
+  border: none;
+  outline: none;
+}
+
+a {
+  text-decoration: none;
+}
+
+p {
+  margin-bottom: 0;
+}
+
+li {
+  list-style: none;
+}
+
+/* color */
+
+.t-white {
+  color: #fff !important;
+}
+
+button {
+  background: transparent;
+}
+
+input {
+  background: transparent;
+}
+
+p {
+  margin-bottom: 0;
+}
+
+.z_index {
+  z-index: 99;
+}
+
+/* =============================================== */
+
+.active {
+  background: rgba(59, 114, 254, 0.3);
+  backdrop-filter: blur(20px);
+}
+
+/* Slide ant */
+.ant-carousel .slick-dots li {
+  width: 100px;
+  height: 16px;
+}
+.ant-carousel .slick-dots li.slick-active {
+  width: 100px;
+  height: 16px;
+}
+/* section-antd */
+.item_select .ant-select-selector {
+  background-color: #3b72fe !important;
+}
+
+.item_select .ant-select-arrow {
+  color: #fff;
+}
