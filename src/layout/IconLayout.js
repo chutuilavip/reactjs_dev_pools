@@ -157,21 +157,21 @@ const icon_right_pool = [
 const icon_header = [
   {
     icon: iconnftgame,
-    path: "/nft-game",
+    path: "https://v2.poolsplay.store/nft-game",
     text: "NFT Games",
     alt: "icon nft game",
     target: "_self",
   },
   {
     icon: iconmetaverse,
-    path: "/metaverse",
+    path: "https://v2.poolsplay.store/metaverse",
     text: "Metaverse",
     alt: "icon metaverse",
     target: "_self",
   },
   {
     icon: playtoearn,
-    path: "/play-to-earn",
+    path: "https://v2.poolsplay.store/play-to-earn",
     text: "Play To Earn",
     alt: "icon play to earn",
     target: "_self",
@@ -185,7 +185,7 @@ const icon_header = [
   },
   {
     icon: poolsservice,
-    path: "/service",
+    path: "https://v2.poolsplay.store/service",
     text: "Pools Service",
     alt: "icon pools service",
     target: "_self",

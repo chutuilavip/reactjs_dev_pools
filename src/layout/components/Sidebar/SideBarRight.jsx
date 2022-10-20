@@ -66,34 +66,19 @@ const SideBarRight = ({ data }) => {
 
   return (
     <SideRight status={data} anima={isOpenCategory}>
-      {!currentUrl.includes("/for-publishers") ? (
-        <div className="wrap_sidebar">
-          <div className="left_bar">
-            <span>{!checkUrl ? "Advertisement" : "Categories"}</span>
-          </div>
-          {checkUrl && (
-            <div className="icon_category">
-              <button onClick={() => setIsOpenCategory(!isOpenCategory)}>
-                <LazyLoadImage src={arrowdown} alt="arr down" />
-              </button>
+      {publisherOptions.map((item, index) => {
+        return (
+          <NavLink
+            className={`wrap_sidebar`}
+            key={index}
+            to={`/for-publishers/${item.url}`}
+          >
+            <div className="left_bar">
+              <span>{item.content}</span>
             </div>
-          )}
-        </div>
-      ) : (
-        publisherOptions.map((item, index) => {
-          return (
-            <NavLink
-              className={`wrap_sidebar`}
-              key={index}
-              to={`/for-publishers/${item.url}`}
-            >
-              <div className="left_bar">
-                <span>{item.content}</span>
-              </div>
-            </NavLink>
-          );
-        })
-      )}
+          </NavLink>
+        );
+      })}
 
       <ListIconPage status={isOpenCategory}>
         {listIcon?.map((item, index) => {

@@ -42,7 +42,7 @@ const arrWallet = [
 ];
 
 const Register = () => {
-  const [isRegisterForPublisher, setIsRegisterForPublisher] = useState(false);
+  const [isRegisterForPublisher, setIsRegisterForPublisher] = useState(true);
   const [step, setStep] = useState(true);
   const fieldsValues = useRef();
   const { register, handleSubmit, reset, getValues } = useForm();
@@ -68,7 +68,6 @@ const Register = () => {
     setIsRegisterForPublisher(checked);
     const values = getValues();
     fieldsValues.current = values;
-    // reset();
   };
   // useEffect(() => {
   //   if (errors) {
@@ -90,11 +89,6 @@ const Register = () => {
       <WrapRegister>
         <h3 className="title_form">CREATE ACOUNT</h3>
         <div className="switch_register_type">
-          <Switch
-            id="switch_register_type"
-            checked={isRegisterForPublisher}
-            onChange={switchRegisterType}
-          />
           <label htmlFor="switch_register_type">Register for Publisher</label>
         </div>
         <FormRegis
