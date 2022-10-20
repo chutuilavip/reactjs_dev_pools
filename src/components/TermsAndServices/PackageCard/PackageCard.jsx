@@ -130,6 +130,7 @@ export default function PackageCard({
             ArrOption={listAppService?.res?.data?.my_apps || []}
             name="select"
             control={control}
+            title="Game *"
           />
           {/* <Select
             {...register("abd")}
