@@ -7,8 +7,10 @@ const initialState = {
   recommendGames: [],
   statusDownload: [],
   listService: [],
+  statusBuyService: [],
   isLoading: true,
   error: {},
+  dataListAppNotService: [],
 };
 
 export const getListGameRecommend = createAsyncThunk(
@@ -54,6 +56,36 @@ export const getServiceType = createAsyncThunk(
   async (type) => {
     try {
       const result = await appApi.getService(type);
+      if (result.status === 400) {
+        toast.error(result.message);
+      }
+      return result;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+);
+
+export const buyService = createAsyncThunk(
+  "service/buyServive",
+  async (type) => {
+    try {
+      const result = await appApi.buyService(type);
+      if (result.status === 400) {
+        toast.error(result.message);
+      }
+      return result;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+);
+
+export const listAppNotService = createAsyncThunk(
+  "service/listNotService",
+  async (type) => {
+    try {
+      const result = await appApi.getListAppService(type);
       if (result.status === 400) {
         toast.error(result.message);
       }
@@ -118,6 +150,32 @@ const gameRecommendSlice = createSlice({
       state.isLoading = false;
     },
     [getServiceType.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload;
+    },
+
+    // Get service
+    [buyService.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [buyService.fulfilled]: (state, action) => {
+      state.statusBuyService = action.payload;
+      state.isLoading = false;
+    },
+    [buyService.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload;
+    },
+
+    // Get list app service
+    [listAppNotService.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [listAppNotService.fulfilled]: (state, action) => {
+      state.dataListAppNotService = action.payload;
+      state.isLoading = false;
+    },
+    [listAppNotService.rejected]: (state, action) => {
       state.isLoading = false;
       state.error = action.payload;
     },
