@@ -72,7 +72,7 @@ export const buyService = createAsyncThunk(
     try {
       const result = await appApi.buyService(type);
       if (result.status === 400) {
-        toast.error(result.message);
+        toast.error(result.error[0]);
       }
       return result;
     } catch (error) {
