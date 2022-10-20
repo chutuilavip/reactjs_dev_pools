@@ -79,7 +79,6 @@ export default function PackageCard({
 
   const onSubmit = (data) => {
     console.log("getValue", getValues());
-    console.log(data);
 
     let finalData = { ...Object.assign(data, selectedCardContent) };
     finalData = { ...finalData, creator_address: acc, id: data.select };
