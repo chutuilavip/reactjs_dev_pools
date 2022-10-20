@@ -42,7 +42,8 @@ export const WrapTermsAndServices = styled.div`
   }
 `;
 export const PackageCardWrapper = styled.div`
-  background-color: #1c212f;
+  background-color: ${({ status }) => (status ? "#3b72fe" : "#1c212f")};
+  cursor: pointer;
   flex: 1 1 30rem;
   padding: 2rem;
   min-width: 25rem;

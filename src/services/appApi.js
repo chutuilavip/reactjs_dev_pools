@@ -34,5 +34,13 @@ const appApi = {
     const url = `api/application/dev-service?type=${type}`;
     return axiosClient.get(url);
   },
+  buyService: (params) => {
+    const url = `api/application/buy-service`;
+    return axiosClient.post(url, params);
+  },
+  getListAppService: (type) => {
+    const url = `api/dev/app-service?type=${type}`;
+    return axiosClient.post(url);
+  },
 };
 export default appApi;

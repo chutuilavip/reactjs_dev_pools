@@ -9,6 +9,7 @@ import { getServiceType } from "../../redux/slice/game.slice";
 import { WrapTermsAndServices } from "./styled";
 
 const TermsAndServices = () => {
+  const [selectedCard, setSelectedCard] = useState([]);
   const tabContent = [
     {
       index: 1,
@@ -75,11 +76,15 @@ const TermsAndServices = () => {
         {tabContent[selectedTab - 1].content.slice(1)}
       </h1>
       {/* call api base on selected tab */}
+
       <div className="package_cards">
         {listService?.res?.data?.map((item, index) => {
           return (
             <PackageCard
+              setSelectedCard={setSelectedCard}
+              selectedCard={selectedCard}
               key={index}
+              id={item.id}
               times={item.date}
               prices={item.price}
               views={item.views}
