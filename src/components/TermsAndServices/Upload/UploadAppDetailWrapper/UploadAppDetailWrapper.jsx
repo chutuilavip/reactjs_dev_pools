@@ -1,4 +1,3 @@
-import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { uploadContent } from "../../../../redux/slice/detailApp.slice";
@@ -71,30 +70,41 @@ export default function UploadAppDetailWrapper() {
         return tabContent[tabContent.length - 1].index;
       });
     } else {
-      const formdata = new FormData();
+      const formData = new FormData();
       const keys = Object.keys(finalData);
       for (let v of keys) {
-        console.log("keyyyyyyyyy", v);
         if (v === "uploadavatar") {
-          formdata.append(v, finalData[v][0]);
+          formData.append(v, finalData[v][0]?.originFileObj);
+        } else if (v === "images") {
+          const newImages = [];
+          for (let image of finalData[v]) {
+            let item = image.originFileObj;
+            newImages.push(item);
+          }
+          console.log(newImages);
+          for (let i = 0; i < newImages.length; i++) {
+            formData.append("images[]", newImages[i], newImages[i].name);
+          }
+          console.log(formData.getAll("images[]"));
+        } else if (v === "fileapk") {
+          formData.append(v, finalData[v][0]?.originFileObj);
         } else {
-          formdata.append(v, finalData[v]);
+          formData.append(v, finalData[v]);
         }
       }
-      dispatch(uploadContent(formdata));
+      console.log(finalData);
+      dispatch(uploadContent(formData));
     }
   };
+  console.log("finaldata", finalData);
   const handlePrevTab = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
     if (selectedTab > 0) {
       setSelectedTab((selectedTab) => {
         return selectedTab - 1;
       });
-    } else {
-      console.log("SUbmit");
-    }
+    } else return;
   };
-  console.log("Final data", finalData);
 
   return (
     <WrapperAppDetail>

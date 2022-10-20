@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 export const PackageButtonWrapper = styled.button`
+  cursor: pointer;
   display: flex;
   align-items: center;
   pointer-events: ${(props) => (props.disabled ? "none" : "")};
@@ -13,8 +14,8 @@ export const PackageButtonWrapper = styled.button`
   height: 8.2rem;
   font-size: 3.2rem;
 
-  /* &:hover {
-      background-color: #3b72fe;
-      color: white;
-   } */
+  &:hover {
+    background-color: #3b72fe;
+    color: white;
+  }
 `;

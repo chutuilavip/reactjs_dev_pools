@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from "react";
-import { message, Upload, Button, Modal } from "antd";
-import { RiInboxArchiveFill } from "react-icons/ri";
-import { useController, useForm } from "react-hook-form";
-import { WrapUploadResource } from "./UploadResource/styled";
 import { PlusOutlined } from "@ant-design/icons";
+import { message, Modal, Upload } from "antd";
+import React, { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
+import { WrapUploadResource } from "./UploadResource/styled";
 const { Dragger } = Upload;
 
 const props = {
@@ -18,7 +17,6 @@ const props = {
     return isLt2M;
   },
   onChange(info) {
-    console.log(")))))))))))))))))))))))))", info.file);
     const { status } = info.file;
     if (status !== "uploading") {
       console.log(info.file, info.fileList);
@@ -84,10 +82,10 @@ const UploadResource = ({ setFinalData, finalData }) => {
       </div>
     </div>
   );
-  const handleChangeAvatar = ({ fileList: newFileList }) => {
-    console.log("fileListfileList", newFileList);
-    setValue("uploadavatar", newFileList);
-    setAvatarImage(newFileList);
+  const handleChangeAvatar = (info) => {
+    console.log("info.fileList", info.fileList);
+    setValue("uploadavatar", info.fileList);
+    setAvatarImage(info.fileList);
   };
   const handleChangeImgaes = ({ fileList: newFileList }) => {
     setValue("images", newFileList);
@@ -111,13 +109,15 @@ const UploadResource = ({ setFinalData, finalData }) => {
     if (finalData.uploadavatar) {
       setAvatarImage(finalData.uploadavatar);
     }
-  }, [finalData]);
+  }, [finalData.uploadavatar, finalData.images]);
+
   useEffect(() => {
+    reset({ ...finalData });
     return () => {
       setFinalData((prevData) => ({ ...Object.assign(prevData, getValues()) }));
     };
   }, []);
-  console.log("imagesimagesimages", images);
+  console.log("imagesimagesimages", getValues(), avatarImage);
   return (
     <WrapUploadResource>
       <form className="form_upload">
@@ -127,7 +127,7 @@ const UploadResource = ({ setFinalData, finalData }) => {
             {...register("uploadavatar")}
             action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
             listType="picture-card"
-            fileList={avatarImage}
+            fileList={getValues("uploadavatar")}
             onChange={handleChangeAvatar}
             onPreview={handlePreview}
           >
@@ -153,7 +153,7 @@ const UploadResource = ({ setFinalData, finalData }) => {
           <Upload
             action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
             listType="picture-card"
-            fileList={images}
+            fileList={getValues("images")}
             onChange={handleChangeImgaes}
             onPreview={handlePreview}
             multiple

@@ -15,7 +15,7 @@ const InputSelect = ({ title, ArrOption, valueDefault, register, field }) => {
       >
         {ArrOption.map((item, index) => {
           return (
-            <Option key={index} value={item.code ? item.code : item.category}>
+            <Option key={index} value={item.code ? item.code : item.id}>
               {item.title || item.language}
             </Option>
           );

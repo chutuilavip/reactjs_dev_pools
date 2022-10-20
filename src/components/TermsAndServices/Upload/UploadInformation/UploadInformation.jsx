@@ -3,7 +3,6 @@ import { useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
 import SelectController from "../SelctController/SelectController";
 import InputText from "../UploadAppDetail/InputText";
-import { FieldContent } from "./FieldContent";
 import { GroupInput, UploadInfoWrapper } from "./styled";
 const OtherLanguages = ["Laos", "Mars", "Sun"];
 const Cost = ["Pay", "Free"];
@@ -79,11 +78,13 @@ export default function UploadInformation({ setFinalData, finalData }) {
         type: "select",
         name: "age_limit",
         Array: AgeLimit,
+        title: "Age limit",
       },
       {
         type: "select",
         name: "country_of_service",
         Array: languages,
+        title: "country of service",
       },
     ],
     [
@@ -91,11 +92,13 @@ export default function UploadInformation({ setFinalData, finalData }) {
         type: "select",
         name: "type",
         Array: Methods,
+        title: "Type ",
       },
       {
         type: "select",
         name: "otherlanguages",
         Array: languages,
+        title: "other languages",
       },
     ],
   ];
@@ -110,6 +113,7 @@ export default function UploadInformation({ setFinalData, finalData }) {
                   key={`field-${index}`}
                   control={control}
                   name={item.name}
+                  title={item.title}
                   ArrOption={item.Array}
                 />
               );

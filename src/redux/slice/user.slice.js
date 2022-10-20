@@ -50,10 +50,10 @@ export const registerUser = createAsyncThunk(
   "user/register",
   async (params, thunkAPI) => {
     try {
-      const result = await userApi.registerUser(params);
+      const result = await userApi.registerUser(params.data);
+      params.goHome();
       return result;
     } catch (error) {
-      console.log("error", error);
       return thunkAPI.rejectWithValue(error.response.data);
     }
   }
@@ -62,11 +62,15 @@ export const registerPublisher = createAsyncThunk(
   "publisher/register",
   async (params, thunkAPI) => {
     try {
-      const result = await userApi.registerPublisher(params);
-      console.log("result", result);
+      const result = await userApi.registerPublisher(params.data);
+      params.goHome();
       return result;
     } catch (error) {
-      console.log("error", error);
+      const fieldErrors = error.response.data.errors;
+      const errorKeys = Object.keys(fieldErrors);
+      for (let v of errorKeys) {
+        toast.error(fieldErrors[v][0]);
+      }
       return thunkAPI.rejectWithValue(error.response.data);
     }
   }

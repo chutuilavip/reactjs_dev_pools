@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import appApi from "../../services/appApi";
-import userApi from "../../services/appApi";
+import userApi from "../../services/userApi";
 
 const initialState = {
   detailApp: {},
@@ -31,7 +31,6 @@ export const getCategoriesAndLanguage = createAsyncThunk(
   }
 );
 export const uploadContent = createAsyncThunk("uploadContent", async (data) => {
-  console.log("dataaaaaaaaaaaaaaaaaaaaa", data);
   try {
     const res = await userApi.uploadContent(data);
     return res;
@@ -56,9 +55,13 @@ const detailAppSlice = createSlice({
       state.error = action.payload;
     },
     //Category
+    [getCategoriesAndLanguage.pending]: (state, action) => {
+      state.isLoading = true;
+    },
     [getCategoriesAndLanguage.fulfilled]: (state, action) => {
       state.categories = action.payload?.category;
       state.languages = action.payload?.language;
+      state.isLoading = false;
     },
   },
 });
