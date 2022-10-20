@@ -79,9 +79,10 @@ export default function PackageCard({
 
   const onSubmit = (data) => {
     console.log("getValue", getValues());
+    console.log(data);
 
     let finalData = { ...Object.assign(data, selectedCardContent) };
-    finalData = { ...finalData, creator_address: acc };
+    finalData = { ...finalData, creator_address: acc, id: data.select };
     const keys = Object.keys(finalData);
     const fd = new FormData();
     for (let v of keys) {
