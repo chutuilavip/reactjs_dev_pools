@@ -48,31 +48,13 @@ export default function PackageCard({
   };
 
   const handleShowListApp = (id) => {
-    setSelectedCard((selectedCard) => {
-      const index = selectedCard.findIndex((el) => el === id);
-      if (index !== -1) {
-        let clone = selectedCard;
-        clone.splice(index, 1);
-        return [...clone];
-      } else {
-        return [...selectedCard, id];
-      }
-    });
+    setSelectedCard(id);
 
     const itemService = arrService.res.data.filter((item) => item.id === id)[0];
     setSelectedCardContent(itemService);
     console.log(itemService);
     dispatch(listAppNotService(itemService.type));
     showModal();
-  };
-
-  const isSelected = (cardId) => {
-    const index = selectedCard.findIndex((el) => el === cardId);
-    if (index === -1) {
-      return false;
-    } else {
-      return true;
-    }
   };
 
   const [img, setImg] = useState([]);
@@ -160,7 +142,7 @@ export default function PackageCard({
         </form>
       </Modal>
       <PackageCardWrapper
-        status={isSelected(id)}
+        status={selectedCard === id}
         onClick={() => {
           handleShowListApp(id);
         }}

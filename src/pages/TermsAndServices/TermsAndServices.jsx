@@ -9,7 +9,7 @@ import { getServiceType } from "../../redux/slice/game.slice";
 import { WrapTermsAndServices } from "./styled";
 
 const TermsAndServices = () => {
-  const [selectedCard, setSelectedCard] = useState([]);
+  const [selectedCard, setSelectedCard] = useState();
   const tabContent = [
     {
       index: 1,
