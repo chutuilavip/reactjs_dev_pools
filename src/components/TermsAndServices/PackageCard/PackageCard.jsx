@@ -98,7 +98,7 @@ export default function PackageCard({
   return (
     <>
       <Modal
-        title="Basic Modal"
+        title="Buy banner"
         open={isModalOpen}
         onOk={handleOk}
         onCancel={handleCancel}
