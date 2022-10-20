@@ -1,5 +1,8 @@
-import React, { useEffect, useRef, useState } from "react";
+import { motion } from "framer-motion";
+import React, { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import global from "../../assets/register/global.png";
 import K from "../../assets/register/K.png";
 import ledger from "../../assets/register/ledger.png";
@@ -10,23 +13,9 @@ import payPal from "../../assets/register/payPal.png";
 import spaces from "../../assets/register/spaces.png";
 import Visa from "../../assets/register/Visa.png";
 import walletConnect from "../../assets/register/walletConnect.png";
-import { motion } from "framer-motion";
 import { variants } from "../../helpers/motion";
-import {
-  FormMeta,
-  FormRegis,
-  ListApp,
-  ListBtnStep,
-  ListInput,
-  StepOne,
-  StepTwo,
-  WrapRegister,
-} from "./styled";
-import { useDispatch, useSelector } from "react-redux";
 import { registerPublisher, registerUser } from "../../redux/slice/user.slice";
-import { useNavigate } from "react-router-dom";
-import { Switch } from "antd";
-import { toast } from "react-toastify";
+import { FormRegis, ListInput, StepOne, WrapRegister } from "./styled";
 
 const arrWallet = [
   global,
@@ -51,33 +40,20 @@ const Register = () => {
   const navigate = useNavigate();
   const onSubmit = (data) => {
     if (!isRegisterForPublisher) {
-      dispatch(registerUser(data));
-      if (statusRegis.status === 200) {
-        console.log("--------------------------------", statusRegis.status);
-        navigate("/login");
-      }
+      dispatch(registerUser({ data, goHome }));
     } else {
-      dispatch(registerPublisher(data));
-      if (statusRegis.status === 200) {
-        console.log("--------------------2222------------");
-        navigate("/login");
-      }
+      dispatch(registerPublisher({ data, goHome }));
     }
   };
+  const goHome = () => {
+    navigate("/login");
+  };
+  console.log(statusRegis);
   const switchRegisterType = (checked) => {
     setIsRegisterForPublisher(checked);
     const values = getValues();
     fieldsValues.current = values;
   };
-  // useEffect(() => {
-  //   if (errors) {
-  //     const keys = Object.keys(errors?.register?.errors);
-  //     keys.forEach((el) => {
-  //       toast.error(errors?.register?.errors[el][0]);
-  //     });
-  //   }
-  //   toast.clearWaitingQueue();
-  // }, [errors]);
 
   return (
     <motion.main
