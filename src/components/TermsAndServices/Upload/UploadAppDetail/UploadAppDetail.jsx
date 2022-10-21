@@ -1,13 +1,15 @@
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import Loading from "../../../../layout/components/Loading/Loading";
 import { getCategoriesAndLanguage } from "../../../../redux/slice/detailApp.slice";
 import SelectController from "../SelctController/SelectController";
+import StepButtonGroup from "../StepButtonGroup/StepButtonGroup";
+import { UploadContextWrapper } from "../UploadAppDetailWrapper/UploadAppDetailWrapper";
 import InputText from "./InputText";
 import { GroupInput, WrapAppDetail } from "./styled";
-
-const Blockchain = ["Block chain 1", "Block chain 2", "Block chain 3"];
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
 const Cost = [
   {
     code: "1",
@@ -20,10 +22,19 @@ const Cost = [
     title: "Free",
   },
 ];
-const Compability = ["Win 10", "Win 11", "Win 12"];
-
+const schema = yup
+  .object({
+    title: yup.string().required(),
+    appid: yup.string().required(),
+    summary: yup.string().required(),
+    full_description: yup.string().required(),
+  })
+  .required();
 const UploadAppDetail = ({ setFinalData, finalData }) => {
   const dispatch = useDispatch();
+  const DetailContext = useContext(UploadContextWrapper);
+  const { handleNextTab } = DetailContext;
+
   const { categories, languages, isLoading } = useSelector(
     (state) => state.detailApp
   );
@@ -34,9 +45,8 @@ const UploadAppDetail = ({ setFinalData, finalData }) => {
         genre: categories[0]?.id,
         languages: languages[0]?.language,
         defaultlanguage: languages[0]?.language,
-        compability: Compability[0],
-        blockchain: Blockchain[0],
       },
+      resolver: yupResolver(schema),
     });
   useEffect(() => {
     reset({ ...finalData });
@@ -54,13 +64,18 @@ const UploadAppDetail = ({ setFinalData, finalData }) => {
     setValue("languages", languages[0]?.language);
     setValue("defaultlanguage", languages[0]?.language);
   }, [categories, languages, Cost]);
-
+  const onSubmit = (data) => {
+    handleNextTab();
+  };
   return (
     <div className="">
       {isLoading ? (
         <Loading />
       ) : (
-        <form style={{ marginBottom: "7rem" }}>
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          style={{ marginBottom: "7rem" }}
+        >
           <WrapAppDetail>
             <p className="title">Application Detail</p>
             <GroupInput>
@@ -139,6 +154,7 @@ const UploadAppDetail = ({ setFinalData, finalData }) => {
                 </div>
               </div>
             </GroupInput>
+            <StepButtonGroup />
           </WrapAppDetail>
         </form>
       )}

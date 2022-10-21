@@ -1,54 +1,48 @@
 import { PlusOutlined } from "@ant-design/icons";
 import { message, Modal, Upload } from "antd";
-import React, { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
+import React, { useContext, useEffect, useState } from "react";
+import { Controller, useForm } from "react-hook-form";
+import StepButtonGroup from "./StepButtonGroup/StepButtonGroup";
 import { WrapUploadResource } from "./UploadResource/styled";
-const { Dragger } = Upload;
-
-const props = {
-  name: "file",
-  multiple: true,
-  action: "https://www.mocky.io/v2/5cc8019d300000980a055e76",
-  beforeUpload(file) {
-    const isLt2M = file.size / 1024 / 1024 < 2;
-    if (!isLt2M) {
-      message.error("Image must smaller than 2MB!");
-    }
-    return isLt2M;
-  },
-  onChange(info) {
-    const { status } = info.file;
-    if (status !== "uploading") {
-      console.log(info.file, info.fileList);
-    }
-    if (status === "done") {
-      message.success(`${info.file.name} file uploaded successfully.`);
-    } else if (status === "error") {
-      message.error(`${info.file.name} file upload failed.`);
-    }
-  },
-  onDrop(e) {
-    console.log("Dropped files", e.dataTransfer.files);
-  },
-};
-
-const props_one = {
-  name: "file",
-  action: "https://www.mocky.io/v2/5cc8019d300000980a055e76",
-  headers: {
-    authorization: "authorization-text",
-  },
-  onChange(info) {
-    if (info.file.status !== "uploading") {
-      console.log(info.file, info.fileList);
-    }
-    if (info.file.status === "done") {
-      message.success(`${info.file.name} file uploaded successfully`);
-    } else if (info.file.status === "error") {
-      message.error(`${info.file.name} file upload failed.`);
-    }
-  },
-};
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { UploadContextWrapper } from "./UploadAppDetailWrapper/UploadAppDetailWrapper";
+import reactImageSize from "react-image-size";
+// const schema = yup.object().shape({
+//   // uploadavatar: yup
+//   //   .mixed()
+//   //   .required()
+//   //   .test("fileSize", "The file is too large", (value) => {
+//   //     console.log("---------------------", value);
+//   //     if (!value) {
+//   //       return true;
+//   //     }
+//   //     return value[0].size / 1024 / 1024 < 0.0002;
+//   //   }),
+//   images: yup
+//     .mixed()
+//     .required()
+//     .test("fileSize", "The file is too large", (value) => {
+//       if (!value) {
+//         return true;
+//       }
+//       for (let v of value) {
+//         if (v.size / 1024 / 1024 < 3) {
+//           return true;
+//         }
+//         return false;
+//       }
+//     })
+//     .test("fileLength", "You must upload at least 2 images", (value) => {
+//       if (!value) {
+//         return false;
+//       }
+//       if (value.length < 2) {
+//         return false;
+//       }
+//       return true;
+//     }),
+// });
 const getBase64 = (file) =>
   new Promise((resolve, reject) => {
     const reader = new FileReader();
@@ -58,18 +52,53 @@ const getBase64 = (file) =>
   });
 
 const UploadResource = ({ setFinalData, finalData }) => {
-  const { register, control, handleSubmit, setValue, getValues, reset } =
-    useForm({
-      defaultValues: {
-        uploadavatar: [],
-        images: [],
-      },
-    });
+  const beforeUploadImages = (singleFile, fileList) => {
+    for (let file of fileList) {
+      const isJpgOrPng =
+        file.type === "image/jpeg" || file.type === "image/png";
+      if (!isJpgOrPng) {
+        setError("images", {
+          type: "type",
+          message: "You can only upload JPG/PNG file!",
+        });
+        message.error("You can only upload JPG/PNG file!");
+      }
+      const isLt8M = file.size / 1024 / 1024 < 8;
+      if (!isLt8M) {
+        setError("images", {
+          type: "imgSize",
+          message: "Image must smaller than 8MB!",
+        });
+        message.error("Image must smaller than 8MB!");
+      }
+      return isJpgOrPng && isLt8M;
+    }
+  };
+
+  const DetailContext = useContext(UploadContextWrapper);
+  const { handleNextTab } = DetailContext;
+
+  const {
+    register,
+    control,
+    handleSubmit,
+    setValue,
+    getValues,
+    reset,
+    setError,
+    formState: { errors },
+  } = useForm({
+    defaultValues: {
+      uploadavatar: [],
+      images: [],
+    },
+  });
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewImage, setPreviewImage] = useState("");
   const [previewTitle, setPreviewTitle] = useState("");
   const [images, setImages] = useState([]);
   const [avatarImage, setAvatarImage] = useState([]);
+
   const uploadButton = (
     <div>
       <PlusOutlined />
@@ -82,12 +111,29 @@ const UploadResource = ({ setFinalData, finalData }) => {
       </div>
     </div>
   );
-  const handleChangeAvatar = (info) => {
-    console.log("info.fileList", info.fileList);
+  const getDimensions = async (file) => {
+    const imageUrl = URL.createObjectURL(file.originFileObj);
+    try {
+      const res = await reactImageSize(imageUrl);
+      return res;
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  const handleChangeAvatar = async (info) => {
+    if (info.fileList[0]) {
+      const res = await getDimensions(info.fileList[0]);
+      if (res.width !== 255) {
+        setError("uploadavatar", { type: "cc", message: "file sai r" });
+      }
+      if (info.fileList[0].size / 1024 / 1024 < 0.0002) {
+        setError("uploadavatar", { type: "cc", message: "file to vcl" });
+      }
+    }
     setValue("uploadavatar", info.fileList);
     setAvatarImage(info.fileList);
   };
-  const handleChangeImgaes = ({ fileList: newFileList }) => {
+  const handleChangeImages = ({ fileList: newFileList }) => {
     setValue("images", newFileList);
     setImages(newFileList);
   };
@@ -117,36 +163,54 @@ const UploadResource = ({ setFinalData, finalData }) => {
       setFinalData((prevData) => ({ ...Object.assign(prevData, getValues()) }));
     };
   }, []);
-  console.log("imagesimagesimages", getValues(), avatarImage);
+
+  const onSubmit = (data) => {
+    if (Object.keys(errors).length > 0) {
+      return;
+    }
+    console.log("oll", errors);
+    handleNextTab();
+  };
+  console.log("Errors", errors);
   return (
     <WrapUploadResource>
-      <form className="form_upload">
+      <form className="form_upload" onSubmit={handleSubmit(onSubmit)}>
         <div className="upload_item">
           <p>Upload Avatar *</p>
-          <Upload
-            {...register("uploadavatar")}
-            action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-            listType="picture-card"
-            fileList={getValues("uploadavatar")}
-            onChange={handleChangeAvatar}
-            onPreview={handlePreview}
-          >
-            {avatarImage.length > 0 ? null : uploadButton}
-          </Upload>
-          <Modal
-            open={previewOpen}
-            title={previewTitle}
-            footer={null}
-            onCancel={handleCancel}
-          >
-            <img
-              alt="example"
-              style={{
-                width: "100%",
-              }}
-              src={previewImage}
-            />
-          </Modal>
+          <Controller
+            name={"uploadavatar"}
+            control={control}
+            render={({ field }) => (
+              <>
+                {" "}
+                <Upload
+                  {...field}
+                  // {...register("uploadavatar")}
+                  action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+                  listType="picture-card"
+                  fileList={getValues("uploadavatar")}
+                  onChange={handleChangeAvatar}
+                  onPreview={handlePreview}
+                >
+                  {avatarImage.length > 0 ? null : uploadButton}
+                </Upload>
+                <Modal
+                  open={previewOpen}
+                  title={previewTitle}
+                  footer={null}
+                  onCancel={handleCancel}
+                >
+                  <img
+                    alt="example"
+                    style={{
+                      width: "100%",
+                    }}
+                    src={previewImage}
+                  />
+                </Modal>
+              </>
+            )}
+          />
         </div>
         <div className="upload_item">
           <p>Upload Images *</p>
@@ -154,7 +218,7 @@ const UploadResource = ({ setFinalData, finalData }) => {
             action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
             listType="picture-card"
             fileList={getValues("images")}
-            onChange={handleChangeImgaes}
+            onChange={handleChangeImages}
             onPreview={handlePreview}
             multiple
           >
@@ -175,6 +239,15 @@ const UploadResource = ({ setFinalData, finalData }) => {
             />
           </Modal>
         </div>
+        <StepButtonGroup />
+        <button
+          onClick={() => {
+            console.log(errors);
+          }}
+          type="button"
+        >
+          submit
+        </button>
       </form>
     </WrapUploadResource>
   );

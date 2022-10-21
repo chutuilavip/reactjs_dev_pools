@@ -1,11 +1,22 @@
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
 import SelectController from "../SelctController/SelectController";
 import InputText from "../UploadAppDetail/InputText";
 import { GroupInput, UploadInfoWrapper } from "./styled";
-const OtherLanguages = ["Laos", "Mars", "Sun"];
-const Cost = ["Pay", "Free"];
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { UploadContextWrapper } from "../UploadAppDetailWrapper/UploadAppDetailWrapper";
+import StepButtonGroup from "../StepButtonGroup/StepButtonGroup";
+
+const schema = yup
+  .object({
+    privacy_policy: yup.string().required(),
+    term_of_policy: yup.string().required(),
+    app_support: yup.string().required(),
+    size: yup.string().required(),
+  })
+  .required();
 const Methods = [
   {
     code: "nft",
@@ -21,19 +32,20 @@ const Methods = [
   },
 ];
 const AgeLimit = ["3", "7", "12", "16", "18"];
-const ServiceCountry = ["VietNam", "Korea"];
 
 export default function UploadInformation({ setFinalData, finalData }) {
   const { languages } = useSelector((state) => state.detailApp);
+  const DetailContext = useContext(UploadContextWrapper);
+  const { handleNextTab } = DetailContext;
   const { register, handleSubmit, control, getValues, reset, setValue } =
     useForm({
       defaultValues: {
         otherlanguages: languages[0]?.language,
-        cost: Cost[0],
         type: Methods[0].title,
         age_limit: AgeLimit[0],
         country_of_service: languages[0]?.language,
       },
+      resolver: yupResolver(schema),
     });
   useEffect(() => {
     setValue("country_of_service", languages[0]?.language);
@@ -41,6 +53,7 @@ export default function UploadInformation({ setFinalData, finalData }) {
   }, [languages]);
   const onSubmit = (data) => {
     setFinalData((prevData) => ({ ...Object.assign(prevData, data) }));
+    handleNextTab();
   };
   const FieldContentInput = [
     [
@@ -134,9 +147,6 @@ export default function UploadInformation({ setFinalData, finalData }) {
   };
   useEffect(() => {
     reset({ ...finalData });
-    return () => {
-      setFinalData((prevData) => ({ ...Object.assign(prevData, getValues()) }));
-    };
   }, []);
   return (
     <div className="">
@@ -147,6 +157,7 @@ export default function UploadInformation({ setFinalData, finalData }) {
             <div className="col_input_one">{renderField()}</div>
           </GroupInput>
         </UploadInfoWrapper>
+        <StepButtonGroup />
       </form>
     </div>
   );

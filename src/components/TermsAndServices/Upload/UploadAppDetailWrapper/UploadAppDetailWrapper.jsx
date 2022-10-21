@@ -1,67 +1,44 @@
-import React, { useEffect, useState } from "react";
+import React, { createContext, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { uploadContent } from "../../../../redux/slice/detailApp.slice";
 import PackageButton from "../../Button/PackageButton";
 import PackageTabs from "../../PackageTabs/PackageTabs";
+import StepButtonGroup, {
+  tabContent,
+} from "../StepButtonGroup/StepButtonGroup";
 import UploadApk from "../UploadApk/UploadApk";
 import UploadAppDetail from "../UploadAppDetail/UploadAppDetail";
 import UploadInformation from "../UploadInformation/UploadInformation";
 import UploadResource from "../UploadResource";
 import { WrapperAppDetail } from "./styled";
-
+export const UploadContextWrapper = createContext();
 export default function UploadAppDetailWrapper() {
   const dispatch = useDispatch();
-  const [selectedTab, setSelectedTab] = useState(1);
+  const [selectedTab, setSelectedTab] = useState(2);
   const [finalData, setFinalData] = useState({});
-  const tabContent = [
-    {
-      index: 1,
-      content: "1 App.Game info",
-    },
-    {
-      index: 2,
-      content: "2 Graphic",
-    },
-    {
-      index: 3,
-      content: "3 Information",
-    },
-    {
-      index: 4,
-      content: "4 Upload APK file",
-    },
-  ];
+
   const renderStepForUpload = () => {
+    const props = {
+      setFinalData,
+      finalData,
+    };
     switch (selectedTab) {
       case 1:
-        return (
-          <UploadAppDetail setFinalData={setFinalData} finalData={finalData} />
-        );
+        return <UploadAppDetail {...props} />;
       case 2:
-        return (
-          <UploadResource setFinalData={setFinalData} finalData={finalData} />
-        );
+        return <UploadResource {...props} />;
       case 3:
-        return (
-          <UploadInformation
-            setFinalData={setFinalData}
-            finalData={finalData}
-          />
-        );
+        return <UploadInformation {...props} />;
       case 4:
-        return <UploadApk setFinalData={setFinalData} finalData={finalData} />;
+        return <UploadApk {...props} />;
       default:
         return;
     }
   };
-  useEffect(() => {
-    if (selectedTab === 5) {
-      console.log("Final data", finalData);
-    }
-  }, [setSelectedTab]);
 
   const handleNextTab = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
+    console.log("nhuw c");
     if (selectedTab <= tabContent.length - 1) {
       setSelectedTab((selectedTab) => {
         if (selectedTab < tabContent.length - 1) {
@@ -70,33 +47,10 @@ export default function UploadAppDetailWrapper() {
         return tabContent[tabContent.length - 1].index;
       });
     } else {
-      const formData = new FormData();
-      const keys = Object.keys(finalData);
-      for (let v of keys) {
-        if (v === "uploadavatar") {
-          formData.append(v, finalData[v][0]?.originFileObj);
-        } else if (v === "images") {
-          const newImages = [];
-          for (let image of finalData[v]) {
-            let item = image.originFileObj;
-            newImages.push(item);
-          }
-          console.log(newImages);
-          for (let i = 0; i < newImages.length; i++) {
-            formData.append("images[]", newImages[i], newImages[i].name);
-          }
-          console.log(formData.getAll("images[]"));
-        } else if (v === "fileapk") {
-          formData.append(v, finalData[v][0]?.originFileObj);
-        } else {
-          formData.append(v, finalData[v]);
-        }
-      }
-      console.log(finalData);
-      dispatch(uploadContent(formData));
+      submitForm();
     }
   };
-  console.log("finaldata", finalData);
+
   const handlePrevTab = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
     if (selectedTab > 0) {
@@ -106,29 +60,48 @@ export default function UploadAppDetailWrapper() {
     } else return;
   };
 
+  const submitForm = () => {
+    const formData = new FormData();
+    const keys = Object.keys(finalData);
+    for (let v of keys) {
+      if (v === "uploadavatar") {
+        formData.append(v, finalData[v][0]?.originFileObj);
+      } else if (v === "images") {
+        const newImages = [];
+        for (let image of finalData[v]) {
+          let item = image.originFileObj;
+          newImages.push(item);
+        }
+        console.log(newImages);
+        for (let i = 0; i < newImages.length; i++) {
+          formData.append("images[]", newImages[i], newImages[i].name);
+        }
+        console.log(formData.getAll("images[]"));
+      } else if (v === "fileapk") {
+        formData.append(v, finalData[v][0]?.originFileObj);
+      } else {
+        formData.append(v, finalData[v]);
+      }
+    }
+    console.log(finalData);
+    dispatch(uploadContent(formData));
+  };
+
+  const value = {
+    buttonGroupProps: {
+      submitForm,
+      selectedTab,
+      setSelectedTab,
+    },
+    buttonGroupComponent: <StepButtonGroup />,
+    handleNextTab,
+    handlePrevTab,
+    submitForm,
+  };
+  console.log("ooooooooooooo");
   return (
-    <WrapperAppDetail>
-      {renderStepForUpload()}
-      <div className="step_group">
-        <PackageTabs
-          tabContent={tabContent}
-          selectedTab={selectedTab}
-          setSelectedTab={setSelectedTab}
-          activeContent={tabContent[selectedTab - 1]?.content}
-        />
-        <div className="btn-group">
-          <PackageButton
-            disabled={selectedTab === 1 ? true : false}
-            className="btn"
-            onClick={handlePrevTab}
-          >
-            Previous
-          </PackageButton>
-          <PackageButton className="btn" onClick={handleNextTab}>
-            {selectedTab === 4 ? "Submit" : "Next"}
-          </PackageButton>
-        </div>
-      </div>
-    </WrapperAppDetail>
+    <UploadContextWrapper.Provider value={value}>
+      <WrapperAppDetail>{renderStepForUpload()}</WrapperAppDetail>
+    </UploadContextWrapper.Provider>
   );
 }

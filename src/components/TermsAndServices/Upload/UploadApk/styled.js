@@ -1,12 +1,15 @@
 import styled from "styled-components";
 
 export const UploadAplWrapper = styled.div`
-  width: 90%;
   margin: auto;
   margin-bottom: 7rem;
   display: flex;
   justify-content: space-evenly;
   align-items: center;
+  flex-direction: column;
+  form {
+    width: 100%;
+  }
   label {
     margin-right: 20rem;
   }

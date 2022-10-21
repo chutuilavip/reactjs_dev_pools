@@ -16,6 +16,7 @@ export default function PackageTabs({
           <PackageButton
             key={index}
             className={`${selectedTab === item.index && "active"} `}
+            type="button"
             // onClick={() => setSelectedTab(item.index)}
           >
             {selectedTab === item.index ? activeContent : item.index}

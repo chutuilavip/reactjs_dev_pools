@@ -5,7 +5,6 @@ const WrapAppDetail = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 60px;
   &&& {
     .btn_submit {
       width: 90%;
@@ -40,7 +39,6 @@ const WrapAppDetail = styled.div`
   .description {
     width: 90%;
     margin: 0 auto;
-    padding-bottom: 30px;
     p {
       font-weight: 700;
       font-size: 24px;
