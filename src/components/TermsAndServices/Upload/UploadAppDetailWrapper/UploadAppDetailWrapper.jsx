@@ -1,6 +1,9 @@
 import React, { createContext, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { uploadContent } from "../../../../redux/slice/detailApp.slice";
+import {
+  getCategoriesAndLanguage,
+  uploadContent,
+} from "../../../../redux/slice/detailApp.slice";
 import PackageButton from "../../Button/PackageButton";
 import PackageTabs from "../../PackageTabs/PackageTabs";
 import StepButtonGroup, {
@@ -14,9 +17,12 @@ import { WrapperAppDetail } from "./styled";
 export const UploadContextWrapper = createContext();
 export default function UploadAppDetailWrapper() {
   const dispatch = useDispatch();
-  const [selectedTab, setSelectedTab] = useState(2);
+  const [selectedTab, setSelectedTab] = useState(4);
   const [finalData, setFinalData] = useState({});
-
+  const [isDisabledPrev, setIsDisabledPrev] = useState(false);
+  useEffect(() => {
+    dispatch(getCategoriesAndLanguage());
+  }, []);
   const renderStepForUpload = () => {
     const props = {
       setFinalData,
@@ -97,8 +103,9 @@ export default function UploadAppDetailWrapper() {
     handleNextTab,
     handlePrevTab,
     submitForm,
+    setIsDisabledPrev,
+    isDisabledPrev,
   };
-  console.log("ooooooooooooo");
   return (
     <UploadContextWrapper.Provider value={value}>
       <WrapperAppDetail>{renderStepForUpload()}</WrapperAppDetail>

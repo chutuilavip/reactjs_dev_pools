@@ -26,7 +26,7 @@ export default function StepButtonGroup() {
 
   const { submitForm, selectedTab, setSelectedTab } =
     DetailContext.buttonGroupProps;
-  const { handlePrevTab, handleNextTab } = DetailContext;
+  const { handlePrevTab, handleNextTab, isDisabledPrev } = DetailContext;
   return (
     <ButtonGroupWrapper>
       <div className="step_group">
@@ -38,15 +38,17 @@ export default function StepButtonGroup() {
         />
         <div className="btn-group">
           <PackageButton
-            disabled={selectedTab === 1 ? true : false}
-            className="btn"
+            disabled={selectedTab === 1 ? true : false || isDisabledPrev}
+            className={`btn ${
+              selectedTab === 1 || isDisabledPrev ? "disabled" : ""
+            }`}
             onClick={handlePrevTab}
             type="button"
           >
             Previous
           </PackageButton>
-          <PackageButton type="submit" className="btn">
-            {selectedTab === 4 ? "Submit" : "Next11"}
+          <PackageButton type="submit" className="btn btn-submit">
+            {selectedTab === 4 ? "Submit" : "Next"}
           </PackageButton>
         </div>
       </div>

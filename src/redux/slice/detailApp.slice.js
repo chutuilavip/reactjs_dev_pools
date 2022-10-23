@@ -1,4 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { toast } from "react-toastify";
 import appApi from "../../services/appApi";
 import userApi from "../../services/userApi";
 
@@ -35,7 +36,11 @@ export const uploadContent = createAsyncThunk("uploadContent", async (data) => {
     const res = await userApi.uploadContent(data);
     return res;
   } catch (err) {
-    console.log(err);
+    const keysErrors = Object.keys(err.response?.data?.errors);
+    for (let key of keysErrors) {
+      toast.error(err.response.data.errors[key][0]);
+    }
+    console.log(err.response.data.errors);
   }
 });
 const detailAppSlice = createSlice({

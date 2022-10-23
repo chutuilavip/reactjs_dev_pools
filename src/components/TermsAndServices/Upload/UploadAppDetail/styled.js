@@ -84,12 +84,20 @@ const WrapAppDetail = styled.div`
     &:nth-child(2) {
     }
   }
+  .field_item {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+  .error_message {
+    color: red !important;
+    text-align: right;
+  }
 `;
 
 const GroupInput = styled.div`
   display: flex;
   justify-content: space-between;
-  width: 90%;
   margin: 0 auto;
   flex-direction: column;
 `;

@@ -9,6 +9,10 @@ export const UploadAplWrapper = styled.div`
   flex-direction: column;
   form {
     width: 100%;
+    .field_item {
+      display: flex;
+      justify-content: space-between;
+    }
   }
   label {
     margin-right: 20rem;
@@ -21,5 +25,8 @@ export const UploadAplWrapper = styled.div`
     justify-content: center;
     align-items: center;
     flex-direction: column;
+  }
+  .error_field {
+    color: red;
   }
 `;
