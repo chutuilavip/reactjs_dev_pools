@@ -1,15 +1,14 @@
+import { yupResolver } from "@hookform/resolvers/yup";
 import React, { useContext, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
+import * as yup from "yup";
 import Loading from "../../../../layout/components/Loading/Loading";
-import { getCategoriesAndLanguage } from "../../../../redux/slice/detailApp.slice";
 import SelectController from "../SelctController/SelectController";
 import StepButtonGroup from "../StepButtonGroup/StepButtonGroup";
 import { UploadContextWrapper } from "../UploadAppDetailWrapper/UploadAppDetailWrapper";
 import InputText from "./InputText";
 import { GroupInput, WrapAppDetail } from "./styled";
-import * as yup from "yup";
-import { yupResolver } from "@hookform/resolvers/yup";
 const Cost = [
   {
     code: "1",
@@ -31,23 +30,29 @@ const schema = yup
   })
   .required();
 const UploadAppDetail = ({ setFinalData, finalData }) => {
-  const dispatch = useDispatch();
   const DetailContext = useContext(UploadContextWrapper);
   const { handleNextTab } = DetailContext;
 
   const { categories, languages, isLoading } = useSelector(
     (state) => state.detailApp
   );
-  const { register, handleSubmit, control, getValues, reset, setValue } =
-    useForm({
-      defaultValues: {
-        free: Cost[0]?.code,
-        genre: categories[0]?.id,
-        languages: languages[0]?.language,
-        defaultlanguage: languages[0]?.language,
-      },
-      resolver: yupResolver(schema),
-    });
+  const {
+    register,
+    handleSubmit,
+    control,
+    getValues,
+    reset,
+    setValue,
+    formState: { errors },
+  } = useForm({
+    defaultValues: {
+      free: Cost[0]?.code,
+      genre: categories[0]?.id,
+      languages: languages[0]?.language,
+      defaultlanguage: languages[0]?.language,
+    },
+    resolver: yupResolver(schema),
+  });
   useEffect(() => {
     reset({ ...finalData });
     return () => {
@@ -55,9 +60,6 @@ const UploadAppDetail = ({ setFinalData, finalData }) => {
     };
   }, []);
 
-  useEffect(() => {
-    dispatch(getCategoriesAndLanguage());
-  }, []);
   useEffect(() => {
     setValue("genre", categories[0]?.id);
     setValue("free", Cost[0]?.code);
@@ -67,6 +69,7 @@ const UploadAppDetail = ({ setFinalData, finalData }) => {
   const onSubmit = (data) => {
     handleNextTab();
   };
+  console.log(errors);
   return (
     <div className="">
       {isLoading ? (
@@ -81,16 +84,22 @@ const UploadAppDetail = ({ setFinalData, finalData }) => {
             <GroupInput>
               <div className="col_input_one">
                 <div className="row">
-                  <InputText
-                    register={{ ...register("title") }}
-                    title="App Name *"
-                    placeho="Enter App Name"
-                  />
-                  <InputText
-                    register={{ ...register("appid") }}
-                    title="App ID *"
-                    placeho="Enter App ID"
-                  />
+                  <div className="field_item">
+                    <InputText
+                      register={{ ...register("title") }}
+                      title="App Name *"
+                      placeho="Enter App Name"
+                    />
+                    <p className="error_message">{errors.title?.message}</p>
+                  </div>
+                  <div className="field_item">
+                    <InputText
+                      register={{ ...register("appid") }}
+                      title="App ID *"
+                      placeho="Enter App ID"
+                    />
+                    <p className="error_message">{errors.appid?.message}</p>
+                  </div>
                 </div>
                 <div className="row">
                   <SelectController
@@ -136,6 +145,7 @@ const UploadAppDetail = ({ setFinalData, finalData }) => {
                       <span>0/1000</span>
                     </div>
                   </div>
+                  <p className="error_message">{errors.summary?.message}</p>
                 </div>
                 <div className="description">
                   <p>Description *</p>
@@ -151,6 +161,9 @@ const UploadAppDetail = ({ setFinalData, finalData }) => {
                       <span>0/1000</span>
                     </div>
                   </div>
+                  <p className="error_message">
+                    {errors.full_description?.message}
+                  </p>
                 </div>
               </div>
             </GroupInput>

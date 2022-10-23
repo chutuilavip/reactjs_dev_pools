@@ -37,16 +37,23 @@ export default function UploadInformation({ setFinalData, finalData }) {
   const { languages } = useSelector((state) => state.detailApp);
   const DetailContext = useContext(UploadContextWrapper);
   const { handleNextTab } = DetailContext;
-  const { register, handleSubmit, control, getValues, reset, setValue } =
-    useForm({
-      defaultValues: {
-        otherlanguages: languages[0]?.language,
-        type: Methods[0].title,
-        age_limit: AgeLimit[0],
-        country_of_service: languages[0]?.language,
-      },
-      resolver: yupResolver(schema),
-    });
+  const {
+    register,
+    handleSubmit,
+    control,
+    getValues,
+    reset,
+    setValue,
+    formState: { errors },
+  } = useForm({
+    defaultValues: {
+      otherlanguages: languages[0]?.language,
+      type: Methods[0].title,
+      age_limit: AgeLimit[0],
+      country_of_service: languages[0]?.language,
+    },
+    resolver: yupResolver(schema),
+  });
   useEffect(() => {
     setValue("country_of_service", languages[0]?.language);
     setValue("otherlanguages", languages[0]?.language);
@@ -59,13 +66,13 @@ export default function UploadInformation({ setFinalData, finalData }) {
     [
       {
         type: "input",
-        register: "privacy_policy",
+        name: "privacy_policy",
         title: "Privacy Policy (link) *",
         placeholder: "Enter The Link",
       },
       {
         type: "input",
-        register: "term_of_policy",
+        name: "term_of_policy",
         title: "Term Policy (link) *",
         placeholder: "Enter The Link",
       },
@@ -73,13 +80,13 @@ export default function UploadInformation({ setFinalData, finalData }) {
     [
       {
         type: "input",
-        register: "app_support",
+        name: "app_support",
         title: "App Support (link) *",
         placeholder: "Enter The Link",
       },
       {
         type: "input",
-        register: "size",
+        name: "size",
         title: "Size *",
         placeholder: "Enter The Size",
       },
@@ -120,24 +127,34 @@ export default function UploadInformation({ setFinalData, finalData }) {
       return (
         <div key={`row-${index}`} className="row">
           {row.map((item, index) => {
+            console.log(errors[`${item.name}`]);
+
             if (item.type === "select") {
               return (
-                <SelectController
-                  key={`field-${index}`}
-                  control={control}
-                  name={item.name}
-                  title={item.title}
-                  ArrOption={item.Array}
-                />
+                <div className="field_item" key={`row-${index}`}>
+                  <SelectController
+                    key={`field-${index}`}
+                    control={control}
+                    name={item.name}
+                    title={item.title}
+                    ArrOption={item.Array}
+                  />
+                  <p className="error_message">
+                    {errors[`${item.name}`]?.message}
+                  </p>
+                </div>
               );
             } else {
               return (
-                <InputText
-                  key={`field-${index}`}
-                  register={{ ...register(item.register) }}
-                  title={item.title}
-                  placeho={item.placeholder}
-                />
+                <div className="field_item">
+                  <InputText
+                    key={`field-${index}`}
+                    register={{ ...register(item.name) }}
+                    title={item.title}
+                    placeho={item.placeholder}
+                  />
+                  <p className="error_message">{errors[item.name]?.message}</p>
+                </div>
               );
             }
           })}

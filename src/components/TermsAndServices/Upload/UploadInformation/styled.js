@@ -86,12 +86,18 @@ const UploadInfoWrapper = styled.div`
     &:nth-child(2) {
     }
   }
+  .field_item {
+    width: 100%;
+  }
+  .error_message {
+    color: red;
+    text-align: right;
+  }
 `;
 
 const GroupInput = styled.div`
   display: flex;
   justify-content: space-between;
-  width: 90%;
   margin: 0 auto;
   flex-direction: column;
 `;
