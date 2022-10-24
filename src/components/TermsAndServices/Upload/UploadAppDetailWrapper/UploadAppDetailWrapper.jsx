@@ -17,7 +17,7 @@ import { WrapperAppDetail } from "./styled";
 export const UploadContextWrapper = createContext();
 export default function UploadAppDetailWrapper() {
   const dispatch = useDispatch();
-  const [selectedTab, setSelectedTab] = useState(4);
+  const [selectedTab, setSelectedTab] = useState(1);
   const [finalData, setFinalData] = useState({});
   const [isDisabledPrev, setIsDisabledPrev] = useState(false);
   useEffect(() => {

@@ -224,6 +224,7 @@ const UploadResource = ({ setFinalData, finalData }) => {
     handleNextTab();
   };
 
+  console.log(getValues());
   return (
     <WrapUploadResource imagesDisplay={images.length >= 10 ? "none" : ""}>
       <form className="form_upload" onSubmit={handleSubmit(onSubmit)}>

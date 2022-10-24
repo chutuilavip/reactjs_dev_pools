@@ -9,6 +9,9 @@ const initialState = {
   error: {},
   categories: [],
   languages: [],
+  handleNextTabStore: null,
+  handlePrevTabStore: null,
+  selectedTabStore: 1,
 };
 
 export const getDetailApp = createAsyncThunk("getDetailApp", async (slug) => {
@@ -46,7 +49,17 @@ export const uploadContent = createAsyncThunk("uploadContent", async (data) => {
 const detailAppSlice = createSlice({
   name: "detailAppSlice",
   initialState,
-  reducers: {},
+  reducers: {
+    setHandleNextTab: (state, { payload }) => {
+      state.handleNextTabStore = payload;
+    },
+    setHandlePrevTab: (state, { payload }) => {
+      state.handlePrevTabStore = payload;
+    },
+    setSelectedTabStore: (state, { payload }) => {
+      state.selectedTabStore = payload;
+    },
+  },
   extraReducers: {
     [getDetailApp.pending]: (state) => {
       state.isLoading = true;
@@ -71,5 +84,6 @@ const detailAppSlice = createSlice({
   },
 });
 
-export const {} = detailAppSlice.actions;
+export const { setHandlePrevTab, setHandleNextTab, setSelectedTabStore } =
+  detailAppSlice.actions;
 export default detailAppSlice.reducer;

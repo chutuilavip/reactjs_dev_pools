@@ -21,16 +21,54 @@ const SideLeft = styled.div`
   max-width: 122px;
   border-right: 1px solid white;
   .wrap_sidebar {
-    height: 50vh;
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 20px;
-    justify-content: space-around;
+    justify-content: flex-end;
     border-bottom: 1px solid white;
     width: 100%;
-    svg {
-      color: red;
+    height: calc(100vh - 9.3rem);
+  }
+  .navigate_group {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    width: 122px;
+    button {
+      background-color: #3b72fe;
+      width: 100%;
+      padding: 1rem 0;
+      cursor: pointer;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      svg {
+        color: white;
+        font-size: 2.5rem;
+      }
+    }
+    .disabled_btn {
+      background-color: inherit;
+      cursor: not-allowed;
+    }
+    .disabled_tab_btn {
+      background-color: inherit;
+      cursor: not-allowed;
+    }
+
+    p {
+      border: 1px solid white;
+      color: white;
+      font-size: 2rem;
+      transform: rotate(90deg);
+      padding: 4.5rem 3.2rem;
+      -webkit-user-select: none; /* Safari */
+      -ms-user-select: none; /* IE 10 and IE 11 */
+      user-select: none; /* Standard syntax */
     }
   }
 `;

@@ -15,6 +15,25 @@ export const WrapUploadResource = styled.div`
         pointer-events: ${(props) => props.imagesDisplay && "none"};
       }
     }
+    .ant-upload-list-picture .ant-upload-list-item-error {
+      border-color: white;
+    }
+    .ant-upload-list-item-error {
+      color: white;
+    }
+    .ant-upload-list-item-error .ant-upload-list-item-name {
+      color: white;
+    }
+    .ant-upload-list-item-thumbnail {
+      height: 100%;
+      img {
+        height: 100%;
+        aspect-ratio: 1 / 1;
+      }
+    }
+    .ant-upload-list-item-list-type-picture {
+      height: 12rem;
+    }
   }
   width: 90%;
   margin: 0 auto;

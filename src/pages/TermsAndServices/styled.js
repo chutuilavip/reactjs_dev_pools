@@ -1,6 +1,26 @@
 import styled from "styled-components";
 
 export const WrapTermsAndServices = styled.div`
+  &&& {
+    .swiper {
+      height: 35rem;
+    }
+    .swiper-pagination-bullet {
+      width: 2rem;
+      height: 2rem;
+      border-radius: 0px;
+      background: transparent;
+      opacity: 1;
+      border: 1px solid #007aff;
+    }
+    .swiper-pagination-bullet-active {
+      opacity: var(--swiper-pagination-bullet-opacity, 1);
+      background: var(--swiper-pagination-color, var(--swiper-theme-color));
+    }
+    .swiper-pagination-bullets-dynamic {
+      overflow: unset;
+    }
+  }
   background-color: black;
   .header_title {
     text-transform: uppercase;
@@ -14,7 +34,7 @@ export const WrapTermsAndServices = styled.div`
     flex-wrap: wrap;
     gap: 1rem;
     padding: 0 1rem;
-    margin-bottom: 25rem;
+    margin-bottom: 4rem;
   }
   .footer_btn {
     display: flex;
@@ -47,6 +67,7 @@ export const PackageCardWrapper = styled.div`
   flex: 1 1 30rem;
   padding: 2rem;
   min-width: 25rem;
+  min-height: 25rem;
   h1 {
     text-align: center;
   }
@@ -59,6 +80,6 @@ export const PackageCardWrapper = styled.div`
   }
   .content {
     color: white;
-    word-break: break-all;
+    word-break: break-word;
   }
 `;
