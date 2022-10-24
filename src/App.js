@@ -1,5 +1,10 @@
 import React, { Suspense, useEffect } from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
 import { PrivateRouter, publicRoutes } from "../src/routes";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
@@ -12,6 +17,7 @@ import ProviderRouter from "./ProviderRouter";
 import { getAccount, getAccountMetaMask } from "./redux/slice/web3.slice";
 // Toast
 import { ToastContainer } from "react-toastify";
+import TermsAndServices from "./pages/TermsAndServices/TermsAndServices";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -75,7 +81,7 @@ const App = () => {
       <Router>
         <Suspense>
           <Routes>
-            <Route index element={<HomePage />} />
+            <Route index element={<Navigate to="/terms-and-services" />} />
             <Route element={<Layout />}>
               {publicRoutes.map((route, index) => {
                 const Page = route.component;

@@ -156,6 +156,13 @@ export default function PackageCard({
           keywords per country - 2 countries) - Increase average organic install
           about {discount}% - Export CSV 1 time/day
         </p>
+        <p className="content">
+          - Suggest ranking keywords (upto 5 keywords per country - 2 countries)
+        </p>
+        <p className="content">
+          - Increase average organic install about {discount}% - Export CSV 1
+          time/day
+        </p>
       </PackageCardWrapper>
     </>
   );

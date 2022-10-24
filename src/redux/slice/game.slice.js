@@ -56,6 +56,7 @@ export const getServiceType = createAsyncThunk(
   async (type) => {
     try {
       const result = await appApi.getService(type);
+      console.log("sẻvices", result);
       if (result.status === 400) {
         toast.error(result.message);
       }

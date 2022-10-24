@@ -10,10 +10,12 @@ import {
   icon_right_pool,
   icon_right_play,
 } from "../../IconLayout";
+import { publisherOptions } from "./SideBarUtils";
 
 const SideBarRight = ({ data }) => {
   const [isOpenCategory, setIsOpenCategory] = useState(false);
   const [listIcon, setListIcon] = useState();
+  const [selectedTab, serSelectedTab] = useState(1);
 
   const location = useLocation();
   const currentUrl = location.pathname;
@@ -43,21 +45,6 @@ const SideBarRight = ({ data }) => {
     currentUrl === "/metaverse" ||
     currentUrl === "/play-to-earn" ||
     currentUrl === "/service";
-
-  const publisherOptions = [
-    {
-      content: "Terms And Services For Publishers",
-      url: "terms-services",
-    },
-    {
-      content: "Upload",
-      url: "upload",
-    },
-    {
-      content: "Advertisement",
-      url: "advertisement",
-    },
-  ];
 
   useEffect(() => {
     SetListIconLayout(currentUrl);
