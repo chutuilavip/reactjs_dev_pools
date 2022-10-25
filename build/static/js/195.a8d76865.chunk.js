@@ -1,2 +1,0 @@
-"use strict";(self.webpackChunkpools_fe=self.webpackChunkpools_fe||[]).push([[195],{6195:function(e,s,n){n.r(s);n(2791);var u=n(184);s.default=function(){return(0,u.jsx)("div",{children:"MostPlayed"})}}}]);
-//# sourceMappingURL=195.a8d76865.chunk.js.map
