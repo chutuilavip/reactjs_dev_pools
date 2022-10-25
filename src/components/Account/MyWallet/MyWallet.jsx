@@ -24,7 +24,7 @@ const MyWallet = ({ res }) => {
             <p>$1000</p>
           </div>
         </Button> */}
-        {res.data.userinfo?.map((item, index) => {
+        {res.data.dev_info?.map((item, index) => {
           return (
             <Button style={{ width: "auto" }} key={index} type="primary">
               <div className="_img">

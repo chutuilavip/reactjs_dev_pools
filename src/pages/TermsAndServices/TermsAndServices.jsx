@@ -130,9 +130,6 @@ const TermsAndServices = () => {
           activeContent={tabContent[selectedTab - 1].content}
         />
         <div style={{ display: "flex", gap: "10px" }}>
-          <PackageButton className="btn_next" onClick={handlePrevTab}>
-            Prev
-          </PackageButton>
           <PackageButton className="btn_next" onClick={handleNextTab}>
             Next
           </PackageButton>

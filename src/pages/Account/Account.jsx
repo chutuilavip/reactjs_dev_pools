@@ -33,7 +33,7 @@ const Account = () => {
         exit="hidden"
       >
         <Main>
-          {isLoading === true ? (
+          {isLoading ? (
             <Loading />
           ) : (
             <>

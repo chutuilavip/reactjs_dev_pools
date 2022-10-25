@@ -26,8 +26,8 @@ const LoginForm = () => {
     }
   }, []);
 
-  const onSubmit = async (data) => {
-    await dispatch(loginUser(data));
+  const onSubmit = (data) => {
+    dispatch(loginUser(data));
   };
 
   return (
@@ -52,7 +52,7 @@ const LoginForm = () => {
               <input placeholder="Password" type="checkbox" id="rememPass" />
               <label htmlFor="rememPass">Remember password</label>
             </div>
-            <Link className="forgot_pass" to="/">
+            <Link className="forgot_pass" to="/forgot-password">
               Forgot password?
             </Link>
           </div>

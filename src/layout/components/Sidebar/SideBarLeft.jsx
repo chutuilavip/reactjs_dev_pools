@@ -13,6 +13,7 @@ import { ItemMenu, SideLeft } from "./styled";
 import { publisherOptions } from "./SideBarUtils";
 import { useSelector } from "react-redux";
 import { tabContent } from "../../../pages/TermsAndServices/TermsAndServices";
+import { goToTop } from "../../../utils";
 
 const SideBarLeft = (customLayout) => {
   const params = useParams();
@@ -25,6 +26,7 @@ const SideBarLeft = (customLayout) => {
     return publisherOptions.find((el) => el.url === option);
   };
   const handlePrev = () => {
+    goToTop();
     const pathName = location.pathname;
     if (pathName === "/terms-and-services") {
       handlePrevTabStore();
@@ -41,6 +43,7 @@ const SideBarLeft = (customLayout) => {
     }
   };
   const handleNext = () => {
+    goToTop();
     const pathName = location.pathname;
     if (pathName === "/terms-and-services") {
       handleNextTabStore();
@@ -56,6 +59,15 @@ const SideBarLeft = (customLayout) => {
       );
       navigate(`/for-publishers/${nextOption.url}`);
     }
+  };
+  const checkRoute = () => {
+    if (
+      location.pathname.startsWith("/for-publishers") ||
+      location.pathname === "/terms-and-services"
+    ) {
+      return true;
+    }
+    return false;
   };
   return (
     <SideLeft status={customLayout.data}>
@@ -75,39 +87,43 @@ const SideBarLeft = (customLayout) => {
             // </ItemMenu>
           );
         })} */}
-        <div className="navigate_group">
-          <button
-            onClick={handlePrev}
-            className={`${
-              getCurrentOption()?.index === 1 ? "disabled_btn" : ""
-            } ${
-              location.pathname === "/terms-and-services" &&
-              selectedTabStore === 1
-                ? "disabled_btn"
-                : ""
-            }`}
-          >
-            <UpOutlined />
-          </button>
-          <p>
-            {location.pathname === "/terms-and-services" ? "Click" : "Scroll"}
-          </p>
-          <button
-            onClick={handleNext}
-            className={`${
-              getCurrentOption()?.index === publisherOptions.length
-                ? "disabled_btn"
-                : ""
-            } ${
-              location.pathname === "/terms-and-services" &&
-              selectedTabStore === tabContent.length
-                ? "disabled_btn"
-                : ""
-            }`}
-          >
-            <DownOutlined />
-          </button>
-        </div>
+        {checkRoute() ? (
+          <div className="navigate_group">
+            <button
+              onClick={handlePrev}
+              className={`${
+                getCurrentOption()?.index === 1 ? "disabled_btn" : ""
+              } ${
+                location.pathname === "/terms-and-services" &&
+                selectedTabStore === 1
+                  ? "disabled_btn"
+                  : ""
+              }`}
+            >
+              <UpOutlined />
+            </button>
+            <p onClick={(e) => console.log(e)}>
+              {location.pathname === "/terms-and-services" ? "Click" : "Scroll"}
+            </p>
+            <button
+              onClick={handleNext}
+              className={`${
+                getCurrentOption()?.index === publisherOptions.length
+                  ? "disabled_btn"
+                  : ""
+              } ${
+                location.pathname === "/terms-and-services" &&
+                selectedTabStore === tabContent.length
+                  ? "disabled_btn"
+                  : ""
+              }`}
+            >
+              <DownOutlined />
+            </button>
+          </div>
+        ) : (
+          ""
+        )}
       </div>
     </SideLeft>
   );

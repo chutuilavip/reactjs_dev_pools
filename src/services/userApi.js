@@ -24,7 +24,14 @@ const userApi = {
     const url = "/api/auth/register-business";
     return axiosClient.post(url, data);
   },
-
+  forgotPassword: (data) => {
+    const url = "/api/auth/forget-password";
+    return axiosClient.post(url, data);
+  },
+  resetPassword: (data) => {
+    const url = "/api/auth/reset-password";
+    return axiosClient.post(url, data);
+  },
   reviewApp: (params, slug) => {
     console.log("Minhquy");
     const url = `/api/application/comment/${slug}`;

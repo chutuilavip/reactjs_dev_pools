@@ -4,6 +4,8 @@
 :root {
   height: 100%;
   --textGray: #757575;
+  --primary: #1c212f;
+  --bg-dark: #181818;
 }
 @media only screen and (max-width: 1200px) {
   html {
@@ -104,4 +106,9 @@ p {
 
 .item_select .ant-select-arrow {
   color: #fff;
+}
+.disabled_text_selection {
+  -webkit-user-select: none; /* Safari */
+  -ms-user-select: none; /* IE 10 and IE 11 */
+  user-select: none; /* Standard syntax */
 }
