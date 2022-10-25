@@ -22,6 +22,11 @@ export const loginUser = createAsyncThunk(
   async (data, thunkAPI) => {
     try {
       const result = await userApi.loginUser(data);
+      if (result.user.type === "mod") {
+        return thunkAPI.rejectWithValue(
+          "You have no permission to access this website"
+        );
+      }
       if (result.access_token) {
         localStorage.setItem("tokens", JSON.stringify(result.access_token));
       }
@@ -72,6 +77,33 @@ export const registerPublisher = createAsyncThunk(
         toast.error(fieldErrors[v][0]);
       }
       return thunkAPI.rejectWithValue(error.response.data);
+    }
+  }
+);
+export const forgotPassword = createAsyncThunk(
+  "user/forgot_password",
+  async (data) => {
+    try {
+      const result = await userApi.forgotPassword(data);
+      toast.success(result.message);
+      console.log("res", result);
+    } catch (err) {
+      toast.error(err.response.data[0]);
+
+      console.log(err);
+    }
+  }
+);
+export const resetPassword = createAsyncThunk(
+  "user/reset_password",
+  async ({ payload, goToLogin }, thunkAPI) => {
+    try {
+      const result = await userApi.resetPassword(payload);
+      toast.success(result.message);
+      goToLogin();
+    } catch (err) {
+      toast.error(err.response?.data?.message);
+      console.log("errors", err);
     }
   }
 );
@@ -240,6 +272,26 @@ const userSlice = createSlice({
     [checkWalletAccount.rejected]: (state, action) => {
       state.isLoading = false;
       state.errors = action.payload;
+    },
+    // Reset password
+    [resetPassword.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [resetPassword.fulfilled]: (state) => {
+      state.isLoading = false;
+    },
+    [resetPassword.rejected]: (state) => {
+      state.isLoading = false;
+    },
+    // Forgot password
+    [forgotPassword.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [forgotPassword.fulfilled]: (state) => {
+      state.isLoading = false;
+    },
+    [forgotPassword.rejected]: (state) => {
+      state.isLoading = false;
     },
   },
 });

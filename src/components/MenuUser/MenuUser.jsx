@@ -158,12 +158,4 @@ const listMenu = [
     name: "Suport",
     path: "/suport",
   },
-  {
-    name: "For Publishers",
-    path: "/for-publishers/terms-services",
-  },
-  {
-    name: "Profit For User",
-    path: "/profit-for-user",
-  },
 ];

@@ -4,7 +4,6 @@ import { TitleActivities } from "./styled";
 import { useTranslation } from "react-i18next";
 
 const TodayActivities = ({ res }) => {
-  console.log(res.data);
   const { t } = useTranslation();
 
   const columns = [

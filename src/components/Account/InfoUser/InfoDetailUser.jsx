@@ -17,6 +17,12 @@ const schema = yup
       .required()
       .min(2, "Min length validate message")
       .max(10),
+    email: yup.string().required().email(),
+    // current_password: yup.string().required(),
+    password: yup.string(),
+    password_confirmation: yup
+      .string()
+      .oneOf([yup.ref("password"), null], "Password confirm does not match"),
   })
   .required();
 
@@ -25,7 +31,7 @@ const InfoDetailUser = ({ res }) => {
   const { t } = useTranslation();
   const [editFields, setEditFields] = useState([]);
   const { data } = res;
-  const { first_name, last_name, email, phone_number, country } = data.user;
+  const { first_name, last_name, email, phone_number, country } = data.dev;
   const {
     handleSubmit,
     control,
@@ -57,14 +63,6 @@ const InfoDetailUser = ({ res }) => {
     }
   };
   const onSubmit = (data) => {
-    if (data.password !== data.password_confirmation) {
-      setError("password_confirmation", {
-        type: "string",
-        message: "password confirm does not match",
-      });
-
-      return;
-    }
     const formData = new FormData();
     const keys = Object.keys(data);
     for (let v of keys) {
@@ -73,6 +71,7 @@ const InfoDetailUser = ({ res }) => {
     dispatch(getEditInfo(formData));
   };
   console.log(errors);
+  console.log(getValues());
   return (
     <InfoDetail>
       <div className="title">{t("account.my_account")}</div>
@@ -89,7 +88,7 @@ const InfoDetailUser = ({ res }) => {
                     control={control}
                     rules={{ required: true }}
                     render={({ field }) => (
-                      <div>
+                      <div className="userNameInput">
                         <Form.Item>
                           <Input {...field} onBlur={field.onBlur} />
                         </Form.Item>
@@ -105,7 +104,7 @@ const InfoDetailUser = ({ res }) => {
                     control={control}
                     rules={{ required: true }}
                     render={({ field }) => (
-                      <div>
+                      <div className="userNameInput">
                         <Form.Item>
                           <Input {...field} onBlur={field.onBlur} />
                         </Form.Item>
@@ -126,6 +125,9 @@ const InfoDetailUser = ({ res }) => {
                 {t("account.edit")} <img src={Pen} alt="pen " />
               </Button>
             </div>
+
+            {/* -------------------------------------- */}
+
             <div className="grid_item one">{t("account.email")}</div>
             <div className="grid_item two">
               {editFields.includes("email") ? (
@@ -154,6 +156,9 @@ const InfoDetailUser = ({ res }) => {
                 {t("account.edit")} <img src={Pen} alt="pen " />
               </Button>
             </div>
+
+            {/* -------------------------------------- */}
+
             <div className="grid_item one">{t("account.password")}</div>
             <div className="grid_item two">
               {editFields.includes("password") ? (
@@ -169,6 +174,7 @@ const InfoDetailUser = ({ res }) => {
                             placeholder="current password"
                             {...field}
                             onBlur={field.onBlur}
+                            type="password"
                           />
                         </Form.Item>
                         <p className="validateMessage">
@@ -189,6 +195,7 @@ const InfoDetailUser = ({ res }) => {
                             placeholder="new password"
                             {...field}
                             onBlur={field.onBlur}
+                            type="password"
                           />
                         </Form.Item>
                         <p className="validateMessage">
@@ -210,6 +217,7 @@ const InfoDetailUser = ({ res }) => {
                             placeholder="confirm new password"
                             {...field}
                             onBlur={field.onBlur}
+                            type="password"
                           />
                         </Form.Item>
                         <p className="validateMessage">
@@ -229,6 +237,9 @@ const InfoDetailUser = ({ res }) => {
                 {t("account.edit")} <img src={Pen} alt="pen " />
               </Button>
             </div>
+
+            {/* -------------------------------------- */}
+
             <div className="grid_item one">{t("account.phone_number")}</div>
             <div className="grid_item two">
               {editFields.includes("phoneNumber") ? (
@@ -251,6 +262,9 @@ const InfoDetailUser = ({ res }) => {
                 {t("account.edit")} <img src={Pen} alt="pen " />
               </Button>
             </div>
+
+            {/* -------------------------------------- */}
+
             <div className="grid_item one">{t("account.country")}</div>
             <div className="grid_item two">
               {editFields.includes("country") ? (
@@ -270,6 +284,259 @@ const InfoDetailUser = ({ res }) => {
             </div>
             <div className="grid_item">
               <Button type="primary" onClick={() => handleEdit("country")}>
+                {t("account.edit")} <img src={Pen} alt="pen " />
+              </Button>
+            </div>
+
+            {/* -------------------------------------- */}
+
+            <div className="grid_item one">{t("account.business_name")}</div>
+            <div className="grid_item two">
+              {editFields.includes("business_name") ? (
+                <Controller
+                  name="business_name"
+                  control={control}
+                  rules={{ required: true }}
+                  render={({ field }) => (
+                    <div>
+                      <Form.Item>
+                        <Input {...field} onBlur={field.onBlur} />
+                      </Form.Item>
+                      <p className="validateMessage">
+                        {" "}
+                        {errors.email?.message}
+                      </p>
+                    </div>
+                  )}
+                />
+              ) : (
+                `${getValues("email")}`
+              )}
+            </div>
+            <div className="grid_item">
+              <Button
+                type="primary"
+                onClick={() => handleEdit("business_name")}
+              >
+                {t("account.edit")} <img src={Pen} alt="pen " />
+              </Button>
+            </div>
+
+            <div className="grid_item one">{t("account.contact_name")}</div>
+            <div className="grid_item two">
+              {editFields.includes("contact_name") ? (
+                <Controller
+                  name="contact_name"
+                  control={control}
+                  rules={{ required: true }}
+                  render={({ field }) => (
+                    <div>
+                      <Form.Item>
+                        <Input {...field} onBlur={field.onBlur} />
+                      </Form.Item>
+                      <p className="validateMessage">
+                        {" "}
+                        {errors.email?.message}
+                      </p>
+                    </div>
+                  )}
+                />
+              ) : (
+                `${getValues("contact_name")}`
+              )}
+            </div>
+            <div className="grid_item">
+              <Button type="primary" onClick={() => handleEdit("contact_name")}>
+                {t("account.edit")} <img src={Pen} alt="pen " />
+              </Button>
+            </div>
+
+            <div className="grid_item one">{t("account.website")}</div>
+            <div className="grid_item two">
+              {editFields.includes("website") ? (
+                <Controller
+                  name="website"
+                  control={control}
+                  rules={{ required: true }}
+                  render={({ field }) => (
+                    <div>
+                      <Form.Item>
+                        <Input {...field} onBlur={field.onBlur} />
+                      </Form.Item>
+                      <p className="validateMessage">
+                        {" "}
+                        {errors.email?.message}
+                      </p>
+                    </div>
+                  )}
+                />
+              ) : (
+                `${getValues("website")}`
+              )}
+            </div>
+            <div className="grid_item">
+              <Button type="primary" onClick={() => handleEdit("website")}>
+                {t("account.edit")} <img src={Pen} alt="pen " />
+              </Button>
+            </div>
+
+            <div className="grid_item one">{t("account.release_details")}</div>
+            <div className="grid_item two">
+              {editFields.includes("release_details") ? (
+                <Controller
+                  name="release_details"
+                  control={control}
+                  rules={{ required: true }}
+                  render={({ field }) => (
+                    <div>
+                      <Form.Item>
+                        <Input {...field} onBlur={field.onBlur} />
+                      </Form.Item>
+                      <p className="validateMessage">
+                        {" "}
+                        {errors.email?.message}
+                      </p>
+                    </div>
+                  )}
+                />
+              ) : (
+                `${getValues("release_details")}`
+              )}
+            </div>
+            <div className="grid_item">
+              <Button
+                type="primary"
+                onClick={() => handleEdit("release_details")}
+              >
+                {t("account.edit")} <img src={Pen} alt="pen " />
+              </Button>
+            </div>
+
+            <div className="grid_item one">
+              {t("account.product_and_services")}
+            </div>
+            <div className="grid_item two">
+              {editFields.includes("product_and_services") ? (
+                <Controller
+                  name="product_and_services"
+                  control={control}
+                  rules={{ required: true }}
+                  render={({ field }) => (
+                    <div>
+                      <Form.Item>
+                        <Input {...field} onBlur={field.onBlur} />
+                      </Form.Item>
+                      <p className="validateMessage">
+                        {" "}
+                        {errors.email?.message}
+                      </p>
+                    </div>
+                  )}
+                />
+              ) : (
+                `${getValues("product_and_services")}`
+              )}
+            </div>
+            <div className="grid_item">
+              <Button
+                type="primary"
+                onClick={() => handleEdit("product_and_services")}
+              >
+                {t("account.edit")} <img src={Pen} alt="pen " />
+              </Button>
+            </div>
+
+            <div className="grid_item one">{t("account.products_url")}</div>
+            <div className="grid_item two">
+              {editFields.includes("products_url") ? (
+                <Controller
+                  name="products_url"
+                  control={control}
+                  rules={{ required: true }}
+                  render={({ field }) => (
+                    <div>
+                      <Form.Item>
+                        <Input {...field} onBlur={field.onBlur} />
+                      </Form.Item>
+                      <p className="validateMessage">
+                        {" "}
+                        {errors.email?.message}
+                      </p>
+                    </div>
+                  )}
+                />
+              ) : (
+                `${getValues("products_url")}`
+              )}
+            </div>
+            <div className="grid_item">
+              <Button type="primary" onClick={() => handleEdit("products_url")}>
+                {t("account.edit")} <img src={Pen} alt="pen " />
+              </Button>
+            </div>
+
+            <div className="grid_item one">{t("account.year_established")}</div>
+            <div className="grid_item two">
+              {editFields.includes("year_established") ? (
+                <Controller
+                  name="year_established"
+                  control={control}
+                  rules={{ required: true }}
+                  render={({ field }) => (
+                    <div>
+                      <Form.Item>
+                        <Input {...field} onBlur={field.onBlur} />
+                      </Form.Item>
+                      <p className="validateMessage">
+                        {" "}
+                        {errors.email?.message}
+                      </p>
+                    </div>
+                  )}
+                />
+              ) : (
+                `${getValues("year_established")}`
+              )}
+            </div>
+            <div className="grid_item">
+              <Button
+                type="primary"
+                onClick={() => handleEdit("year_established")}
+              >
+                {t("account.edit")} <img src={Pen} alt="pen " />
+              </Button>
+            </div>
+
+            <div className="grid_item one">
+              {t("account.application_catalog")}
+            </div>
+            <div className="grid_item two">
+              {editFields.includes("application_catalog") ? (
+                <Controller
+                  name="application_catalog"
+                  control={control}
+                  rules={{ required: true }}
+                  render={({ field }) => (
+                    <div>
+                      <Form.Item>
+                        <Input {...field} onBlur={field.onBlur} />
+                      </Form.Item>
+                      <p className="validateMessage">
+                        {" "}
+                        {errors.email?.message}
+                      </p>
+                    </div>
+                  )}
+                />
+              ) : (
+                `${getValues("application_catalog")}`
+              )}
+            </div>
+            <div className="grid_item">
+              <Button
+                type="primary"
+                onClick={() => handleEdit("application_catalog")}
+              >
                 {t("account.edit")} <img src={Pen} alt="pen " />
               </Button>
             </div>

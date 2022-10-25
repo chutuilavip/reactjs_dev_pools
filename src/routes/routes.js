@@ -1,4 +1,6 @@
 import React from "react";
+import ForgotPassword from "../pages/ForgotPassword/ForgotPassword";
+import ResetPassword from "../pages/ResetPassword/ResetPassword";
 
 const TermsAndServices = React.lazy(() =>
   import("../pages/TermsAndServices/TermsAndServices")
@@ -39,6 +41,8 @@ export const publicRoutes = [
   { path: "/library", component: Library },
   { path: "/profit-for-user", component: ProfitForUser },
   { path: "/search", component: ResultSearch },
+  { path: "/forgot-password/*", component: ForgotPassword },
+  { path: "/reset-password", component: ResetPassword },
 ];
 
 export const PrivateRouter = [

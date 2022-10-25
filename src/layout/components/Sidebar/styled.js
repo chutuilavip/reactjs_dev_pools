@@ -61,11 +61,13 @@ const SideLeft = styled.div`
     }
 
     p {
+      background-color: var(--primary);
       border: 1px solid white;
       color: white;
       font-size: 2rem;
       transform: rotate(90deg);
       padding: 4.5rem 3.2rem;
+      width: 100%;
       -webkit-user-select: none; /* Safari */
       -ms-user-select: none; /* IE 10 and IE 11 */
       user-select: none; /* Standard syntax */

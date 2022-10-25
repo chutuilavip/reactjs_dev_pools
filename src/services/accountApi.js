@@ -2,17 +2,17 @@ import axiosClient from "./axiosClient";
 
 const accountApi = {
   getAccountInfo: () => {
-    const url = `/api/user/account`;
+    const url = `/api/dev/account`;
     return axiosClient.get(url);
   },
 
   editAccount: (data) => {
-    const url = `/api/user/account-edit`;
+    const url = `api/dev/account-edit`;
     return axiosClient.post(url, data);
   },
 
   editAvatarAccount: (formData) => {
-    const url = "/api/user/account-edit-avatar";
+    const url = "/api/dev/account-edit-avatar";
     return axiosClient.post(url, formData);
   },
 };
