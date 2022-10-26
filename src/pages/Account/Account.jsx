@@ -15,14 +15,10 @@ import Loading from "../../layout/components/Loading/Loading";
 const Account = () => {
   const { infoAccount, isLoading } = useSelector((state) => state.account);
   const dispatch = useDispatch();
-
-  console.log(infoAccount);
-
+  console.log(infoAccount.res);
   useEffect(() => {
     dispatch(getAccount());
   }, []);
-
-  const { res } = infoAccount;
 
   return (
     <>
@@ -37,12 +33,12 @@ const Account = () => {
             <Loading />
           ) : (
             <>
-              <InfoAvatarUser res={res} />
-              <InfoDetailUser res={res} />
-              <MyWallet res={res} />
-              <MyActivities res={res} />
-              <DownloadApp res={res} />
-              <TodayActivities res={res} />
+              <InfoAvatarUser res={infoAccount?.res} />
+              <InfoDetailUser res={infoAccount?.res} />
+              <MyWallet res={infoAccount?.res} />
+              <MyActivities res={infoAccount?.res} />
+              <DownloadApp res={infoAccount?.res} />
+              <TodayActivities res={infoAccount?.res} />
             </>
           )}
         </Main>

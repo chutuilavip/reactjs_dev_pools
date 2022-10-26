@@ -18,6 +18,7 @@ import { getAccount, getAccountMetaMask } from "./redux/slice/web3.slice";
 // Toast
 import { ToastContainer } from "react-toastify";
 import TermsAndServices from "./pages/TermsAndServices/TermsAndServices";
+import { getLanguagesTranslations } from "./redux/slice/app.slice";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -62,6 +63,7 @@ const App = () => {
     if (token) {
       dispatch(checkWalletAccount({ address: account, add: 1 }));
     }
+    dispatch(getLanguagesTranslations());
   }, [account, token]);
 
   return (

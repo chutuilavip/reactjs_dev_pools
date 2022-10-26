@@ -22,6 +22,7 @@ export const loginUser = createAsyncThunk(
   async (data, thunkAPI) => {
     try {
       const result = await userApi.loginUser(data);
+      console.log(result);
       if (result.user.type === "mod") {
         return thunkAPI.rejectWithValue(
           "You have no permission to access this website"
@@ -161,7 +162,6 @@ export const disLikeReview = createAsyncThunk(
 export const checkWalletAccount = createAsyncThunk(
   "user/checkWallet",
   async (address, thunkAPI) => {
-    console.log("ADD", address);
     try {
       const res = await userApi.checkWallet(address);
       if (res.status === 200) {
@@ -169,7 +169,7 @@ export const checkWalletAccount = createAsyncThunk(
       }
       return res;
     } catch (err) {
-      console.log(err);
+      console.error(err);
       return thunkAPI.rejectWithValue(err);
     }
   }
@@ -200,7 +200,7 @@ const userSlice = createSlice({
     },
     [loginUser.rejected]: (state, action) => {
       state.isLoading = false;
-      console.log("payload", action.payload);
+      console.log(action.payload);
       state.errors.login = action.payload;
     },
 

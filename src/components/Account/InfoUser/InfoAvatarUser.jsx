@@ -6,34 +6,62 @@ import {
   TextInfoUser,
   Onchange,
 } from "./styled";
-import { Button, Modal, Input, Avatar } from "antd";
+import { Button, Modal, Input, Avatar, Upload, message } from "antd";
 import Pen from "../../../assets/Account/buttonchange.png";
 import { useDispatch } from "react-redux";
 import { getEditAvatar, getAccount } from "../../../redux/slice/account.slice";
 import Loading from "../../../layout/components/Loading/Loading";
 import { URL_API } from "../../../constants/constants.js";
 import { useTranslation } from "react-i18next";
+import { UploadOutlined } from "@ant-design/icons";
+import { getDefaultAvatarName } from "../../../helpers";
+import { assignToFormData } from "../../../helpers/formData";
 
 const InfoUser = ({ res }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const formData = new FormData();
+  const [disabledButton, setDisabledButton] = useState(false);
+  const [file, setFile] = useState({});
+  let formData = new FormData();
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const showModal = () => {
     setIsModalOpen(true);
   };
+
+  const beforeUpload = (file) => {
+    const isJpgOrPng = file.type === "image/jpeg" || file.type === "image/png";
+    if (!isJpgOrPng) {
+      message.error("You can only upload JPG/PNG file!");
+    }
+
+    return isJpgOrPng;
+  };
   const handleCancel = () => {
+    if (disabledButton) {
+      return;
+    }
     setIsModalOpen(false);
   };
   const handleChangeAvt = () => {
+    if (disabledButton) {
+      return;
+    }
+    if (Object.keys(file).length === 0) {
+      return;
+    }
+    formData.append("avatar", file);
     dispatch(getEditAvatar(formData));
     setIsModalOpen(false);
   };
-
-  const { data } = res;
-  const getDefaultAvatarName = () => {
-    return data.dev.first_name[0] + data.dev.last_name[0];
+  const handleChange = (info) => {
+    if (info?.file.status === "uploading") {
+      setDisabledButton(true);
+    } else {
+      setDisabledButton(false);
+      setFile(info.file.originFileObj);
+    }
   };
+  const { data } = res;
   return (
     <MainAvatar>
       {data ? (
@@ -47,7 +75,7 @@ const InfoUser = ({ res }) => {
                   verticalAlign: "middle",
                 }}
               >
-                {getDefaultAvatarName()}
+                {getDefaultAvatarName(data.dev.first_name, data.dev.last_name)}
               </Avatar>
             )}
           </AvatarUser>
@@ -80,11 +108,17 @@ const InfoUser = ({ res }) => {
         onOk={handleChangeAvt}
         onCancel={handleCancel}
       >
-        <Input
-          placeholder="Basic usage"
-          type="file"
-          onChange={(e) => formData.append("avatar", e.target.files[0])}
-        />
+        <Upload
+          action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+          listType="picture"
+          // defaultFileList={[...fileList]}
+          maxCount={1}
+          beforeUpload={beforeUpload}
+          accept="image/png, image/jpeg"
+          onChange={handleChange}
+        >
+          <Button icon={<UploadOutlined />}>Upload</Button>
+        </Upload>
       </Modal>
     </MainAvatar>
   );

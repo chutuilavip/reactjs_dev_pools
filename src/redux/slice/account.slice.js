@@ -1,4 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { toast } from "react-toastify";
 import accountApi from "../../services/accountApi";
 
 const initialState = {
@@ -24,6 +25,11 @@ export const getEditAvatar = createAsyncThunk(
       if (result.status === 200) {
         thunkAPI.dispatch(getAccount());
       }
+      if (result.status >= 400) {
+        result.errors.forEach((el) => {
+          toast.error(el);
+        });
+      }
       return result;
     } catch (error) {
       console.log(error);
@@ -31,11 +37,17 @@ export const getEditAvatar = createAsyncThunk(
   }
 );
 
-export const getEditInfo = createAsyncThunk(
-  "getEditInfo",
+export const editAccountInfo = createAsyncThunk(
+  "editAccountInfo",
   async (formData, { dispatch }) => {
     try {
       const result = await accountApi.editAccount(formData);
+      if (result.status >= 400) {
+        result.error?.forEach((el) => toast.error(el));
+      }
+      if (result.status === 200) {
+        toast.success("Update user info successfully");
+      }
       await dispatch(getAccount());
       return result;
     } catch (error) {
@@ -75,15 +87,15 @@ const getAccountSlice = createSlice({
     },
 
     //edit info
-    [getEditInfo.pending]: (state, action) => {
+    [editAccountInfo.pending]: (state, action) => {
       state.isLoading = true;
     },
-    [getEditInfo.fulfilled]: (state, action) => {
+    [editAccountInfo.fulfilled]: (state, action) => {
       // state.newInfo = action.payload;
       // window.location.reload();
       state.isLoading = false;
     },
-    [getEditInfo.rejected]: (state, action) => {
+    [editAccountInfo.rejected]: (state, action) => {
       state.isLoading = false;
     },
   },

@@ -16,6 +16,7 @@ import {
   setHandlePrevTab,
   setSelectedTabStore,
 } from "../../redux/slice/detailApp.slice";
+import PackageVideo from "./PackageVideo/PackageVideo";
 export const tabContent = [
   {
     index: 1,
@@ -32,6 +33,10 @@ export const tabContent = [
   {
     index: 4,
     content: "4 Top game NFT package",
+  },
+  {
+    index: 5,
+    content: "5 Video Package",
   },
 ];
 
@@ -98,29 +103,33 @@ const TermsAndServices = () => {
       {/* call api base on selected tab */}
 
       <div className="package_cards">
-        <Swiper
-          spaceBetween={40}
-          slidesPerView={3}
-          pagination={pagination}
-          modules={[Pagination]}
-        >
-          {listService?.res?.data?.map((item, index) => {
-            return (
-              <SwiperSlide key={index}>
-                <PackageCard
-                  setSelectedCard={setSelectedCard}
-                  selectedCard={selectedCard}
-                  key={index}
-                  id={item.id}
-                  times={item.date}
-                  prices={item.price}
-                  views={item.views}
-                  discount={item.discount}
-                />
-              </SwiperSlide>
-            );
-          })}
-        </Swiper>
+        {selectedTab !== 5 ? (
+          <Swiper
+            spaceBetween={40}
+            slidesPerView={3}
+            pagination={pagination}
+            modules={[Pagination]}
+          >
+            {listService?.res?.data?.map((item, index) => {
+              return (
+                <SwiperSlide key={index}>
+                  <PackageCard
+                    setSelectedCard={setSelectedCard}
+                    selectedCard={selectedCard}
+                    key={index}
+                    id={item.id}
+                    times={item.date}
+                    prices={item.price}
+                    views={item.views}
+                    discount={item.discount}
+                  />
+                </SwiperSlide>
+              );
+            })}
+          </Swiper>
+        ) : (
+          <PackageVideo />
+        )}
       </div>
       <div className="footer_btn">
         <PackageTabs

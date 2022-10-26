@@ -1,6 +1,15 @@
 import styled from "styled-components";
 
 const WrapMenuUser = styled.div`
+  &&& {
+    .ant-avatar {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      font-size: 4rem;
+    }
+  }
   bottom: -1px;
   transform: translateY(100%);
   transition: all 0.25s ease-in-out;

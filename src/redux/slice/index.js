@@ -6,6 +6,7 @@ import detailAppReducer from "./detailApp.slice";
 import resultSearchReducer from "./search.slice";
 import editAccountReducer from "./account.slice";
 import customLayoutReducer from "./customLayout.slice";
+import appReducer from "./app.slice";
 
 export default combineReducers({
   web3: web3Reducer,
@@ -15,4 +16,5 @@ export default combineReducers({
   resultSearch: resultSearchReducer,
   account: editAccountReducer,
   customLayout: customLayoutReducer,
+  appSlice: appReducer,
 });

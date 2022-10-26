@@ -12,6 +12,12 @@
     font-size: 45% !important;
   }
 }
+.ant-upload-list-picture .ant-upload-list-item-error {
+  border-color: black;
+}
+.ant-upload-list-item-name {
+  color: black !important;
+}
 * {
   margin: 0;
   padding: 0;
