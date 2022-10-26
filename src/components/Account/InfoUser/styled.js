@@ -114,6 +114,7 @@ export const ShowInfo = styled.div`
   Button {
     display: flex;
     align-items: center;
+    justify-content: center;
     img {
       height: 100%;
     }

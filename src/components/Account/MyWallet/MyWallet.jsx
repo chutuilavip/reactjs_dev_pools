@@ -7,7 +7,6 @@ import Metamask from "../../../assets/Account/metamask.png";
 import { useTranslation } from "react-i18next";
 
 const MyWallet = ({ res }) => {
-  console.log(res);
   const { t } = useTranslation();
 
   return (

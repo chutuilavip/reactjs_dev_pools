@@ -5,7 +5,6 @@ import { useTranslation } from "react-i18next";
 import { URL_API } from "../../../constants/constants";
 
 const DownloadApp = ({ res }) => {
-  console.log(res.data.downloaded);
   const { t } = useTranslation();
 
   return (

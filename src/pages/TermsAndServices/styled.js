@@ -22,6 +22,9 @@ export const WrapTermsAndServices = styled.div`
     }
   }
   background-color: black;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
   .header_title {
     text-transform: uppercase;
     text-align: center;
@@ -30,6 +33,7 @@ export const WrapTermsAndServices = styled.div`
     color: white;
   }
   .package_cards {
+    flex: 1;
     display: flex;
     flex-wrap: wrap;
     gap: 1rem;

@@ -150,6 +150,7 @@ const UploadResource = ({ setFinalData, finalData }) => {
   const propsUploadAvatar = {
     name: "file",
     listType: "picture",
+    accept: "image/png, image/jpeg",
     multiple: false,
     action: "https://www.mocky.io/v2/5cc8019d300000980a055e76",
     onChange: async (info) => {
@@ -161,6 +162,7 @@ const UploadResource = ({ setFinalData, finalData }) => {
   const propsUploadImages = {
     name: "file",
     multiple: true,
+    accept: "image/png, image/jpeg",
     listType: "picture",
     fileList: images || [],
     action: "https://www.mocky.io/v2/5cc8019d300000980a055e76",

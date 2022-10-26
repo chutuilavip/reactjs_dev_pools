@@ -11,8 +11,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { setShowPopup } from "../../redux/slice/customLayout.slice";
 import { checkLogin, logOut } from "../../redux/slice/user.slice";
 
-import { Button } from "antd";
+import { Avatar, Button } from "antd";
 import { URL_API } from "../../constants/constants";
+import { getDefaultAvatarName } from "../../helpers";
 
 export const IsEmpty = (obj) => {
   return Object.keys(obj).length === 0;
@@ -41,18 +42,27 @@ const MenuUser = ({ show, setShow }) => {
     dispatch(setShowPopup(true));
     setShow(false);
   };
-
   return (
     <WrapMenuUser show={show} ref={ref}>
       {token ? (
         <div className="avt">
           <div className="img_avatar">
-            <LazyLoadImage
-              src={`${URL_API}/${user.avatar}`}
-              alt="avatar"
-              width="100%"
-              style={{ boderRadius: "50%" }}
-            />
+            {user.avatar ? (
+              <LazyLoadImage
+                src={`${URL_API}/${user.avatar}`}
+                alt="avatar"
+                width="100%"
+                style={{ boderRadius: "50%" }}
+              />
+            ) : (
+              <Avatar
+                style={{
+                  verticalAlign: "middle",
+                }}
+              >
+                {getDefaultAvatarName(user?.first_name, user?.last_name)}
+              </Avatar>
+            )}
           </div>
           <div className="profile">
             <span className="title">Profile</span>

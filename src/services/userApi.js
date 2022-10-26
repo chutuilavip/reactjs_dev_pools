@@ -2,6 +2,8 @@ import axiosClient from "./axiosClient";
 
 const userApi = {
   loginUser: (params) => {
+    console.log(params);
+
     const url = `/api/auth/login`;
     return axiosClient.post(url, params);
   },
@@ -55,6 +57,10 @@ const userApi = {
   uploadContent: (data) => {
     const url = `api/application/uploadcontent`;
     return axiosClient.post(url, data);
+  },
+  getLanguagesTranslations: () => {
+    const url = "/api/translations";
+    return axiosClient.get(url);
   },
 };
 export default userApi;

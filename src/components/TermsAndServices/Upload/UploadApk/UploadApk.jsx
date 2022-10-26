@@ -70,6 +70,7 @@ export default function UploadApk({ setFinalData, finalData }) {
             {...register("fileapk")}
             action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
             fileList={apk}
+            accept=".apk"
             onChange={onChangeFile}
           >
             <Button icon={<UploadOutlined />}>Upload</Button>
