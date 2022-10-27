@@ -1,4 +1,4 @@
-export const assignToFormData = (data) => {
+export const ConvertToFormData = (data) => {
   const formData = new FormData();
   const keys = Object.keys(data);
   for (let v of keys) {

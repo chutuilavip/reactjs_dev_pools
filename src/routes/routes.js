@@ -46,7 +46,7 @@ export const publicRoutes = [
 ];
 
 export const PrivateRouter = [
-  { path: "/terms-and-services", component: TermsAndServices },
+  { path: "/terms-and-services/*", component: TermsAndServices },
   { path: "/account", component: Account },
   { path: "/friends", component: Friends },
   { path: "/for-publishers/:option", component: Upload },

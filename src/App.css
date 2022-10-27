@@ -18,6 +18,12 @@
 .ant-upload-list-item-name {
   color: black !important;
 }
+.ant-modal {
+  width: fit-content !important;
+}
+.ant-modal-content {
+  width: 100% !important;
+}
 * {
   margin: 0;
   padding: 0;

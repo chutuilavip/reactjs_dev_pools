@@ -9,6 +9,7 @@ const initialState = {
   listService: [],
   statusBuyService: [],
   isLoading: true,
+  isLoadingChoosingPackage: false,
   error: {},
   dataListAppNotService: [],
 };
@@ -170,14 +171,14 @@ const gameRecommendSlice = createSlice({
 
     // Get list app service
     [listAppNotService.pending]: (state) => {
-      state.isLoading = true;
+      state.isLoadingChoosingPackage = true;
     },
     [listAppNotService.fulfilled]: (state, action) => {
       state.dataListAppNotService = action.payload;
-      state.isLoading = false;
+      state.isLoadingChoosingPackage = false;
     },
     [listAppNotService.rejected]: (state, action) => {
-      state.isLoading = false;
+      state.isLoadingChoosingPackage = false;
       state.error = action.payload;
     },
   },

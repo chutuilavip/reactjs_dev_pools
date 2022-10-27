@@ -6,6 +6,7 @@ import userApi from "../../services/userApi";
 const initialState = {
   detailApp: {},
   isLoading: true,
+  isLoadingBuyVideoService: false,
   error: {},
   categories: [],
   languages: [],
@@ -46,6 +47,23 @@ export const uploadContent = createAsyncThunk("uploadContent", async (data) => {
     console.log(err.response.data.errors);
   }
 });
+
+export const buyServiceVideo = createAsyncThunk(
+  "service/buyVideo",
+  async (data) => {
+    try {
+      const res = await userApi.buyServiceVideo(data);
+      console.log(res);
+      if (res.status === 200) {
+        toast.success("Action successfully, please waiting for admin approve");
+      }
+    } catch (err) {
+      toast.error("Buying service video failed");
+      console.log(err);
+    }
+  }
+);
+
 const detailAppSlice = createSlice({
   name: "detailAppSlice",
   initialState,
@@ -80,6 +98,17 @@ const detailAppSlice = createSlice({
       state.categories = action.payload?.category;
       state.languages = action.payload?.language;
       state.isLoading = false;
+    },
+
+    //Buy package video
+    [buyServiceVideo.pending]: (state) => {
+      state.isLoadingBuyVideoService = true;
+    },
+    [buyServiceVideo.fulfilled]: (state) => {
+      state.isLoadingBuyVideoService = false;
+    },
+    [buyServiceVideo.rejected]: (state) => {
+      state.isLoadingBuyVideoService = false;
     },
   },
 });

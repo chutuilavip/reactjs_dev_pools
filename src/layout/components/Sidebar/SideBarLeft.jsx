@@ -28,7 +28,7 @@ const SideBarLeft = (customLayout) => {
   const handlePrev = () => {
     goToTop();
     const pathName = location.pathname;
-    if (pathName === "/terms-and-services") {
+    if (pathName.startsWith("/terms-and-services")) {
       handlePrevTabStore();
       return;
     }
@@ -45,7 +45,7 @@ const SideBarLeft = (customLayout) => {
   const handleNext = () => {
     goToTop();
     const pathName = location.pathname;
-    if (pathName === "/terms-and-services") {
+    if (pathName.startsWith("/terms-and-services")) {
       handleNextTabStore();
       return;
     }
@@ -63,7 +63,7 @@ const SideBarLeft = (customLayout) => {
   const checkRoute = () => {
     if (
       location.pathname.startsWith("/for-publishers") ||
-      location.pathname === "/terms-and-services"
+      location.pathname.startsWith("/terms-and-services")
     ) {
       return true;
     }
@@ -72,21 +72,6 @@ const SideBarLeft = (customLayout) => {
   return (
     <SideLeft status={customLayout.data}>
       <div className="wrap_sidebar">
-        {/* {icon_left.map((item, index) => {
-          return (
-            <></>
-            // <ItemMenu key={index}>
-            //    <NavLink to={item.path}>
-            //       <span className="name_menu_item">{item.name}</span>
-            //       <LazyLoadImage
-            //          className="icon"
-            //          src={item.icon}
-            //          alt={item.alt}
-            //       />
-            //    </NavLink>
-            // </ItemMenu>
-          );
-        })} */}
         {checkRoute() ? (
           <div className="navigate_group">
             <button
@@ -94,7 +79,7 @@ const SideBarLeft = (customLayout) => {
               className={`${
                 getCurrentOption()?.index === 1 ? "disabled_btn" : ""
               } ${
-                location.pathname === "/terms-and-services" &&
+                location.pathname.startsWith("/terms-and-services") &&
                 selectedTabStore === 1
                   ? "disabled_btn"
                   : ""
@@ -103,7 +88,9 @@ const SideBarLeft = (customLayout) => {
               <UpOutlined />
             </button>
             <p onClick={(e) => console.log(e)}>
-              {location.pathname === "/terms-and-services" ? "Click" : "Scroll"}
+              {location.pathname.startsWith("/terms-and-services")
+                ? "Click"
+                : "Scroll"}
             </p>
             <button
               onClick={handleNext}
@@ -112,7 +99,7 @@ const SideBarLeft = (customLayout) => {
                   ? "disabled_btn"
                   : ""
               } ${
-                location.pathname === "/terms-and-services" &&
+                location.pathname.startsWith("/terms-and-services") &&
                 selectedTabStore === tabContent.length
                   ? "disabled_btn"
                   : ""
