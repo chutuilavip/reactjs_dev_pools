@@ -62,5 +62,9 @@ const userApi = {
     const url = "/api/translations";
     return axiosClient.get(url);
   },
+  buyServiceVideo: (data) => {
+    const url = "api/application/buy-service-video";
+    return axiosClient.post(url, data);
+  },
 };
 export default userApi;

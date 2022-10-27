@@ -6,7 +6,7 @@ import { useTranslation } from "react-i18next";
 import { useDispatch } from "react-redux";
 import * as yup from "yup";
 import Pen from "../../../assets/Account/buttonchange.png";
-import { assignToFormData } from "../../../helpers/formData";
+import { ConvertToFormData } from "../../../helpers/formData";
 import Loading from "../../../layout/components/Loading/Loading";
 import { editAccountInfo } from "../../../redux/slice/account.slice";
 import { goToTop } from "../../../utils";
@@ -45,6 +45,7 @@ const InfoDetailUser = ({ res }) => {
   const [editFields, setEditFields] = useState([]);
   const { data } = res;
   const { first_name, last_name, email, phone_number, country } = data.dev;
+  console.log(data.business_info);
   const {
     business_name,
     application_catalog,
@@ -55,7 +56,7 @@ const InfoDetailUser = ({ res }) => {
     website,
     address,
     year_established,
-  } = data.business_info;
+  } = data.business_info ? data.business_info : [];
   const {
     handleSubmit,
     control,
@@ -105,8 +106,17 @@ const InfoDetailUser = ({ res }) => {
       setFocus("password", { shouldSelect: true });
       return;
     }
+    if (data.current_password.length === 0 && data.password.length > 0) {
+      setError("current_password", {
+        type: "required",
+        message:
+          "You must provide your current password if you want to change it",
+      });
+      setFocus("current_password", { shouldSelect: true });
+      return;
+    }
     goToTop();
-    const formData = assignToFormData(data);
+    const formData = ConvertToFormData(data);
     dispatch(editAccountInfo(formData));
   };
   console.log(errors);
@@ -270,7 +280,8 @@ const InfoDetailUser = ({ res }) => {
                       />
                     ) : (
                       `${
-                        getValues(fieldName) === "null" || undefined
+                        getValues(fieldName) === "null" ||
+                        getValues(fieldName) === undefined
                           ? "This field is empty"
                           : getValues(fieldName)
                       }`

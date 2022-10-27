@@ -11,7 +11,7 @@ const DownloadApp = ({ res }) => {
     <>
       <TitleActivities>{t("account.downloaded_app")}</TitleActivities>
       <MyActivities>
-        {res.data.downloaded.map((item, index) => {
+        {res.data.downloaded?.map((item, index) => {
           return (
             <ItemsActivities key={index}>
               <div className="_items bg_dark">

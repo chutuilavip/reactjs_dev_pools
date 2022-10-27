@@ -6,12 +6,20 @@ export const PackageVideoWrapper = styled.div`
       display: none;
     }
   }
-  width: 100%;
+  width: 100rem;
   height: 100%;
   display: flex;
   justify-content: space-between;
   form {
     width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    label {
+      color: black;
+    }
+  }
+  .media {
+    width: 50%;
     display: flex;
   }
   .flex_item {
@@ -27,6 +35,7 @@ export const PackageVideoWrapper = styled.div`
       width: 100%;
       aspect-ratio: 16/9;
       border-radius: 5px;
+      margin-top: 2rem;
     }
   }
   .thumbnail {
@@ -34,6 +43,16 @@ export const PackageVideoWrapper = styled.div`
       width: 100%;
       border-radius: 5px;
       aspect-ratio: 16/9;
+      margin-top: 2rem;
+    }
+  }
+  .media-content {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    padding: 2rem;
+    select {
+      width: 100%;
     }
   }
 `;

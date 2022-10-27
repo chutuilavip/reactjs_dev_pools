@@ -1,4 +1,4 @@
-import { Button, Carousel, Radio } from "antd";
+import { Button, Carousel, Empty, Radio } from "antd";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -17,6 +17,9 @@ import {
   setSelectedTabStore,
 } from "../../redux/slice/detailApp.slice";
 import PackageVideo from "./PackageVideo/PackageVideo";
+import { useNavigate } from "react-router-dom";
+import { changeStringToAlias } from "../../utils";
+import Loading from "../../layout/components/Loading/Loading";
 export const tabContent = [
   {
     index: 1,
@@ -43,9 +46,11 @@ export const tabContent = [
 const TermsAndServices = () => {
   const [selectedCard, setSelectedCard] = useState();
 
-  const [selectedTab, setSelectedTab] = useState(1);
+  const [selectedTab, setSelectedTab] = useState(5);
 
-  const { listService } = useSelector((state) => state.listGame);
+  const { listService, isLoading } = useSelector((state) => state.listGame);
+
+  const navigate = useNavigate();
 
   const dispatch = useDispatch();
 
@@ -60,18 +65,37 @@ const TermsAndServices = () => {
       case 3:
         dispatch(getServiceType("banner"));
         break;
+      case 5:
+        dispatch(getServiceType("video"));
+        break;
       default:
         dispatch(getServiceType("top_game"));
         break;
     }
   }, [selectedTab]);
+
   useEffect(() => {
     dispatch(setHandlePrevTab(handlePrevTab));
     dispatch(setHandleNextTab(handleNextTab));
   }, []);
+
   useEffect(() => {
     dispatch(setSelectedTabStore(selectedTab));
   }, [selectedTab]);
+
+  useEffect(() => {
+    const selectedTabContent = tabContent.find(
+      (el) => el.index === selectedTab
+    );
+    if (selectedTabContent !== -1) {
+      navigate(
+        `/terms-and-services/${changeStringToAlias(
+          selectedTabContent.content.slice(2)
+        )}`
+      );
+    }
+  }, [selectedTab]);
+
   const handleNextTab = () => {
     setSelectedTab((selectedTab) => {
       if (selectedTab < tabContent.length - 1) {
@@ -89,12 +113,14 @@ const TermsAndServices = () => {
       return 1;
     });
   };
+
   const pagination = {
     clickable: true,
     renderBullet: function (index, className) {
       return '<span class="' + className + '"> </span>';
     },
   };
+  console.log(selectedTab);
   return (
     <WrapTermsAndServices>
       <h1 className="header_title">
@@ -102,35 +128,41 @@ const TermsAndServices = () => {
       </h1>
       {/* call api base on selected tab */}
 
-      <div className="package_cards">
-        {selectedTab !== 5 ? (
-          <Swiper
-            spaceBetween={40}
-            slidesPerView={3}
-            pagination={pagination}
-            modules={[Pagination]}
-          >
-            {listService?.res?.data?.map((item, index) => {
-              return (
-                <SwiperSlide key={index}>
-                  <PackageCard
-                    setSelectedCard={setSelectedCard}
-                    selectedCard={selectedCard}
-                    key={index}
-                    id={item.id}
-                    times={item.date}
-                    prices={item.price}
-                    views={item.views}
-                    discount={item.discount}
-                  />
-                </SwiperSlide>
-              );
-            })}
-          </Swiper>
-        ) : (
-          <PackageVideo />
-        )}
-      </div>
+      {isLoading ? (
+        <Loading />
+      ) : (
+        <div className="package_cards">
+          {!listService?.res?.data?.length > 0 ? (
+            <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
+          ) : (
+            <Swiper
+              spaceBetween={40}
+              slidesPerView={3}
+              pagination={pagination}
+              modules={[Pagination]}
+            >
+              {listService?.res?.data?.map((item, index) => {
+                return (
+                  <SwiperSlide key={index}>
+                    <PackageCard
+                      selectedTab={selectedTab}
+                      setSelectedCard={setSelectedCard}
+                      selectedCard={selectedCard}
+                      key={index}
+                      id={item.id}
+                      times={item.date}
+                      prices={item.price}
+                      views={item.views}
+                      discount={item.discount}
+                    />
+                  </SwiperSlide>
+                );
+              })}
+            </Swiper>
+          )}
+        </div>
+      )}
+
       <div className="footer_btn">
         <PackageTabs
           tabContent={tabContent}

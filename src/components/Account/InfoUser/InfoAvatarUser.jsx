@@ -62,6 +62,7 @@ const InfoUser = ({ res }) => {
     }
   };
   const { data } = res;
+  console.log(file);
   return (
     <MainAvatar>
       {data ? (

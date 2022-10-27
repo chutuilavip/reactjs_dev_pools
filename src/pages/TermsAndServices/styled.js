@@ -20,6 +20,15 @@ export const WrapTermsAndServices = styled.div`
     .swiper-pagination-bullets-dynamic {
       overflow: unset;
     }
+    .ant-empty-image svg {
+      transform: scale(4);
+    }
+    .ant-empty-normal .ant-empty-image {
+      height: 100%;
+    }
+    .ant-empty-normal {
+      width: 100%;
+    }
   }
   background-color: black;
   height: 100%;
@@ -71,7 +80,7 @@ export const PackageCardWrapper = styled.div`
   flex: 1 1 30rem;
   padding: 2rem;
   min-width: 25rem;
-  min-height: 25rem;
+  height: 100%;
   h1 {
     text-align: center;
   }

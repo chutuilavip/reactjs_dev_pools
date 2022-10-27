@@ -152,6 +152,7 @@ const listMenu = [
     name: "Terms and Service",
     path: "/terms-and-services",
   },
+
   {
     name: "Notifications",
     path: "/friends",
