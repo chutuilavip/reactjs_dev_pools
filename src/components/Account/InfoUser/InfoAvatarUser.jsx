@@ -62,7 +62,6 @@ const InfoUser = ({ res }) => {
     }
   };
   const { data } = res;
-  console.log(file);
   return (
     <MainAvatar>
       {data ? (
@@ -118,7 +117,9 @@ const InfoUser = ({ res }) => {
           accept="image/png, image/jpeg"
           onChange={handleChange}
         >
-          <Button icon={<UploadOutlined />}>Upload</Button>
+          <Button className="upload_avatar_btn" icon={<UploadOutlined />}>
+            Upload
+          </Button>
         </Upload>
       </Modal>
     </MainAvatar>

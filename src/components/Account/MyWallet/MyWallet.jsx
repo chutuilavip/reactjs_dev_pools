@@ -40,9 +40,9 @@ const MyWallet = ({ res }) => {
           );
         })}
       </div>
-      <Button className="connect_more">
+      {/* <Button className="connect_more">
         {t("account.connect_more_wallet")}
-      </Button>
+      </Button> */}
     </MyWalletMain>
   );
 };

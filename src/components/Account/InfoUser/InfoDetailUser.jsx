@@ -1,9 +1,11 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Button, Form, Input } from "antd";
 import React, { Fragment, useState } from "react";
+import { useEffect } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { useDispatch } from "react-redux";
+import { toast } from "react-toastify";
 import * as yup from "yup";
 import Pen from "../../../assets/Account/buttonchange.png";
 import { ConvertToFormData } from "../../../helpers/formData";
@@ -30,7 +32,13 @@ const schema = yup
     products_url: yup.string().required(),
     release_details: yup.string().required(),
     website: yup.string().required(),
-    year_established: yup.string().required(),
+    year_established: yup
+      .number("Year established can not be characters")
+      .required()
+      .min(
+        new Date().getFullYear(),
+        "Year must be current year or greater than current year"
+      ),
     password: yup.string(),
     password_confirmation: yup
       .string()
@@ -39,13 +47,11 @@ const schema = yup
   .required();
 
 const InfoDetailUser = ({ res }) => {
-  console.log(res);
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const [editFields, setEditFields] = useState([]);
   const { data } = res;
   const { first_name, last_name, email, phone_number, country } = data.dev;
-  console.log(data.business_info);
   const {
     business_name,
     application_catalog,
@@ -88,15 +94,17 @@ const InfoDetailUser = ({ res }) => {
   });
 
   const handleEdit = (type) => {
-    const index = editFields.findIndex((el) => el === type);
+    const setOfEditFields = [...new Set(editFields)];
+    const index = setOfEditFields.findIndex((el) => el === type);
     if (index === -1) {
       setEditFields((editFields) => [...editFields, type]);
     } else {
-      const cloneEditFields = [...editFields];
+      const cloneEditFields = [...setOfEditFields];
       cloneEditFields.splice(index, 1);
       setEditFields(cloneEditFields);
     }
   };
+
   const onSubmit = (data) => {
     if (data.current_password && data.password.length < 8) {
       setError("password", {
@@ -119,17 +127,30 @@ const InfoDetailUser = ({ res }) => {
     const formData = ConvertToFormData(data);
     dispatch(editAccountInfo(formData));
   };
-  console.log(errors);
+  useEffect(() => {
+    // const validateErrors = [...Object.values(errors)];
+
+    // if (validateErrors.length > 0) {
+    //   validateErrors.forEach((el) => toast.error(el.message));
+    // }
+    const keys = Object.keys(errors);
+    const cloneEditFields = [...editFields, ...keys];
+    console.log(cloneEditFields);
+    const setOfEditFields = [...new Set(cloneEditFields)];
+    setEditFields(setOfEditFields);
+  }, [errors]);
+  console.log("edit field", editFields);
+
   return (
     <InfoDetail>
       <div className="title">{t("account.my_account")}</div>
-      <Button className="button_logOut">{t("account.log_out")}</Button>
+      {/* <Button className="button_logOut">{t("account.log_out")}</Button> */}
       {data ? (
         <ShowInfo>
           <Form onFinish={handleSubmit(onSubmit)} className="grid_container">
             <div className="grid_item one">{t("account.user_name")}</div>
             <div className="grid_item two">
-              {editFields.includes("userName") ? (
+              {editFields.includes("first_name") ? (
                 <div className="userNameField">
                   <Controller
                     name="first_name"
@@ -169,7 +190,7 @@ const InfoDetailUser = ({ res }) => {
               )}
             </div>
             <div className="grid_item">
-              <Button type="primary" onClick={() => handleEdit("userName")}>
+              <Button type="primary" onClick={() => handleEdit("first_name")}>
                 {t("account.edit")} <img src={Pen} alt="pen " />
               </Button>
             </div>
@@ -270,7 +291,15 @@ const InfoDetailUser = ({ res }) => {
                         render={({ field }) => (
                           <div>
                             <Form.Item>
-                              <Input {...field} onBlur={field.onBlur} />
+                              {fieldName === "year_established" ? (
+                                <Input
+                                  type="number"
+                                  {...field}
+                                  onBlur={field.onBlur}
+                                />
+                              ) : (
+                                <Input {...field} onBlur={field.onBlur} />
+                              )}
                             </Form.Item>
                             <p className="validateMessage">
                               {errors[fieldName]?.message}

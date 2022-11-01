@@ -46,7 +46,7 @@ export const tabContent = [
 const TermsAndServices = () => {
   const [selectedCard, setSelectedCard] = useState();
 
-  const [selectedTab, setSelectedTab] = useState(5);
+  const [selectedTab, setSelectedTab] = useState(1);
 
   const { listService, isLoading } = useSelector((state) => state.listGame);
 
@@ -171,7 +171,10 @@ const TermsAndServices = () => {
           activeContent={tabContent[selectedTab - 1].content}
         />
         <div style={{ display: "flex", gap: "10px" }}>
-          <PackageButton className="btn_next" onClick={handleNextTab}>
+          <PackageButton
+            className={`btn_next ${selectedTab === 5 ? "disabled_btn" : ""}`}
+            onClick={handleNextTab}
+          >
             Next
           </PackageButton>
         </div>
