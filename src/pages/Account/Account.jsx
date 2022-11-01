@@ -15,7 +15,6 @@ import Loading from "../../layout/components/Loading/Loading";
 const Account = () => {
   const { infoAccount, isLoading } = useSelector((state) => state.account);
   const dispatch = useDispatch();
-  console.log(infoAccount.res);
   useEffect(() => {
     dispatch(getAccount());
   }, []);
