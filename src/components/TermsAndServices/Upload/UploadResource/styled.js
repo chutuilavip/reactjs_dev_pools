@@ -6,7 +6,15 @@ export const WrapUploadResource = styled.div`
       border-radius: 10px;
       height: auto;
     }
-
+    .ant-upload-list-item-card-actions .anticon {
+      color: red;
+    }
+    .ant-upload-list-picture .ant-upload-list-item-thumbnail .anticon {
+      display: none;
+    }
+    .ant-progress-outer {
+      display: none;
+    }
     .upload_item.item_1 {
       .ant-upload.ant-upload-drag {
         display: ${(props) => props.imagesDisplay && "inline-block"};

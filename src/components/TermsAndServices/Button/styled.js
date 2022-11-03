@@ -4,7 +4,7 @@ export const PackageButtonWrapper = styled.button`
   cursor: pointer;
   display: flex;
   align-items: center;
-  pointer-events: ${(props) => (props.disabled ? "none" : "")};
+  /* cursor: ${(props) => (props.disabled ? "not-allowed" : "pointer")}; */
   justify-content: center;
   color: #757575;
   background: #212121;

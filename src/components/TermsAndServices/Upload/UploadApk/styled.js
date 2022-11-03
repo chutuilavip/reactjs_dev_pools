@@ -5,6 +5,9 @@ export const UploadAplWrapper = styled.div`
     .ant-upload-list-item-name {
       color: white;
     }
+    .ant-upload-list-item:hover .ant-upload-list-item-info {
+      background-color: transparent;
+    }
   }
   margin: auto;
   margin-bottom: 7rem;
