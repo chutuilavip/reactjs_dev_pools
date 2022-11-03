@@ -21,7 +21,7 @@ const schema = yup.object().shape({
 });
 export default function UploadApk({ setFinalData, finalData }) {
   const DetailContext = useContext(UploadContextWrapper);
-  const { submitForm } = DetailContext;
+  const { submitForm, disabledSubmit, setDisabledSubmit } = DetailContext;
   const {
     register,
     getValues,
@@ -33,6 +33,7 @@ export default function UploadApk({ setFinalData, finalData }) {
     resolver: yupResolver(schema),
   });
   const [apk, setApk] = useState([]);
+
   useEffect(() => {
     reset({ ...finalData });
     return () => {
@@ -46,7 +47,11 @@ export default function UploadApk({ setFinalData, finalData }) {
   }, [finalData.fileapk]);
 
   const onChangeFile = (info) => {
-    console.log(info.file.originFileObj);
+    if (info.file.status === "uploading") {
+      setDisabledSubmit(true);
+    } else {
+      setDisabledSubmit(false);
+    }
     setApk(info.fileList);
     setValue("fileapk", info.fileList);
     setFinalData((prevData) => ({
@@ -76,7 +81,7 @@ export default function UploadApk({ setFinalData, finalData }) {
             <Button icon={<UploadOutlined />}>Upload</Button>
           </Upload>
         </div>
-        <StepButtonGroup />
+        <StepButtonGroup disabledSubmit={disabledSubmit} />
       </form>
     </UploadAplWrapper>
   );

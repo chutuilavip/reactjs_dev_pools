@@ -26,10 +26,10 @@ export const tabContent = [
 export default function StepButtonGroup() {
   const DetailContext = useContext(UploadContextWrapper);
   const { isLoadingSubmit } = useSelector((state) => state.detailApp);
-  const { submitForm, selectedTab, setSelectedTab } =
-    DetailContext.buttonGroupProps;
+  const { submitForm, selectedTab, setSelectedTab, disabledSubmit } =
+    DetailContext;
   const { handlePrevTab, handleNextTab, isDisabledPrev } = DetailContext;
-  console.log("isLoadingBuyVideoService", isLoadingSubmit);
+  console.log("disabledSubmit", disabledSubmit);
   return (
     <ButtonGroupWrapper>
       <div className="step_group">
@@ -51,7 +51,11 @@ export default function StepButtonGroup() {
             Previous
           </PackageButton>
           {selectedTab !== 4 ? (
-            <PackageButton type="submit" className="btn btn-submit">
+            <PackageButton
+              disabled={disabledSubmit}
+              type="submit"
+              className="btn btn-submit"
+            >
               {selectedTab === 4 ? "Submit" : "Next"}
             </PackageButton>
           ) : (
@@ -59,6 +63,7 @@ export default function StepButtonGroup() {
               htmlType="submit"
               className="btn btn-submit btn-antd"
               loading={isLoadingSubmit}
+              disabled={disabledSubmit}
             >
               Submit
             </Button>

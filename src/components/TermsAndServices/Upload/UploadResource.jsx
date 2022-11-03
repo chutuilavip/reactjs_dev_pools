@@ -73,18 +73,22 @@ const schema = yup.object().shape({
         return false;
       }
     })
-    .test("fileLength", "You must upload at least 2 images", (value) => {
-      if (!value) {
-        return false;
+    .test(
+      "fileLength",
+      "You must upload at least 2 images and max is 10 images",
+      (value) => {
+        if (!value) {
+          return false;
+        }
+        if (value.length < 2) {
+          return false;
+        }
+        if (value.length > 10) {
+          return false;
+        }
+        return true;
       }
-      if (value.length < 2) {
-        return false;
-      }
-      if (value.length > 10) {
-        return false;
-      }
-      return true;
-    })
+    )
     .test(
       "image-type",
       "The type must be image/jpeg or image/png",
@@ -115,7 +119,12 @@ const getBase64 = (file) => {
 const UploadResource = ({ setFinalData, finalData }) => {
   // Context
   const DetailContext = useContext(UploadContextWrapper);
-  const { handleNextTab, setIsDisabledPrev } = DetailContext;
+  const {
+    handleNextTab,
+    setIsDisabledPrev,
+    disabledSubmit,
+    setDisabledSubmit,
+  } = DetailContext;
 
   // UseForm
   const {
@@ -126,6 +135,7 @@ const UploadResource = ({ setFinalData, finalData }) => {
     getValues,
     reset,
     trigger,
+    setFocus,
     setError,
     formState: { errors },
   } = useForm({
@@ -153,7 +163,7 @@ const UploadResource = ({ setFinalData, finalData }) => {
     accept: "image/png, image/jpeg",
     multiple: false,
     action: "https://www.mocky.io/v2/5cc8019d300000980a055e76",
-    onChange: async (info) => {
+    onChange: (info) => {
       setAvatarImage(info.fileList[0]);
       setValue("uploadavatar", info.fileList);
     },
@@ -167,6 +177,14 @@ const UploadResource = ({ setFinalData, finalData }) => {
     fileList: images || [],
     action: "https://www.mocky.io/v2/5cc8019d300000980a055e76",
     onChange: async (info) => {
+      // const uploadingImages = info.fileList.filter(
+      //   (el) => el.status === "uploading"
+      // );
+      // if (uploadingImages.length > 0) {
+      //   setDisabledSubmit(true);
+      // } else {
+      //   setDisabledSubmit(false);
+      // }
       setImages(info.fileList);
       setValue("images", info.fileList);
     },
@@ -220,13 +238,19 @@ const UploadResource = ({ setFinalData, finalData }) => {
       setFinalData((prevData) => ({ ...Object.assign(prevData, getValues()) }));
     };
   }, []);
-
+  useEffect(() => {
+    const keys = Object.keys(errors);
+    if (keys.length > 0) {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      return;
+    }
+  }, [errors]);
   // Submit Form
   const onSubmit = (data) => {
+    console.log("upload return", getValues());
     handleNextTab();
   };
 
-  console.log(getValues());
   return (
     <WrapUploadResource imagesDisplay={images.length >= 10 ? "none" : ""}>
       <form className="form_upload" onSubmit={handleSubmit(onSubmit)}>

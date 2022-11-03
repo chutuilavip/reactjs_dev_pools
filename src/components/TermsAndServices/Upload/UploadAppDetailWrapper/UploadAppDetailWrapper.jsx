@@ -20,6 +20,8 @@ export default function UploadAppDetailWrapper() {
   const [selectedTab, setSelectedTab] = useState(1);
   const [finalData, setFinalData] = useState({});
   const [isDisabledPrev, setIsDisabledPrev] = useState(false);
+  const [disabledSubmit, setDisabledSubmit] = useState(false);
+
   useEffect(() => {
     dispatch(getCategoriesAndLanguage());
   }, []);
@@ -94,17 +96,17 @@ export default function UploadAppDetailWrapper() {
   };
 
   const value = {
-    buttonGroupProps: {
-      submitForm,
-      selectedTab,
-      setSelectedTab,
-    },
+    submitForm,
+    selectedTab,
+    setSelectedTab,
     buttonGroupComponent: <StepButtonGroup />,
     handleNextTab,
     handlePrevTab,
     submitForm,
     setIsDisabledPrev,
     isDisabledPrev,
+    disabledSubmit,
+    setDisabledSubmit,
   };
   return (
     <UploadContextWrapper.Provider value={value}>
