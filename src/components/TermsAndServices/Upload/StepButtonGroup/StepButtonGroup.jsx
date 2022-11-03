@@ -1,4 +1,6 @@
+import { Button } from "antd";
 import React, { useContext } from "react";
+import { useSelector } from "react-redux";
 import PackageButton from "../../Button/PackageButton";
 import PackageTabs from "../../PackageTabs/PackageTabs";
 import { UploadContextWrapper } from "../UploadAppDetailWrapper/UploadAppDetailWrapper";
@@ -23,10 +25,11 @@ export const tabContent = [
 ];
 export default function StepButtonGroup() {
   const DetailContext = useContext(UploadContextWrapper);
-
+  const { isLoadingSubmit } = useSelector((state) => state.detailApp);
   const { submitForm, selectedTab, setSelectedTab } =
     DetailContext.buttonGroupProps;
   const { handlePrevTab, handleNextTab, isDisabledPrev } = DetailContext;
+  console.log("isLoadingBuyVideoService", isLoadingSubmit);
   return (
     <ButtonGroupWrapper>
       <div className="step_group">
@@ -47,9 +50,19 @@ export default function StepButtonGroup() {
           >
             Previous
           </PackageButton>
-          <PackageButton type="submit" className="btn btn-submit">
-            {selectedTab === 4 ? "Submit" : "Next"}
-          </PackageButton>
+          {selectedTab !== 4 ? (
+            <PackageButton type="submit" className="btn btn-submit">
+              {selectedTab === 4 ? "Submit" : "Next"}
+            </PackageButton>
+          ) : (
+            <Button
+              htmlType="submit"
+              className="btn btn-submit btn-antd"
+              loading={isLoadingSubmit}
+            >
+              Submit
+            </Button>
+          )}
         </div>
       </div>
     </ButtonGroupWrapper>

@@ -89,7 +89,7 @@ export default function UploadAppDetailWrapper() {
         formData.append(v, finalData[v]);
       }
     }
-    console.log(finalData);
+    console.log("olalal");
     dispatch(uploadContent(formData));
   };
 

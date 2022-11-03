@@ -7,6 +7,11 @@ const ButtonGroupWrapper = styled.div`
     background-color: #3b72fe;
     color: white;
   }
+  .btn-antd {
+    height: 58%;
+    border: none;
+    font-size: 3.2rem;
+  }
   .disabled {
     cursor: not-allowed;
   }

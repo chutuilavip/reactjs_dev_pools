@@ -1,6 +1,11 @@
 import styled from "styled-components";
 
 export const UploadAplWrapper = styled.div`
+  &&& {
+    .ant-upload-list-item-name {
+      color: white;
+    }
+  }
   margin: auto;
   margin-bottom: 7rem;
   display: flex;

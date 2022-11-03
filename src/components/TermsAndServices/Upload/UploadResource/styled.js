@@ -6,6 +6,7 @@ export const WrapUploadResource = styled.div`
       border-radius: 10px;
       height: auto;
     }
+
     .upload_item.item_1 {
       .ant-upload.ant-upload-drag {
         display: ${(props) => props.imagesDisplay && "inline-block"};
@@ -19,17 +20,18 @@ export const WrapUploadResource = styled.div`
       border-color: white;
     }
     .ant-upload-list-item-error {
-      color: white;
+      color: red;
     }
-    .ant-upload-list-item-error .ant-upload-list-item-name {
-      color: white;
-    }
+
     .ant-upload-list-item-thumbnail {
       height: 100%;
       img {
         height: 100%;
         aspect-ratio: 1 / 1;
       }
+    }
+    .ant-upload-list-item-name {
+      color: white !important;
     }
     .ant-upload-list-item-list-type-picture {
       height: 12rem;
