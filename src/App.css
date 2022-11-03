@@ -16,7 +16,7 @@
   border-color: black;
 }
 .ant-upload-list-item-name {
-  color: black !important;
+  color: black;
 }
 .ant-modal {
   width: fit-content !important;

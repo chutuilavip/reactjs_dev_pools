@@ -7,6 +7,7 @@ const initialState = {
   detailApp: {},
   isLoading: true,
   isLoadingBuyVideoService: false,
+  isLoadingSubmit: false,
   error: {},
   categories: [],
   languages: [],
@@ -38,8 +39,14 @@ export const getCategoriesAndLanguage = createAsyncThunk(
 export const uploadContent = createAsyncThunk("uploadContent", async (data) => {
   try {
     const res = await userApi.uploadContent(data);
+    if (res) {
+      toast.success("Created successfully");
+    }
     return res;
   } catch (err) {
+    if (err?.response?.data?.error) {
+      toast.error(err.response.data.error);
+    }
     const keysErrors = Object.keys(err.response?.data?.errors);
     for (let key of keysErrors) {
       toast.error(err.response.data.errors[key][0]);
@@ -109,6 +116,15 @@ const detailAppSlice = createSlice({
     },
     [buyServiceVideo.rejected]: (state) => {
       state.isLoadingBuyVideoService = false;
+    },
+    [uploadContent.pending]: (state) => {
+      state.isLoadingSubmit = true;
+    },
+    [uploadContent.fulfilled]: (state) => {
+      state.isLoadingSubmit = false;
+    },
+    [uploadContent.rejected]: (state) => {
+      state.isLoadingSubmit = false;
     },
   },
 });
