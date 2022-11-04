@@ -46,7 +46,6 @@ export default function UploadAppDetailWrapper() {
 
   const handleNextTab = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
-    console.log("nhuw c");
     if (selectedTab <= tabContent.length - 1) {
       setSelectedTab((selectedTab) => {
         if (selectedTab < tabContent.length - 1) {

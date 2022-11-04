@@ -7,6 +7,7 @@ import SelectController from "../Upload/SelctController/SelectController";
 import { PlusOutlined } from "@ant-design/icons";
 import { ModalBuyPackageWrapper } from "./styled";
 import { getBase64 } from "../../../utils";
+import SelectControllerForBanner from "../Upload/SelectControllerForBanner/SelectControllerForBanner";
 
 export default function ModalBuyPackage({ selectedCardContent }) {
   const dispatch = useDispatch();
@@ -29,19 +30,21 @@ export default function ModalBuyPackage({ selectedCardContent }) {
   };
 
   const onSubmit = (data) => {
+    console.log("data", data);
     let finalData = { ...Object.assign(data, selectedCardContent) };
     finalData = { ...finalData, creator_address: acc, id: data.select };
-    const keys = Object.keys(finalData);
-    const fd = new FormData();
-    for (let v of keys) {
-      if (v === "image_banner") {
-        let file = finalData[v][0]?.originFileObj;
-        fd.append(v, file);
-      } else {
-        fd.append(v, finalData[v]);
-      }
-    }
-    dispatch(buyService(fd));
+    // const keys = Object.keys(finalData);
+    // const fd = new FormData();
+    // for (let v of keys) {
+    //   if (v === "image_banner") {
+    //     let file = finalData[v][0]?.originFileObj;
+    //     fd.append(v, file);
+    //   } else {
+    //     fd.append(v, finalData[v]);
+    //   }
+    // }
+    // dispatch(buyService(fd));
+    // console.log("final", finalData);
   };
   const uploadButton = (
     <div>
@@ -63,7 +66,7 @@ export default function ModalBuyPackage({ selectedCardContent }) {
         style={{ display: "flex", gap: "40px" }}
         action=""
       >
-        <SelectController
+        <SelectControllerForBanner
           ArrOption={listAppService?.res?.data?.my_apps || []}
           name="select"
           control={control}
