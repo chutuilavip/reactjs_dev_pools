@@ -2,7 +2,7 @@ import React from "react";
 import { Controller } from "react-hook-form";
 import InputSelect from "../UploadAppDetail/InputSelect";
 
-export default function SelectController({
+export default function SelectControllerForBanner({
   control,
   ArrOption,
   name,
@@ -22,7 +22,7 @@ export default function SelectController({
 
     return res.join(" ") + "*";
   };
-  console.log(ArrOption);
+  console.log(ArrOption[0]?.id);
   return (
     <Controller
       name={name}
@@ -31,7 +31,7 @@ export default function SelectController({
         <InputSelect
           title={upperCaseFirstLetter(title)}
           ArrOption={ArrOption}
-          valueDefault={ArrOption[0]?.title}
+          valueDefault={ArrOption[0]?.id}
           field={{ ...field }}
           register
         />

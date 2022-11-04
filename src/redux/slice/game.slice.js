@@ -11,6 +11,7 @@ const initialState = {
   isLoading: true,
   isLoadingChoosingPackage: false,
   error: {},
+  isLoadingModalBuyBanner: false,
   dataListAppNotService: [],
 };
 
@@ -171,13 +172,16 @@ const gameRecommendSlice = createSlice({
 
     // Get list app service
     [listAppNotService.pending]: (state) => {
+      state.isLoadingModalBuyBanner = true;
       state.isLoadingChoosingPackage = true;
     },
     [listAppNotService.fulfilled]: (state, action) => {
+      state.isLoadingModalBuyBanner = false;
       state.dataListAppNotService = action.payload;
       state.isLoadingChoosingPackage = false;
     },
     [listAppNotService.rejected]: (state, action) => {
+      state.isLoadingModalBuyBanner = false;
       state.isLoadingChoosingPackage = false;
       state.error = action.payload;
     },

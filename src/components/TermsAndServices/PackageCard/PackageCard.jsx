@@ -7,6 +7,7 @@ import { useForm } from "react-hook-form";
 import { buyService, listAppNotService } from "../../../redux/slice/game.slice";
 import PackageVideo from "../../../pages/TermsAndServices/PackageVideo/PackageVideo";
 import ModalBuyPackage from "../ModalBuyPackage/ModalBuyPackage";
+import Loading from "../../../layout/components/Loading/Loading";
 
 const { Option } = Select;
 
@@ -30,7 +31,7 @@ export default function PackageCard({
   );
 
   const [isModalOpen, setIsModalOpen] = useState(false);
-
+  const { isLoadingModalBuyBanner } = useSelector((state) => state.listGame);
   const [isModalVideoOpen, setIsModalVideoOpen] = useState(false);
   const dispatch = useDispatch();
 
@@ -69,8 +70,17 @@ export default function PackageCard({
         open={isModalOpen}
         onOk={handleOk}
         onCancel={handleCancel}
+        footer={null}
       >
-        <ModalBuyPackage selectedCardContent={selectedCardContent} />
+        {isLoadingModalBuyBanner ? (
+          <Loading />
+        ) : (
+          <ModalBuyPackage selectedCardContent={selectedCardContent} />
+        )}
+        {/* {isLoadingModalBuyBanner && (
+          <ModalBuyPackage selectedCardContent={selectedCardContent} />
+        )} */}
+        {/* <ModalBuyPackage selectedCardContent={selectedCardContent} /> */}
       </Modal>
       <Modal
         title="Basic Modal"

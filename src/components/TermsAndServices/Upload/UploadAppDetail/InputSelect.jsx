@@ -4,6 +4,7 @@ import styled from "styled-components";
 const { Option } = Select;
 
 const InputSelect = ({ title, ArrOption, valueDefault, register, field }) => {
+  console.log("default: " + valueDefault);
   return (
     <StyleInputSelect>
       <p>{title}</p>
