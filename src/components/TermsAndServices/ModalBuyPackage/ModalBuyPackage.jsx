@@ -30,21 +30,28 @@ export default function ModalBuyPackage({ selectedCardContent }) {
   };
 
   const onSubmit = (data) => {
-    console.log("data", data);
     let finalData = { ...Object.assign(data, selectedCardContent) };
-    finalData = { ...finalData, creator_address: acc, id: data.select };
-    // const keys = Object.keys(finalData);
-    // const fd = new FormData();
-    // for (let v of keys) {
-    //   if (v === "image_banner") {
-    //     let file = finalData[v][0]?.originFileObj;
-    //     fd.append(v, file);
-    //   } else {
-    //     fd.append(v, finalData[v]);
-    //   }
-    // }
-    // dispatch(buyService(fd));
-    // console.log("final", finalData);
+    finalData = {
+      ...finalData,
+      creator_address: acc,
+      id: data.select,
+      id_service: selectedCardContent.id,
+    };
+    const keys = Object.keys(finalData);
+    const fd = new FormData();
+    for (let v of keys) {
+      if (v === "image_banner") {
+        let file = finalData[v][0]?.originFileObj;
+        fd.append(v, file);
+      } else {
+        fd.append(v, finalData[v]);
+      }
+    }
+    dispatch(buyService(fd));
+    console.log("=======================================");
+    console.log("data", data);
+    console.log("SelectCardContent: ", selectedCardContent);
+    console.log("final", finalData);
   };
   const uploadButton = (
     <div>
