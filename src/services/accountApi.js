@@ -15,5 +15,9 @@ const accountApi = {
     const url = "/api/dev/account-edit-avatar";
     return axiosClient.post(url, formData);
   },
+  getCreatedApp: (limit, page, title) => {
+    const url = `/api/dev/index?limit=${limit}&page=${page}&title=${title}`;
+    return axiosClient.get(url);
+  },
 };
 export default accountApi;

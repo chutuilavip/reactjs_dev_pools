@@ -11,6 +11,7 @@ import TodayActivities from "../../components/Account/Activities/TodayActivities
 import { useDispatch, useSelector } from "react-redux";
 import { getAccount } from "../../redux/slice/account.slice";
 import Loading from "../../layout/components/Loading/Loading";
+import ListAppCreated from "../../components/Account/ListAppCreated/ListAppCreated";
 
 const Account = () => {
   const { infoAccount, isLoading } = useSelector((state) => state.account);
@@ -35,9 +36,10 @@ const Account = () => {
               <InfoAvatarUser res={infoAccount?.res} />
               <InfoDetailUser res={infoAccount?.res} />
               <MyWallet res={infoAccount?.res} />
-              <MyActivities res={infoAccount?.res} />
-              <DownloadApp res={infoAccount?.res} />
-              <TodayActivities res={infoAccount?.res} />
+              <ListAppCreated />
+              {/* <MyActivities res={infoAccount?.res} /> */}
+              {/* <DownloadApp res={infoAccount?.res} /> */}
+              {/* <TodayActivities res={infoAccount?.res} /> */}
             </>
           )}
         </Main>

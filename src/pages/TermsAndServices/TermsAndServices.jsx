@@ -17,7 +17,7 @@ import {
   setSelectedTabStore,
 } from "../../redux/slice/detailApp.slice";
 import PackageVideo from "./PackageVideo/PackageVideo";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { changeStringToAlias } from "../../utils";
 import Loading from "../../layout/components/Loading/Loading";
 export const tabContent = [
@@ -51,7 +51,7 @@ const TermsAndServices = () => {
   const { listService, isLoading } = useSelector((state) => state.listGame);
 
   const navigate = useNavigate();
-
+  const params = useParams();
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -78,7 +78,14 @@ const TermsAndServices = () => {
     dispatch(setHandlePrevTab(handlePrevTab));
     dispatch(setHandleNextTab(handleNextTab));
   }, []);
-
+  useEffect(() => {
+    const item = tabContent.find(
+      (el) => changeStringToAlias(el.content.slice(2)) === params.tabs
+    );
+    if (!!item) {
+      setSelectedTab(item.index);
+    }
+  }, []);
   useEffect(() => {
     dispatch(setSelectedTabStore(selectedTab));
   }, [selectedTab]);
@@ -120,7 +127,6 @@ const TermsAndServices = () => {
       return '<span class="' + className + '"> </span>';
     },
   };
-  console.log(selectedTab);
   return (
     <WrapTermsAndServices>
       <h1 className="header_title">

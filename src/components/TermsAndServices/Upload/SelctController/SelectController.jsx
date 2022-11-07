@@ -22,7 +22,6 @@ export default function SelectController({
 
     return res.join(" ") + "*";
   };
-  console.log(ArrOption);
   return (
     <Controller
       name={name}

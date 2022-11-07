@@ -6,6 +6,8 @@ const initialState = {
   // newInfo: [],
   infoAccount: {},
   isLoading: true,
+  createdApps: [],
+  isLoadingCreatedApps: false,
 };
 
 export const getAccount = createAsyncThunk("getAccount", async () => {
@@ -16,7 +18,25 @@ export const getAccount = createAsyncThunk("getAccount", async () => {
     console.log(error);
   }
 });
-
+export const getCreatedApp = createAsyncThunk(
+  "getCreatedApp",
+  async (payload, thunkApi) => {
+    try {
+      const res = await accountApi.getCreatedApp(
+        payload.limit,
+        payload.page,
+        payload.title
+      );
+      if (res.status === 200) {
+        return res?.res?.data;
+      } else {
+        throw new Error(res?.status?.error);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  }
+);
 export const getEditAvatar = createAsyncThunk(
   "editavatar",
   async (formData, thunkAPI) => {
@@ -43,7 +63,11 @@ export const editAccountInfo = createAsyncThunk(
     try {
       const result = await accountApi.editAccount(formData);
       if (result.status >= 400) {
-        result.error?.forEach((el) => toast.error(el));
+        if (result.error) {
+          toast.error(result.error);
+        } else if (result.errors) {
+          result.errors?.forEach((el) => toast.error(el));
+        }
       }
       if (result.status === 200) {
         toast.success("Update user info successfully");
@@ -97,6 +121,18 @@ const getAccountSlice = createSlice({
     },
     [editAccountInfo.rejected]: (state, action) => {
       state.isLoading = false;
+    },
+
+    // Get created app
+    [getCreatedApp.pending]: (state, action) => {
+      state.isLoadingCreatedApps = true;
+    },
+    [getCreatedApp.fulfilled]: (state, { payload }) => {
+      state.createdApps = payload;
+      state.isLoadingCreatedApps = false;
+    },
+    [getCreatedApp.rejected]: (state, action) => {
+      state.isLoadingCreatedApps = false;
     },
   },
 });

@@ -43,7 +43,7 @@ function Footer() {
           <LazyLoadImage src={Logo} alt="logo" />
         </div>
 
-        <ListLanguage status={showLang}>
+        {/* <ListLanguage status={showLang}>
           <div className="list_lang" ref={ref}>
             {languageData.map((item, index) => {
               return (
@@ -72,7 +72,7 @@ function Footer() {
             </div>
             <AiOutlineUp onClick={() => setShowLang(!showLang)} />
           </div>
-        </ListLanguage>
+        </ListLanguage> */}
 
         <div className="content_one">
           Pools! which is the First-Generation NFTs market. With Pools, you can

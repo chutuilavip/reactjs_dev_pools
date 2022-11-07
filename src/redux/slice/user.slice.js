@@ -57,7 +57,9 @@ export const registerUser = createAsyncThunk(
   async (params, thunkAPI) => {
     try {
       const result = await userApi.registerUser(params.data);
-      params.goHome();
+      if (result.status === 200) {
+        // params.goHome();
+      }
       return result;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response.data);
@@ -68,8 +70,11 @@ export const registerPublisher = createAsyncThunk(
   "publisher/register",
   async (params, thunkAPI) => {
     try {
-      const result = await userApi.registerPublisher(params.data);
-      params.goHome();
+      const result = await userApi.registerPublisher(params.payload);
+      if (result.status === 200) {
+        params.goHome();
+        toast.success("Please wait for your account to be approved by admin");
+      }
       return result;
     } catch (error) {
       const fieldErrors = error.response.data.errors;

@@ -38,9 +38,16 @@ export const getCategoriesAndLanguage = createAsyncThunk(
 );
 export const uploadContent = createAsyncThunk("uploadContent", async (data) => {
   try {
-    const res = await userApi.uploadContent(data);
-    if (res) {
+    const res = await userApi.uploadContent(data.formData);
+    if (res.status === 200) {
       toast.success("Created successfully");
+      data.callback();
+    } else if (res.status === 400) {
+      if (res.error) {
+        toast.error(res.error);
+      } else if (res.errors) {
+        res.errors.forEach((el) => toast.error(el));
+      }
     }
     return res;
   } catch (err) {

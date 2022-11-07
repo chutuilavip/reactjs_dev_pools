@@ -11,10 +11,27 @@ import StepButtonGroup from "../StepButtonGroup/StepButtonGroup";
 
 const schema = yup
   .object({
-    privacy_policy: yup.string().required(),
-    term_of_policy: yup.string().required(),
-    app_support: yup.string().required(),
-    size: yup.string().required(),
+    privacy_policy: yup
+      .string()
+      .required()
+      .matches(
+        /((https?):\/\/)?(www.)?[a-z0-9]+(\.[a-z]{2,}){1,3}(#?\/?[a-zA-Z0-9#]+)*\/?(\?[a-zA-Z0-9-_]+=[a-zA-Z0-9-%]+&?)?$/,
+        "Enter correct url!"
+      ),
+    term_of_policy: yup
+      .string()
+      .required()
+      .matches(
+        /((https?):\/\/)?(www.)?[a-z0-9]+(\.[a-z]{2,}){1,3}(#?\/?[a-zA-Z0-9#]+)*\/?(\?[a-zA-Z0-9-_]+=[a-zA-Z0-9-%]+&?)?$/,
+        "Enter correct url!"
+      ),
+    app_support: yup
+      .string()
+      .required()
+      .matches(
+        /((https?):\/\/)?(www.)?[a-z0-9]+(\.[a-z]{2,}){1,3}(#?\/?[a-zA-Z0-9#]+)*\/?(\?[a-zA-Z0-9-_]+=[a-zA-Z0-9-%]+&?)?$/,
+        "Enter correct url!"
+      ),
   })
   .required();
 const Methods = [
@@ -86,9 +103,9 @@ export default function UploadInformation({ setFinalData, finalData }) {
       },
       {
         type: "input",
-        name: "size",
-        title: "Size *",
-        placeholder: "Enter The Size",
+        name: "prices",
+        title: "Prices *",
+        placeholder: "Enter The Prices",
       },
     ],
   ];
@@ -122,13 +139,12 @@ export default function UploadInformation({ setFinalData, finalData }) {
       },
     ],
   ];
+  console.log(finalData);
   const renderField = () => {
     return FieldContentInput.concat(FieldContentSelect).map((row, index) => {
       return (
         <div key={`row-${index}`} className="row">
           {row.map((item, index) => {
-            console.log(errors[`${item.name}`]);
-
             if (item.type === "select") {
               return (
                 <div className="field_item" key={`row-${index}`}>
@@ -145,17 +161,36 @@ export default function UploadInformation({ setFinalData, finalData }) {
                 </div>
               );
             } else {
-              return (
-                <div className="field_item">
-                  <InputText
-                    key={`field-${index}`}
-                    register={{ ...register(item.name) }}
-                    title={item.title}
-                    placeho={item.placeholder}
-                  />
-                  <p className="error_message">{errors[item.name]?.message}</p>
-                </div>
-              );
+              if (item.title === "Prices *") {
+                return (
+                  <div key={`field-${index}`} className="field_item">
+                    <InputText
+                      register={{ ...register(item.name) }}
+                      title={item.title}
+                      placeho={item.placeholder}
+                      disabled={finalData.free === "1"}
+                      type="number"
+                    />
+                    <p className="error_message">
+                      {errors[item.name]?.message}
+                    </p>
+                  </div>
+                );
+              } else {
+                return (
+                  <div className="field_item">
+                    <InputText
+                      key={`field-${index}`}
+                      register={{ ...register(item.name) }}
+                      title={item.title}
+                      placeho={item.placeholder}
+                    />
+                    <p className="error_message">
+                      {errors[item.name]?.message}
+                    </p>
+                  </div>
+                );
+              }
             }
           })}
         </div>

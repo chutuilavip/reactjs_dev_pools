@@ -16,7 +16,11 @@ import walletConnect from "../../assets/register/walletConnect.png";
 import { variants } from "../../helpers/motion";
 import { registerPublisher, registerUser } from "../../redux/slice/user.slice";
 import { FormRegis, ListInput, StepOne, WrapRegister } from "./styled";
-
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { InputData, schema } from "./registerItul";
+import { Button } from "antd";
+import { ConvertToFormData } from "../../helpers/formData";
 const arrWallet = [
   global,
   K,
@@ -31,28 +35,26 @@ const arrWallet = [
 ];
 
 const Register = () => {
-  const [isRegisterForPublisher, setIsRegisterForPublisher] = useState(true);
   const [step, setStep] = useState(true);
   const fieldsValues = useRef();
-  const { register, handleSubmit, reset, getValues } = useForm();
+  const {
+    register,
+    handleSubmit,
+    reset,
+    getValues,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(schema),
+  });
   const dispatch = useDispatch();
-  const { statusRegis, errors } = useSelector((state) => state.user);
+  const { statusRegis } = useSelector((state) => state.user);
   const navigate = useNavigate();
   const onSubmit = (data) => {
-    if (!isRegisterForPublisher) {
-      dispatch(registerUser({ data, goHome }));
-    } else {
-      dispatch(registerPublisher({ data, goHome }));
-    }
+    let payload = ConvertToFormData(data);
+    dispatch(registerPublisher({ payload, goHome }));
   };
   const goHome = () => {
     navigate("/login");
-  };
-  console.log(statusRegis);
-  const switchRegisterType = (checked) => {
-    setIsRegisterForPublisher(checked);
-    const values = getValues();
-    fieldsValues.current = values;
   };
 
   return (
@@ -67,116 +69,49 @@ const Register = () => {
         <div className="switch_register_type">
           <label htmlFor="switch_register_type">Register for Publisher</label>
         </div>
-        <FormRegis
-          onSubmit={handleSubmit(onSubmit)}
-          height={isRegisterForPublisher ? "72%" : "43%"}
-        >
+        <FormRegis onSubmit={handleSubmit(onSubmit)} height={"100%"}>
           <StepOne status={step}>
-            {isRegisterForPublisher && (
-              <>
+            {InputData.map((item, index) => {
+              return (
                 <ListInput>
-                  <input
-                    placeholder="Business Name *"
-                    type="text"
-                    defaultValue={fieldsValues.current?.business_name}
-                    {...register("business_name", {
-                      required: true,
-                    })}
-                  />
-                  <input
-                    placeholder="Contact Name *"
-                    type="text"
-                    {...register("contact_name")}
-                  />
+                  <div className="field_item">
+                    <input
+                      placeholder={item.field_1.placeholder}
+                      type={item.field_1.type || "text"}
+                      {...register(item.field_1.register)}
+                    />
+                    <p className="validateMessage">
+                      {" "}
+                      {errors[item.field_1.register]?.message}
+                    </p>
+                  </div>
+                  <div className="field_item">
+                    <input
+                      placeholder={item.field_2.placeholder}
+                      type={item.field_2.type || "text"}
+                      {...register(item.field_2.register)}
+                    />
+                    <p className="validateMessage">
+                      {" "}
+                      {errors[item.field_2.register]?.message}
+                    </p>
+                  </div>
                 </ListInput>
-                <ListInput>
-                  <input
-                    placeholder="Website *"
-                    type="text"
-                    {...register("website")}
-                  />
-                  <input
-                    placeholder="Products and Services *"
-                    type="text"
-                    {...register("product_and_services")}
-                  />
-                </ListInput>
-                <ListInput>
-                  <input
-                    placeholder="Release details *"
-                    type="text"
-                    {...register("release_details")}
-                  />
-                  <input
-                    placeholder="Products URL *"
-                    type="text"
-                    {...register("products_url")}
-                  />
-                </ListInput>
-                <ListInput>
-                  <input
-                    placeholder="Year Established *"
-                    type="text"
-                    {...register("year_established")}
-                  />
-                  <input
-                    placeholder="Application catalog *"
-                    type="text"
-                    {...register("application_catalog")}
-                  />
-                </ListInput>
-              </>
-            )}
-            <ListInput>
+              );
+            })}
+
+            <div className="field_item">
               <input
-                placeholder="First Name *"
+                placeholder="Address"
                 type="text"
-                {...register("first_name")}
+                className="input_form_last"
+                {...register("address")}
               />
-              <input
-                placeholder="Last Name *"
-                type="text"
-                {...register("last_name")}
-              />
-            </ListInput>
-            <ListInput>
-              <input placeholder="Email *" type="text" {...register("email")} />
-              <input
-                placeholder="Phone Number *"
-                type="text"
-                {...register("phone_number")}
-              />
-            </ListInput>
-            <ListInput>
-              <input
-                placeholder="Password *"
-                type="password"
-                {...register("password", { required: true, minLength: 6 })}
-              />
-              <input
-                placeholder="Confirm Password *"
-                type="password"
-                {...register("password_confirmation", {
-                  required: true,
-                  minLength: 6,
-                })}
-              />
-            </ListInput>
-            <input
-              placeholder="Address"
-              type="text"
-              className="input_form_last"
-              {...register("address")}
-            />
-            <button
-              type="submit"
-              className="btn_form"
-              // onClick={() => {
-              //   setStep(false);
-              // }}
-            >
+              <p className="validateMessage"> {errors?.address?.message}</p>
+            </div>
+            <Button htmlType="submit" className="btn_form">
               Submit
-            </button>
+            </Button>
           </StepOne>
 
           {/* <StepTwo status={step}>

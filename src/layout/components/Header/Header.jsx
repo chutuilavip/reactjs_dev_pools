@@ -34,7 +34,7 @@ const Header = (customLayout) => {
           <LazyLoadImage src={logo} alt="logo" />
         </a>
       </div>
-      <HeaderMiddle>
+      {/* <HeaderMiddle>
         <div></div>
         <ListMenu>
           {icon_header.map((item, index) => {
@@ -57,7 +57,7 @@ const Header = (customLayout) => {
         <div className="icon_search" onClick={() => handleSearch()}>
           <LazyLoadImage src={iconSearch} alt="search" />
         </div>
-      </HeaderMiddle>
+      </HeaderMiddle> */}
       <div className="menu" onClick={() => setShow(!show)}>
         <LazyLoadImage src={iconMenu} alt="icon menu" />
       </div>
