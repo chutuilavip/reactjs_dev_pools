@@ -21,7 +21,8 @@ const schema = yup.object().shape({
 });
 export default function UploadApk({ setFinalData, finalData }) {
   const DetailContext = useContext(UploadContextWrapper);
-  const { submitForm, disabledSubmit, setDisabledSubmit } = DetailContext;
+  const { submitForm, disabledSubmit, setDisabledSubmit, setIsDisabledPrev } =
+    DetailContext;
   const {
     register,
     getValues,
@@ -49,8 +50,10 @@ export default function UploadApk({ setFinalData, finalData }) {
   const onChangeFile = (info) => {
     if (info.file.status === "uploading") {
       setDisabledSubmit(true);
+      setIsDisabledPrev(true);
     } else {
       setDisabledSubmit(false);
+      setIsDisabledPrev(false);
     }
     setApk(info.fileList);
     setValue("fileapk", info.fileList);
@@ -76,6 +79,7 @@ export default function UploadApk({ setFinalData, finalData }) {
             action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
             fileList={apk}
             accept=".apk"
+            maxCount={1}
             onChange={onChangeFile}
           >
             <Button icon={<UploadOutlined />}>Upload</Button>

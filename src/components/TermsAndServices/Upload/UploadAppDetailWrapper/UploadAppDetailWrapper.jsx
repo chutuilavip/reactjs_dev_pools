@@ -91,7 +91,9 @@ export default function UploadAppDetailWrapper() {
       }
     }
     console.log("olalal");
-    dispatch(uploadContent(formData));
+    dispatch(
+      uploadContent({ formData, callback: () => window.location.reload() })
+    );
   };
 
   const value = {

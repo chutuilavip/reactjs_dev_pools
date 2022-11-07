@@ -29,7 +29,6 @@ export default function StepButtonGroup() {
   const { submitForm, selectedTab, setSelectedTab, disabledSubmit } =
     DetailContext;
   const { handlePrevTab, handleNextTab, isDisabledPrev } = DetailContext;
-  console.log("disabledSubmit", disabledSubmit);
   return (
     <ButtonGroupWrapper>
       <div className="step_group">

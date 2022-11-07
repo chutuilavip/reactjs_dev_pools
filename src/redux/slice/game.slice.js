@@ -75,7 +75,14 @@ export const buyService = createAsyncThunk(
     try {
       const result = await appApi.buyService(type);
       if (result.status === 400) {
-        toast.error(result.error[0]);
+        if (result.errors) {
+          result.errors.forEach((el) => toast.error(el));
+        } else if (result.error) {
+          toast.error(result.error);
+        }
+      }
+      if (result.status === 200) {
+        toast.success("Buy services successfully");
       }
       return result;
     } catch (error) {

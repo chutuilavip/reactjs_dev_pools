@@ -1,11 +1,26 @@
 import React from "react";
 import styled from "styled-components";
 
-const InputText = ({ title, placeho, register, value, className }) => {
+const InputText = ({
+  title,
+  placeho,
+  register,
+  value,
+  className,
+  disabled,
+  type,
+}) => {
   return (
     <StyleInput className={className}>
       <p>{title}</p>
-      <input {...register} type="text" placeholder={placeho} value={value} />
+      <input
+        disabled={disabled}
+        style={{ cursor: disabled ? "not-allowed" : "" }}
+        {...register}
+        type={type || "text"}
+        placeholder={placeho}
+        value={value}
+      />
     </StyleInput>
   );
 };

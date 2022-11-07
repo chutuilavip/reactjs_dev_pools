@@ -12,11 +12,17 @@
     font-size: 45% !important;
   }
 }
+.ant-select-selection-item {
+  color: white;
+}
+.ant-select:not(.ant-select-customize-input) .ant-select-selector {
+  background: #3b72fe;
+}
 .ant-upload-list-picture .ant-upload-list-item-error {
   border-color: black;
 }
 .ant-upload-list-item-name {
-  color: black;
+  color: black !important;
 }
 .ant-modal {
   width: fit-content !important;

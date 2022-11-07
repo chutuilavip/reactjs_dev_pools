@@ -11,12 +11,12 @@ import InputText from "./InputText";
 import { GroupInput, WrapAppDetail } from "./styled";
 const Cost = [
   {
-    code: "1",
+    code: "0",
     id: 1,
     title: "Pay",
   },
   {
-    code: "0",
+    code: "1",
     id: 2,
     title: "Free",
   },
@@ -54,22 +54,25 @@ const UploadAppDetail = ({ setFinalData, finalData }) => {
     resolver: yupResolver(schema),
   });
   useEffect(() => {
+    if (Object.keys(finalData).length > 0) {
+      reset({ ...finalData });
+    } else {
+      setValue("genre", categories[0]?.id);
+      setValue("free", Cost[0]?.code);
+      setValue("languages", languages[0]?.language);
+      setValue("defaultlanguage", languages[0]?.language);
+    }
+  }, [categories, languages, Cost]);
+  useEffect(() => {
     reset({ ...finalData });
     return () => {
       setFinalData((prevData) => ({ ...Object.assign(prevData, getValues()) }));
     };
   }, []);
 
-  useEffect(() => {
-    setValue("genre", categories[0]?.id);
-    setValue("free", Cost[0]?.code);
-    setValue("languages", languages[0]?.language);
-    setValue("defaultlanguage", languages[0]?.language);
-  }, [categories, languages, Cost]);
   const onSubmit = (data) => {
     handleNextTab();
   };
-  console.log(errors);
   return (
     <div className="">
       {isLoading ? (

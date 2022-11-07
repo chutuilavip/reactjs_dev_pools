@@ -54,17 +54,31 @@ const SideBarRight = ({ data }) => {
   return (
     <SideRight status={data} anima={isOpenCategory}>
       {publisherOptions.map((item, index) => {
-        return (
-          <NavLink
-            className={`wrap_sidebar`}
-            key={index}
-            to={`/for-publishers/${item.url}`}
-          >
-            <div className="left_bar">
-              <span>{item.content}</span>
-            </div>
-          </NavLink>
-        );
+        if (item.url === "") {
+          return (
+            <NavLink
+              className={`wrap_sidebar`}
+              key={index}
+              to={`/terms-and-services/${item.url}`}
+            >
+              <div className="left_bar">
+                <span>{item.content}</span>
+              </div>
+            </NavLink>
+          );
+        } else {
+          return (
+            <NavLink
+              className={`wrap_sidebar`}
+              key={index}
+              to={`/for-publishers/${item.url}`}
+            >
+              <div className="left_bar">
+                <span>{item.content}</span>
+              </div>
+            </NavLink>
+          );
+        }
       })}
 
       <ListIconPage status={isOpenCategory}>

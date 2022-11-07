@@ -5,7 +5,7 @@ const WrapRegister = styled.div`
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  height: 100vh;
+  height: 125vh;
   background-color: #131313;
   .title_form {
     margin-top: 50px;
@@ -14,6 +14,10 @@ const WrapRegister = styled.div`
     font-size: 32px;
     letter-spacing: 0.0025em;
     color: #ffffff;
+  }
+  .validateMessage {
+    color: red;
+    font-size: 1.2rem;
   }
   .switch_register_type {
     margin-bottom: 2rem;
@@ -54,12 +58,23 @@ const StepOne = styled.div`
     letter-spacing: 0.0025em;
     color: #ffffff;
     cursor: pointer;
+    height: 5rem;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
   }
   .input_form_last {
     width: 100%;
     background-color: #212121;
-    padding: 17px 50px;
+    padding: 1.5rem;
     color: #ffffff;
+  }
+  .field_item {
+    display: flex;
+    flex-direction: column;
+    height: 10rem;
+    width: 100%;
   }
 `;
 
@@ -75,7 +90,7 @@ const ListInput = styled.div`
   input {
     background-color: #212121;
     padding: 17px 50px;
-    width: 50%;
+    width: 100%;
     color: #ffffff;
   }
 `;

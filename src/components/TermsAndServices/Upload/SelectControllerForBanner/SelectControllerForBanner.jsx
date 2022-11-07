@@ -22,7 +22,6 @@ export default function SelectControllerForBanner({
 
     return res.join(" ") + "*";
   };
-  console.log(ArrOption[0]?.id);
   return (
     <Controller
       name={name}

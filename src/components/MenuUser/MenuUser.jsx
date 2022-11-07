@@ -148,25 +148,24 @@ const MenuUser = ({ show, setShow }) => {
 export default MenuUser;
 
 const listMenu = [
-  {
-    name: "Terms and Service",
-    path: "/terms-and-services",
-  },
-
-  {
-    name: "Notifications",
-    path: "/friends",
-  },
-  {
-    name: "Setting",
-    // path: "",
-  },
-  {
-    name: "Friends",
-    path: "/friends",
-  },
-  {
-    name: "Suport",
-    path: "/suport",
-  },
+  // {
+  //   name: "Terms and Service",
+  //   path: "/terms-and-services",
+  // },
+  // {
+  //   name: "Notifications",
+  //   path: "/friends",
+  // },
+  // {
+  //   name: "Setting",
+  //   // path: "",
+  // },
+  // {
+  //   name: "Friends",
+  //   path: "/friends",
+  // },
+  // {
+  //   name: "Suport",
+  //   path: "/suport",
+  // },
 ];

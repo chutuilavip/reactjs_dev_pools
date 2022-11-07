@@ -62,28 +62,31 @@ export default function PackageCard({
   const handleCancelVideoModal = () => {
     setIsModalVideoOpen(false);
   };
-  console.log(listAppService);
+
   return (
     <PackageCardWrapper>
       <Modal
-        title="Buy banner"
+        title={`${selectedCardContent?.type
+          .replaceAll("_", " ")
+          .toString()
+          .toUpperCase()} SERVICES`}
         open={isModalOpen}
         onOk={handleOk}
         onCancel={handleCancel}
         footer={null}
       >
-        {isLoadingModalBuyBanner ? (
+        {/* {isLoadingModalBuyBanner ? (
           <Loading />
         ) : (
           <ModalBuyPackage selectedCardContent={selectedCardContent} />
-        )}
+        )} */}
         {/* {isLoadingModalBuyBanner && (
           <ModalBuyPackage selectedCardContent={selectedCardContent} />
         )} */}
-        {/* <ModalBuyPackage selectedCardContent={selectedCardContent} /> */}
+        <ModalBuyPackage selectedCardContent={selectedCardContent} />
       </Modal>
       <Modal
-        title="Basic Modal"
+        title="Video Services"
         open={isModalVideoOpen}
         footer={null}
         onCancel={handleCancelVideoModal}
@@ -100,7 +103,7 @@ export default function PackageCard({
         }}
       >
         <h1>
-          <span className="times">{times} Days</span> -{" "}
+          <span className="times">{times} Days - </span>
           <span className="prices">{prices}$</span>
         </h1>
         <p className="content">

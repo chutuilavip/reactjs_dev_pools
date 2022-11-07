@@ -20,6 +20,9 @@ const Library = React.lazy(() => import("../pages/Library/Library"));
 const Upload = React.lazy(() =>
   import("../pages/UploadForPublishers/UploadForPublisher")
 );
+const EditApp = React.lazy(() =>
+  import("../components/TermsAndServices/Upload/EditApp/EditApp")
+);
 const ProfitForUser = React.lazy(() =>
   import("../pages/ProfitUser/ProfitUser")
 );
@@ -46,8 +49,10 @@ export const publicRoutes = [
 ];
 
 export const PrivateRouter = [
-  { path: "/terms-and-services/*", component: TermsAndServices },
+  { path: "/terms-and-services/:tabs", component: TermsAndServices },
+  { path: "/terms-and-services", component: TermsAndServices },
   { path: "/account", component: Account },
   { path: "/friends", component: Friends },
+  { path: "/for-publishers/edit-app/:appid", component: EditApp },
   { path: "/for-publishers/:option", component: Upload },
 ];

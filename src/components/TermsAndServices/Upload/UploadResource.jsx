@@ -233,11 +233,13 @@ const UploadResource = ({ setFinalData, finalData }) => {
   }, []);
   useEffect(() => {
     // Update final data when move on next step
-    reset({ ...finalData });
     return () => {
       setFinalData((prevData) => ({ ...Object.assign(prevData, getValues()) }));
     };
   }, []);
+  useEffect(() => {
+    reset({ ...finalData });
+  }, [finalData, reset]);
   useEffect(() => {
     const keys = Object.keys(errors);
     if (keys.length > 0) {
@@ -247,10 +249,9 @@ const UploadResource = ({ setFinalData, finalData }) => {
   }, [errors]);
   // Submit Form
   const onSubmit = (data) => {
-    console.log("upload return", getValues());
     handleNextTab();
   };
-
+  console.log(getValues().free, finalData.free);
   return (
     <WrapUploadResource imagesDisplay={images.length >= 10 ? "none" : ""}>
       <form className="form_upload" onSubmit={handleSubmit(onSubmit)}>

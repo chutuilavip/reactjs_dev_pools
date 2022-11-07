@@ -4,6 +4,7 @@ export const WrapTermsAndServices = styled.div`
   &&& {
     .swiper {
       height: 35rem;
+      width: 100%;
     }
     .swiper-pagination-bullet {
       width: 2rem;

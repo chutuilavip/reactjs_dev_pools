@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const UploadAplWrapper = styled.div`
   &&& {
     .ant-upload-list-item-name {
-      color: white;
+      color: white !important;
     }
     .ant-upload-list-item:hover .ant-upload-list-item-info {
       background-color: transparent;
@@ -20,6 +20,12 @@ export const UploadAplWrapper = styled.div`
     .field_item {
       display: flex;
       justify-content: space-between;
+      flex-direction: column;
+      gap: 10rem;
+      border: 1px solid white;
+      border-radius: 14px;
+      padding: 2rem;
+      width: 100%;
     }
   }
   label {

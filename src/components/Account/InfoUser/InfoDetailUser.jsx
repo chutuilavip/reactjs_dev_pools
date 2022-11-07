@@ -1,4 +1,3 @@
-import { yupResolver } from "@hookform/resolvers/yup";
 import { Button, Form, Input } from "antd";
 import React, { Fragment, useState } from "react";
 import { useEffect } from "react";
@@ -7,6 +6,7 @@ import { useTranslation } from "react-i18next";
 import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
 import Pen from "../../../assets/Account/buttonchange.png";
 import { ConvertToFormData } from "../../../helpers/formData";
 import Loading from "../../../layout/components/Loading/Loading";
@@ -29,9 +29,22 @@ const schema = yup
     application_catalog: yup.string().required(),
     contact_name: yup.string().required(),
     product_and_services: yup.string().required(),
-    products_url: yup.string().required(),
+    address: yup.string().required(),
+    products_url: yup
+      .string()
+      .required()
+      .matches(
+        /((https?):\/\/)?(www.)?[a-z0-9]+(\.[a-z]{2,}){1,3}(#?\/?[a-zA-Z0-9#]+)*\/?(\?[a-zA-Z0-9-_]+=[a-zA-Z0-9-%]+&?)?$/,
+        "Enter correct url!"
+      ),
     release_details: yup.string().required(),
-    website: yup.string().required(),
+    website: yup
+      .string()
+      .required()
+      .matches(
+        /((https?):\/\/)?(www.)?[a-z0-9]+(\.[a-z]{2,}){1,3}(#?\/?[a-zA-Z0-9#]+)*\/?(\?[a-zA-Z0-9-_]+=[a-zA-Z0-9-%]+&?)?$/,
+        "Enter correct url!"
+      ),
     year_established: yup
       .number("Year established can not be characters")
       .required()
@@ -139,7 +152,6 @@ const InfoDetailUser = ({ res }) => {
     const setOfEditFields = [...new Set(cloneEditFields)];
     setEditFields(setOfEditFields);
   }, [errors]);
-  console.log("edit field", editFields);
 
   return (
     <InfoDetail>
