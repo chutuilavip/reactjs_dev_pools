@@ -43,6 +43,7 @@ export default function ModalBuyPackage({ selectedCardContent }) {
       toast.error("Please choose your game");
       return;
     }
+
     let finalData = { ...Object.assign(data, selectedCardContent) };
     finalData = {
       ...finalData,
