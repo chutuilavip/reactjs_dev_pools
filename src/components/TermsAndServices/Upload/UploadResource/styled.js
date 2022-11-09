@@ -50,9 +50,7 @@ export const WrapUploadResource = styled.div`
   display: flex;
   flex-direction: column;
   gap: 50px;
-  .hint {
-    font-size: 1rem;
-  }
+
   .title {
     font-weight: 700;
     font-size: 24px;

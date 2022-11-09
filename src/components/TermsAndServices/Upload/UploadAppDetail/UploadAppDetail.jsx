@@ -48,19 +48,20 @@ const UploadAppDetail = ({ setFinalData, finalData }) => {
     defaultValues: {
       free: Cost[0]?.code,
       genre: categories[0]?.id,
-      languages: languages[0]?.language,
-      defaultlanguage: languages[0]?.language,
+      languages: languages[0]?.code,
+      defaultlanguage: languages[0]?.code,
     },
     resolver: yupResolver(schema),
   });
+  console.log("languageslanguageslanguageslanguageslanguages", languages);
   useEffect(() => {
     if (Object.keys(finalData).length > 0) {
       reset({ ...finalData });
     } else {
       setValue("genre", categories[0]?.id);
       setValue("free", Cost[0]?.code);
-      setValue("languages", languages[0]?.language);
-      setValue("defaultlanguage", languages[0]?.language);
+      setValue("languages", languages[0]?.code);
+      setValue("defaultlanguage", languages[0]?.code);
     }
   }, [categories, languages, Cost]);
   useEffect(() => {

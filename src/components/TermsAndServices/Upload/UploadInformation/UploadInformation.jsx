@@ -64,10 +64,10 @@ export default function UploadInformation({ setFinalData, finalData }) {
     formState: { errors },
   } = useForm({
     defaultValues: {
-      otherlanguages: languages[0]?.language,
-      type: Methods[0].title,
+      otherlanguages: languages[0]?.code,
+      type: Methods[0].code,
       age_limit: AgeLimit[0],
-      country_of_service: languages[0]?.language,
+      country_of_service: languages[0]?.locale_code,
     },
     resolver: yupResolver(schema),
   });
@@ -168,7 +168,7 @@ export default function UploadInformation({ setFinalData, finalData }) {
                       register={{ ...register(item.name) }}
                       title={item.title}
                       placeho={item.placeholder}
-                      disabled={finalData.free === "1"}
+                      disabled={finalData.free === "0"}
                       type="number"
                     />
                     <p className="error_message">
