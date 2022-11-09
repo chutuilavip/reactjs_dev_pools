@@ -16,6 +16,7 @@ export const getLanguagesTranslations = createAsyncThunk(
     }
   }
 );
+
 const AppSlice = createSlice({
   name: "customLayout",
   initialState,

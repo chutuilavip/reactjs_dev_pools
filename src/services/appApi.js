@@ -16,7 +16,10 @@ const appApi = {
     const url = `/api/application/detail/${slug}`;
     return axiosClient.get(url);
   },
-
+  getDetailAppWithLange: (slug, lang) => {
+    const url = `/api/dev/detail/${slug}?locale=${lang}`;
+    return axiosClient.get(url);
+  },
   getListGameFollowType: (type) => {
     const url = `api/application/game-list?type=${type}`;
     return axiosClient.get(url);
@@ -41,6 +44,14 @@ const appApi = {
   getListAppService: (type) => {
     const url = `api/dev/app-service?type=${type}`;
     return axiosClient.post(url);
+  },
+  editApp: (data) => {
+    const url = "api/dev/update";
+    return axiosClient.post(url, data);
+  },
+  deleteScreenshot: (payload) => {
+    const url = `api/dev/remove-screenshot`;
+    return axiosClient.post(url, payload);
   },
 };
 export default appApi;

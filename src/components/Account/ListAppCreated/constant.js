@@ -1,4 +1,5 @@
 import { Avatar, Button, Space } from "antd";
+import { NavLink } from "react-router-dom";
 import { URL_API } from "../../../utils";
 
 export const columns = [
@@ -49,13 +50,15 @@ export const columns = [
     title: "Action",
     dataIndex: "action",
     key: "action",
-    render: () => {
+    render: (value) => {
       return (
         <Space>
           <Button type="primary" danger>
             Delete
           </Button>
-          <Button type="primary">Edit</Button>
+          <Button type="primary">
+            <NavLink to={`/for-publishers/edit-app/${value}`}>Edit</NavLink>
+          </Button>
         </Space>
       );
     },

@@ -12,6 +12,9 @@
     font-size: 45% !important;
   }
 }
+.hint {
+  font-size: 1rem;
+}
 .ant-select-selection-item {
   color: white;
 }

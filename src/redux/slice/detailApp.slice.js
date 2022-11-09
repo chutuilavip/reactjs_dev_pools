@@ -2,9 +2,11 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { toast } from "react-toastify";
 import appApi from "../../services/appApi";
 import userApi from "../../services/userApi";
+import { ToastError } from "../../utils";
 
 const initialState = {
   detailApp: {},
+  detailAppWithLang: {},
   isLoading: true,
   isLoadingBuyVideoService: false,
   isLoadingSubmit: false,
@@ -24,12 +26,52 @@ export const getDetailApp = createAsyncThunk("getDetailApp", async (slug) => {
     console.log(error);
   }
 });
+
+export const editApp = createAsyncThunk("editApp", async (data) => {
+  try {
+    const { res, status } = await appApi.editApp(data);
+    if (status === 200) {
+      toast.success("Edit app successfully");
+      return res;
+    } else if (status >= 400) {
+      ToastError(res);
+    }
+  } catch (error) {
+    console.log(error);
+  }
+});
+export const deleteScreenshot = createAsyncThunk(
+  "deleteScreenshot",
+  async (data) => {
+    try {
+      const { res, status } = await appApi.deleteScreenshot(data);
+      if (status === 200) {
+        toast.success("Delete screenshot successfully");
+        return res;
+      } else if (status >= 400) {
+        ToastError(res);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+);
+export const getDetailAppWithLange = createAsyncThunk(
+  "getDetailApp",
+  async ({ slug, lang }) => {
+    try {
+      const { res, status } = await appApi.getDetailAppWithLange(slug, lang);
+      return res;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+);
 export const getCategoriesAndLanguage = createAsyncThunk(
   "getCategories",
   async () => {
     try {
       const res = await appApi.getCategories();
-      console.log("language", res);
       return res;
     } catch (err) {
       console.log(err);
@@ -70,6 +112,12 @@ export const buyServiceVideo = createAsyncThunk(
       console.log(res);
       if (res.status === 200) {
         toast.success("Action successfully, please waiting for admin approve");
+      } else if (res.status === 400) {
+        if (res.error) {
+          toast.error(res.error);
+        } else if (res.errors) {
+          res.errors.forEach((el) => toast.error(el));
+        }
       }
     } catch (err) {
       toast.error("Buying service video failed");
@@ -132,6 +180,26 @@ const detailAppSlice = createSlice({
     },
     [uploadContent.rejected]: (state) => {
       state.isLoadingSubmit = false;
+    },
+    [getDetailAppWithLange.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [getDetailAppWithLange.fulfilled]: (state, action) => {
+      state.isLoading = false;
+      state.detailAppWithLang = action.payload;
+    },
+    [getDetailAppWithLange.rejected]: (state) => {
+      state.isLoading = false;
+    },
+
+    [deleteScreenshot.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [deleteScreenshot.fulfilled]: (state, action) => {
+      state.isLoading = false;
+    },
+    [deleteScreenshot.rejected]: (state) => {
+      state.isLoading = false;
     },
   },
 });

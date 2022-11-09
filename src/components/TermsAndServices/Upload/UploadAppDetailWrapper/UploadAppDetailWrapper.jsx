@@ -79,11 +79,9 @@ export default function UploadAppDetailWrapper() {
           let item = image.originFileObj;
           newImages.push(item);
         }
-        console.log(newImages);
         for (let i = 0; i < newImages.length; i++) {
           formData.append("images[]", newImages[i], newImages[i].name);
         }
-        console.log(formData.getAll("images[]"));
       } else if (v === "fileapk") {
         formData.append(v, finalData[v][0]?.originFileObj);
       } else {

@@ -4,6 +4,7 @@ import styled from "styled-components";
 const { Option } = Select;
 
 const InputSelect = ({ title, ArrOption, valueDefault, register, field }) => {
+  console.log(ArrOption);
   return (
     <StyleInputSelect>
       <p>{title}</p>
@@ -15,7 +16,7 @@ const InputSelect = ({ title, ArrOption, valueDefault, register, field }) => {
       >
         {ArrOption.map((item, index) => {
           return (
-            <Option key={index} value={item.code ? item.code : item.id}>
+            <Option key={index} value={item.code || item.id}>
               {item.title || item.language}
             </Option>
           );
