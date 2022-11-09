@@ -73,6 +73,7 @@ export default function UploadApk({ setFinalData, finalData }) {
               Choose APK file
             </label>
             <p className="error_field">{errors.fileapk?.message}</p>
+            <p className="hint">- The file sime must be less than 200MB</p>
           </div>
           <Upload
             {...register("fileapk")}

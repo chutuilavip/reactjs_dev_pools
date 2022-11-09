@@ -19,7 +19,7 @@ export default function ListAppCreated() {
   const { createdApps, isLoadingCreatedApps } = useSelector(
     (state) => state.account
   );
-
+  console.log("createdAppscreatedApps", createdApps);
   const [pagingParams, setPagingParams] = useState({
     limit: DEFAULT_LIMIT,
     page: 0,
@@ -58,6 +58,7 @@ export default function ListAppCreated() {
           slug: item.slug,
           status: status,
           title: item.title,
+          action: item.slug,
         });
       });
     }

@@ -11,12 +11,12 @@ import InputText from "./InputText";
 import { GroupInput, WrapAppDetail } from "./styled";
 const Cost = [
   {
-    code: "0",
+    code: "1",
     id: 1,
     title: "Pay",
   },
   {
-    code: "1",
+    code: "0",
     id: 2,
     title: "Free",
   },

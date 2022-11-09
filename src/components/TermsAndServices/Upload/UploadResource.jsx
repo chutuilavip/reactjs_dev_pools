@@ -258,7 +258,13 @@ const UploadResource = ({ setFinalData, finalData }) => {
         <div className="upload_item">
           <div className="label">
             <p>Upload Avatar *</p>
+
             <p className="error_message">{errors.uploadavatar?.message}</p>
+            <p className="hint">- The file size must be less than 2MB</p>
+            <p className="hint">
+              - File must be 255 of width and 390 of height
+            </p>
+            <p className="hint">- The type must be image/jpeg or image/png</p>
           </div>
           {!avatarImageUrl ? (
             <Controller
@@ -312,6 +318,11 @@ const UploadResource = ({ setFinalData, finalData }) => {
           <div className="label">
             <p>Upload Images *</p>
             <p className="error_message">{errors.images?.message}</p>
+            <p className="hint">- The file size must be less than 3MB</p>
+            <p className="hint">
+              - You must upload at least 2 images and max is 10 images
+            </p>
+            <p className="hint">- The type must be image/jpeg or image/png</p>
           </div>
           <Dragger {...propsUploadImages}>
             <p className="ant-upload-drag-icon">
