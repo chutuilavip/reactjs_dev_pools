@@ -1,0 +1,39 @@
+{
+  "user": {
+    "signin": "Sign In"
+  },
+  "account": {
+    "change_avatar": "Change Avatar",
+    "my_account": "MY ACCOUNT",
+    "log_out": "Log Out",
+    "user_name": "User Name",
+    "edit": "Edit",
+    "email": "Email",
+    "password": "Password",
+    "phone_number": "Phone Number",
+    "country": "Country",
+    "my_wallet": "MY WALLET",
+    "your_wallet_address": "Your Wallet Address",
+    "connect_more_wallet": "Connect More Wallet",
+    "my_activities": "My Activities",
+    "name_of_product": "Name Of Product",
+    "type": "Type",
+    "status": "Status",
+    "date": "Date",
+    "value": "Value",
+    "downloaded_app": "Downloaded App",
+    "time": "Time",
+    "action": "Action",
+    "view": "View",
+    "today_activities": "Today Activities",
+    "business_name": "Business Name",
+    "contact_name": "Contact Name",
+    "website": "Website",
+    "address": "Address",
+    "release_details": "Release Details",
+    "product_and_services": "Product And Services",
+    "products_url": "Product URL",
+    "year_established": "Year Established",
+    "application_catalog": "Application Catalog"
+  }
+}
