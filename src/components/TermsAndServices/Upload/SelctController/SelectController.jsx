@@ -10,6 +10,7 @@ export default function SelectController({
   register,
   className,
 }) {
+  console.log(ArrOption);
   const upperCaseFirstLetter = (string) => {
     const stringArray = string.split(" ");
 
@@ -30,7 +31,7 @@ export default function SelectController({
         <InputSelect
           title={upperCaseFirstLetter(title)}
           ArrOption={ArrOption}
-          valueDefault={ArrOption[0]?.title}
+          valueDefault={ArrOption[0]?.code || ArrOption[0]?.id}
           field={{ ...field }}
           register
         />

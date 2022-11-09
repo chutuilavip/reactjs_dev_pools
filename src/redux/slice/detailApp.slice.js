@@ -10,6 +10,8 @@ const initialState = {
   isLoading: true,
   isLoadingBuyVideoService: false,
   isLoadingSubmit: false,
+  isLoadingDeleteScreenshot: false,
+  isLoadingEditApp: false,
   error: {},
   categories: [],
   languages: [],
@@ -42,10 +44,14 @@ export const editApp = createAsyncThunk("editApp", async (data) => {
 });
 export const deleteScreenshot = createAsyncThunk(
   "deleteScreenshot",
-  async (data) => {
+  async ({ name_image, appid, reload }, thunkAPI) => {
     try {
-      const { res, status } = await appApi.deleteScreenshot(data);
+      const { res, status } = await appApi.deleteScreenshot({
+        name_image,
+        appid,
+      });
       if (status === 200) {
+        reload();
         toast.success("Delete screenshot successfully");
         return res;
       } else if (status >= 400) {
@@ -182,24 +188,34 @@ const detailAppSlice = createSlice({
       state.isLoadingSubmit = false;
     },
     [getDetailAppWithLange.pending]: (state) => {
-      state.isLoading = true;
+      state.isLoadingEditApp = true;
     },
     [getDetailAppWithLange.fulfilled]: (state, action) => {
-      state.isLoading = false;
+      state.isLoadingEditApp = false;
       state.detailAppWithLang = action.payload;
     },
     [getDetailAppWithLange.rejected]: (state) => {
-      state.isLoading = false;
+      state.isLoadingEditApp = false;
     },
 
     [deleteScreenshot.pending]: (state) => {
-      state.isLoading = true;
+      state.isLoadingDeleteScreenshot = true;
     },
     [deleteScreenshot.fulfilled]: (state, action) => {
-      state.isLoading = false;
+      state.isLoadingDeleteScreenshot = false;
     },
     [deleteScreenshot.rejected]: (state) => {
-      state.isLoading = false;
+      state.isLoadingDeleteScreenshot = false;
+    },
+
+    [editApp.pending]: (state) => {
+      state.isLoadingEditApp = true;
+    },
+    [editApp.fulfilled]: (state, action) => {
+      state.isLoadingEditApp = false;
+    },
+    [editApp.rejected]: (state) => {
+      state.isLoadingEditApp = false;
     },
   },
 });
