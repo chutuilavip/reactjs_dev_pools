@@ -4,36 +4,11 @@ import { useSelector } from "react-redux";
 import SelectController from "../SelctController/SelectController";
 import InputText from "../UploadAppDetail/InputText";
 import { GroupInput, UploadInfoWrapper } from "./styled";
-import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { UploadContextWrapper } from "../UploadAppDetailWrapper/UploadAppDetailWrapper";
 import StepButtonGroup from "../StepButtonGroup/StepButtonGroup";
+import UploadInformationSchema from "../Schema/UploadInfomationSchema";
 
-const schema = yup
-  .object({
-    privacy_policy: yup
-      .string()
-      .required()
-      .matches(
-        /((https?):\/\/)?(www.)?[a-z0-9]+(\.[a-z]{2,}){1,3}(#?\/?[a-zA-Z0-9#]+)*\/?(\?[a-zA-Z0-9-_]+=[a-zA-Z0-9-%]+&?)?$/,
-        "Enter correct url!"
-      ),
-    term_of_policy: yup
-      .string()
-      .required()
-      .matches(
-        /((https?):\/\/)?(www.)?[a-z0-9]+(\.[a-z]{2,}){1,3}(#?\/?[a-zA-Z0-9#]+)*\/?(\?[a-zA-Z0-9-_]+=[a-zA-Z0-9-%]+&?)?$/,
-        "Enter correct url!"
-      ),
-    app_support: yup
-      .string()
-      .required()
-      .matches(
-        /((https?):\/\/)?(www.)?[a-z0-9]+(\.[a-z]{2,}){1,3}(#?\/?[a-zA-Z0-9#]+)*\/?(\?[a-zA-Z0-9-_]+=[a-zA-Z0-9-%]+&?)?$/,
-        "Enter correct url!"
-      ),
-  })
-  .required();
 const Methods = [
   {
     code: "nft",
@@ -48,7 +23,28 @@ const Methods = [
     title: "Play To Earn",
   },
 ];
-const AgeLimit = ["3", "7", "12", "16", "18"];
+const AgeLimit = [
+  {
+    code: "3",
+    title: "3",
+  },
+  {
+    code: "7",
+    title: "7",
+  },
+  {
+    code: "12",
+    title: "12",
+  },
+  {
+    code: "16",
+    title: "16",
+  },
+  {
+    code: "18",
+    title: "18",
+  },
+];
 
 export default function UploadInformation({ setFinalData, finalData }) {
   const { languages } = useSelector((state) => state.detailApp);
@@ -60,25 +56,23 @@ export default function UploadInformation({ setFinalData, finalData }) {
     control,
     getValues,
     reset,
+    setError,
     setValue,
     formState: { errors },
   } = useForm({
     defaultValues: {
       otherlanguages: languages[0]?.code,
       type: Methods[0].code,
-      age_limit: AgeLimit[0],
+      age_limit: AgeLimit[0].code,
       country_of_service: languages[0]?.locale_code,
     },
-    resolver: yupResolver(schema),
+    resolver: yupResolver(UploadInformationSchema),
   });
-  useEffect(() => {
-    setValue("country_of_service", languages[0]?.language);
-    setValue("otherlanguages", languages[0]?.language);
-  }, [languages]);
+
   const onSubmit = (data) => {
-    setFinalData((prevData) => ({ ...Object.assign(prevData, data) }));
     handleNextTab();
   };
+
   const FieldContentInput = [
     [
       {
@@ -139,7 +133,6 @@ export default function UploadInformation({ setFinalData, finalData }) {
       },
     ],
   ];
-  console.log(finalData);
   const renderField = () => {
     return FieldContentInput.concat(FieldContentSelect).map((row, index) => {
       return (
@@ -147,9 +140,8 @@ export default function UploadInformation({ setFinalData, finalData }) {
           {row.map((item, index) => {
             if (item.type === "select") {
               return (
-                <div className="field_item" key={`row-${index}`}>
+                <div className="field_item" key={`field-${index}`}>
                   <SelectController
-                    key={`field-${index}`}
                     control={control}
                     name={item.name}
                     title={item.title}
@@ -178,9 +170,8 @@ export default function UploadInformation({ setFinalData, finalData }) {
                 );
               } else {
                 return (
-                  <div className="field_item">
+                  <div className="field_item" key={`field-${index}`}>
                     <InputText
-                      key={`field-${index}`}
                       register={{ ...register(item.name) }}
                       title={item.title}
                       placeho={item.placeholder}
@@ -198,8 +189,29 @@ export default function UploadInformation({ setFinalData, finalData }) {
     });
   };
   useEffect(() => {
+    setValue("country_of_service", languages[0]?.language);
+    setValue("otherlanguages", languages[0]?.language);
+  }, [languages]);
+  useEffect(() => {
     reset({ ...finalData });
+  }, [finalData]);
+  useEffect(() => {
+    return () => {
+      if (getValues().free === "0") {
+        getValues().price = 0;
+      }
+      if (finalData.free === "1" && getValues().prices === "") {
+        setError("prices", {
+          type: "required",
+          message: "Price is required when you set app is Pay",
+        });
+        return;
+      }
+      setFinalData((prevData) => ({ ...Object.assign(prevData, getValues()) }));
+    };
   }, []);
+  console.log("upload information", getValues(), finalData);
+
   return (
     <div className="">
       <form onSubmit={handleSubmit(onSubmit)} style={{ marginBottom: "7rem" }}>

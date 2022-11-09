@@ -33,7 +33,7 @@ export const EditAppWrapper = styled.div`
 
     input.ant-input {
       border: none;
-      border-bottom: 1px solid black;
+      border-bottom: 1px solid #d7d7d7;
     }
   }
   form {

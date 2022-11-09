@@ -37,6 +37,8 @@ export default function UploadApk({ setFinalData, finalData }) {
 
   useEffect(() => {
     reset({ ...finalData });
+  }, [finalData]);
+  useEffect(() => {
     return () => {
       setFinalData((prevData) => ({
         ...Object.assign(prevData, getValues()),
@@ -64,6 +66,8 @@ export default function UploadApk({ setFinalData, finalData }) {
   const onSubmit = () => {
     submitForm();
   };
+  console.log("upload apk", getValues(), finalData);
+
   return (
     <UploadAplWrapper>
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -73,7 +77,10 @@ export default function UploadApk({ setFinalData, finalData }) {
               Choose APK file
             </label>
             <p className="error_field">{errors.fileapk?.message}</p>
-            <p className="hint">- The file sime must be less than 200MB</p>
+            <p className="hint">
+              - The file sime must be less than{" "}
+              <span className="special">200MB</span>
+            </p>
           </div>
           <Upload
             {...register("fileapk")}

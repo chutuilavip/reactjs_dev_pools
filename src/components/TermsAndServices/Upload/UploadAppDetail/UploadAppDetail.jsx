@@ -53,7 +53,6 @@ const UploadAppDetail = ({ setFinalData, finalData }) => {
     },
     resolver: yupResolver(schema),
   });
-  console.log("languageslanguageslanguageslanguageslanguages", languages);
   useEffect(() => {
     if (Object.keys(finalData).length > 0) {
       reset({ ...finalData });
@@ -66,14 +65,22 @@ const UploadAppDetail = ({ setFinalData, finalData }) => {
   }, [categories, languages, Cost]);
   useEffect(() => {
     reset({ ...finalData });
+  }, [finalData]);
+  useEffect(() => {
     return () => {
       setFinalData((prevData) => ({ ...Object.assign(prevData, getValues()) }));
     };
   }, []);
-
   const onSubmit = (data) => {
     handleNextTab();
   };
+  useEffect(() => {
+    if (getValues("free") === "0") {
+      setValue("price", 0);
+    }
+  }, [getValues()]);
+  console.log("upload app detail", getValues(), finalData);
+
   return (
     <div className="">
       {isLoading ? (

@@ -4,7 +4,7 @@ import { Button, Form, Image, Input, Select, Upload } from "antd";
 import React, { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import {
   deleteScreenshot,
   editApp,
@@ -50,6 +50,7 @@ export default function EditApp() {
   const [isAppFree, setIsAppFree] = useState(true);
   const [locale, setLocale] = useState("");
 
+  const navigate = useNavigate();
   const InputFields = [
     [
       {
@@ -173,6 +174,12 @@ export default function EditApp() {
     onChange: (info) => {},
     onDrop(e) {},
   };
+  const handleGetDetailApp = () => {
+    dispatch(getDetailAppWithLange({ slug: params?.slug, lang: locale }));
+  };
+  const redirectToAccount = () => {
+    navigate("/account");
+  };
   const submitForm = (value) => {
     let payload = Object.assign(getValues(), { locale });
     if (!isAppFree && payload.price === undefined) {
@@ -211,7 +218,7 @@ export default function EditApp() {
     }
     console.log(payload);
     const formData = ConvertToFormData(payload);
-    dispatch(editApp(formData));
+    dispatch(editApp({ data: formData, callBack: redirectToAccount }));
   };
   const handleChangeAppCost = (value) => {
     setValue("free", value);
@@ -223,9 +230,6 @@ export default function EditApp() {
     }
   };
 
-  const handleGetDetailApp = () => {
-    dispatch(getDetailAppWithLange({ slug: params?.slug, lang: locale }));
-  };
   const handleDeleteScreenshot = (imgUrl) => {
     console.log(imgUrl);
     dispatch(
@@ -297,7 +301,6 @@ export default function EditApp() {
   useEffect(() => {
     dispatch(getCategoriesAndLanguage());
   }, []);
-  console.log(getValues());
   return (
     <EditAppWrapper>
       <h1 style={{ textAlign: "center" }}>EDIT APP</h1>
@@ -336,111 +339,103 @@ export default function EditApp() {
         )}
         {locale && (
           <>
-            {!isLoadingEditApp ? (
-              <>
-                {InputFields.map((row, index) => {
-                  return (
-                    <div className="row" key={index}>
-                      {row.map((item, index) => {
-                        return (
-                          <Controller
-                            key={index}
-                            control={control}
-                            name={item.name}
-                            render={({ field }) => (
-                              // <Form.Item label={item.label}>
+            {InputFields.map((row, index) => {
+              return (
+                <div className="row" key={index}>
+                  {row.map((item, index) => {
+                    return (
+                      <Controller
+                        key={index}
+                        control={control}
+                        name={item.name}
+                        render={({ field }) => (
+                          // <Form.Item label={item.label}>
 
-                              // </Form.Item>
-                              <div className="field-item">
-                                <label className="fieldLabel">
-                                  {item.label} :
-                                </label>
+                          // </Form.Item>
+                          <div className="field-item">
+                            <label className="fieldLabel">{item.label} :</label>
 
-                                <Input
-                                  disabled={item?.disabled || false}
-                                  {...field}
-                                  placeholder={item.placeholder}
-                                  type={item.type || "text"}
-                                />
-                                <p className="error_message">
-                                  {errors[item.name]?.message}
-                                </p>
-                              </div>
-                            )}
-                          />
-                        );
-                      })}
-                    </div>
-                  );
-                })}
-                {SelectField.map((row, index) => {
-                  return (
-                    <div className="row" key={index}>
-                      {row.map((item, index) => {
-                        return (
-                          <Controller
-                            key={index}
-                            control={control}
-                            name={item.name}
-                            render={({ field }) => (
-                              // <Form.Item label={item.label}>
+                            <Input
+                              disabled={item?.disabled || false}
+                              {...field}
+                              placeholder={item.placeholder}
+                              type={item.type || "text"}
+                            />
+                            <p className="error_message">
+                              {errors[item.name]?.message}
+                            </p>
+                          </div>
+                        )}
+                      />
+                    );
+                  })}
+                </div>
+              );
+            })}
+            {SelectField.map((row, index) => {
+              return (
+                <div className="row" key={index}>
+                  {row.map((item, index) => {
+                    return (
+                      <Controller
+                        key={index}
+                        control={control}
+                        name={item.name}
+                        render={({ field }) => (
+                          // <Form.Item label={item.label}>
 
-                              // </Form.Item>
-                              <div className="field-item">
-                                <label className="fieldLabel">
-                                  {item.label} :
-                                </label>
-                                <Select
-                                  {...field}
-                                  defaultValue=""
-                                  onChange={
-                                    item.name === "free"
-                                      ? handleChangeAppCost
-                                      : field.onChange
-                                  }
-                                  options={renderOption(item)}
-                                />
-                                <p className="error_message">
-                                  {errors[item.name]?.message}
-                                </p>
-                              </div>
-                            )}
-                          />
-                        );
-                      })}
-                    </div>
-                  );
-                })}
-                {!isAppFree && (
-                  <div className="field-item">
-                    {" "}
-                    <Controller
-                      style={{ width: "100%" }}
-                      control={control}
-                      name="price"
-                      render={({ field }) => (
-                        <Form.Item label="App Price">
-                          <Input
-                            {...field}
-                            placeholder="Enter App price"
-                            type="number"
-                          />
-                          <p className="error_message">
-                            {errors?.price?.message}
-                          </p>
-                        </Form.Item>
-                      )}
-                    />
-                  </div>
-                )}
-                <UploadSingleAvatar
+                          // </Form.Item>
+                          <div className="field-item">
+                            <label className="fieldLabel">{item.label} :</label>
+                            <Select
+                              {...field}
+                              defaultValue=""
+                              onChange={
+                                item.name === "free"
+                                  ? handleChangeAppCost
+                                  : field.onChange
+                              }
+                              options={renderOption(item)}
+                            />
+                            <p className="error_message">
+                              {errors[item.name]?.message}
+                            </p>
+                          </div>
+                        )}
+                      />
+                    );
+                  })}
+                </div>
+              );
+            })}
+            {!isAppFree && (
+              <div className="field-item">
+                {" "}
+                <Controller
+                  style={{ width: "100%" }}
                   control={control}
-                  defaultAvatar={detailAppWithLang?.data?.app?.cover}
-                  errMessage={errors?.cover?.message}
-                  name="cover"
-                  label="App Cover"
+                  name="price"
+                  render={({ field }) => (
+                    <Form.Item label="App Price">
+                      <Input
+                        {...field}
+                        placeholder="Enter App price"
+                        type="number"
+                      />
+                      <p className="error_message">{errors?.price?.message}</p>
+                    </Form.Item>
+                  )}
                 />
-                {/* <Controller
+              </div>
+            )}
+            <UploadSingleAvatar
+              control={control}
+              defaultAvatar={detailAppWithLang?.data?.app?.cover}
+              errMessage={errors?.cover?.message}
+              name="cover"
+              label="App Cover"
+            />
+            {/* <Controller
                   control={control}
                   name="cover"
                   render={({ field }) => (
@@ -477,84 +472,82 @@ export default function EditApp() {
                     </Form.Item>
                   )}
                 /> */}
-                <Controller
-                  control={control}
-                  name="images"
-                  render={({ field }) => (
-                    <Form.Item label="App Images">
-                      <Dragger
-                        {...propsUploadAvatar}
-                        {...field}
-                        multiple={true}
-                        // maxCount={1}
-                        listType="picture"
-                        accept="image/png, image/jpeg"
-                      >
-                        <p className="ant-upload-drag-icon">
-                          <InboxOutlined />
-                        </p>
-                        <p className="ant-upload-text">
-                          Click or drag file to this area to upload
-                        </p>
-                        <p className="ant-upload-hint">
-                          Upload your new app's screenshot
-                        </p>
-                      </Dragger>
+            <Controller
+              control={control}
+              name="images"
+              render={({ field }) => (
+                <Form.Item label="App Images">
+                  <Dragger
+                    {...propsUploadAvatar}
+                    {...field}
+                    multiple={true}
+                    // maxCount={1}
+                    listType="picture"
+                    accept="image/png, image/jpeg"
+                  >
+                    <p className="ant-upload-drag-icon">
+                      <InboxOutlined />
+                    </p>
+                    <p className="ant-upload-text">
+                      Click or drag file to this area to upload
+                    </p>
+                    <p className="ant-upload-hint">
+                      Upload your new app's screenshot
+                    </p>
+                  </Dragger>
 
-                      <div className="screenshots-wrapper">
-                        <p
-                          style={{
-                            textTransform: "uppercase",
-                            margin: "3rem 0",
-                          }}
-                        >
-                          Current Screenshots:{" "}
-                        </p>
-                        {!isLoadingDeleteScreenshot ? (
-                          <div className="screenshots">
-                            {detailAppWithLang?.data?.app?.screenshots ? (
-                              JSON.parse(
-                                detailAppWithLang?.data?.app?.screenshots
-                              ).map((item, index) => {
-                                return (
-                                  <div className="image" key={index}>
-                                    <Image
-                                      key={index}
-                                      className="screenshot"
-                                      style={{
-                                        marginTop: "1rem",
-                                        borderRadius: "1rem",
-                                      }}
-                                      preview={false}
-                                      src={`${URL_API}${item}`}
-                                      alt="screenshot"
-                                    />
+                  <div className="screenshots-wrapper">
+                    <p
+                      style={{
+                        textTransform: "uppercase",
+                        margin: "3rem 0",
+                      }}
+                    >
+                      Current Screenshots:{" "}
+                    </p>
+                    {!isLoadingDeleteScreenshot ? (
+                      <div className="screenshots">
+                        {detailAppWithLang?.data?.app?.screenshots ? (
+                          JSON.parse(
+                            detailAppWithLang?.data?.app?.screenshots
+                          ).map((item, index) => {
+                            return (
+                              <div className="image" key={index}>
+                                <Image
+                                  key={index}
+                                  className="screenshot"
+                                  style={{
+                                    marginTop: "1rem",
+                                    borderRadius: "1rem",
+                                  }}
+                                  preview={false}
+                                  src={`${URL_API}${item}`}
+                                  alt="screenshot"
+                                />
 
-                                    <Button
-                                      type="danger"
-                                      onClick={() =>
-                                        handleDeleteScreenshot(item)
-                                      }
-                                    >
-                                      x
-                                    </Button>
-                                  </div>
-                                );
-                              })
-                            ) : (
-                              <p>Nothing</p>
-                            )}
-                          </div>
+                                <Button
+                                  type="danger"
+                                  onClick={() => handleDeleteScreenshot(item)}
+                                >
+                                  x
+                                </Button>
+                              </div>
+                            );
+                          })
                         ) : (
-                          <Loading />
+                          <p>Nothing</p>
                         )}
                       </div>
+                    ) : (
+                      <Loading />
+                    )}
+                  </div>
 
-                      <p className="error_message">{errors.images?.message}</p>
-                    </Form.Item>
-                  )}
-                />
-                {/* <UploadMultipleImage
+                  <p className="error_message">{errors.images?.message}</p>
+                </Form.Item>
+              )}
+            />
+            {/* <UploadMultipleImage
                   control={control}
                   defaultImages={JSON.parse(
                     detailAppWithLang?.data?.app?.screenshots
@@ -564,44 +557,44 @@ export default function EditApp() {
                   onDeleteScreenshot={handleDeleteScreenshot}
                   label="App Screenshots"
                 /> */}
-                <Controller
-                  control={control}
-                  name="apkfile"
-                  render={({ field }) => (
-                    <Form.Item label="App Apk">
-                      <Dragger {...field} multiple={false} accept=".apk">
-                        <p className="ant-upload-drag-icon">
-                          <InboxOutlined />
-                        </p>
-                        <p className="ant-upload-text">
-                          Click or drag file to this area to upload
-                        </p>
-                        <p className="ant-upload-hint">Upload your new apk</p>
-                      </Dragger>
-                      <p className="error_message">{errors.apkfile?.message}</p>
-                      {detailAppWithLang?.data?.app?.file_apk && (
-                        <p
-                          style={{
-                            border: "1px dashed black",
-                            padding: "1rem",
-                            marginTop: "2rem",
-                            cursor: "not-allowed",
-                          }}
-                        >
-                          {getFileName(detailAppWithLang?.data?.app?.file_apk)}
-                        </p>
-                      )}
-                    </Form.Item>
+            <Controller
+              control={control}
+              name="apkfile"
+              render={({ field }) => (
+                <Form.Item label="App Apk">
+                  <Dragger {...field} multiple={false} accept=".apk">
+                    <p className="ant-upload-drag-icon">
+                      <InboxOutlined />
+                    </p>
+                    <p className="ant-upload-text">
+                      Click or drag file to this area to upload
+                    </p>
+                    <p className="ant-upload-hint">Upload your new apk</p>
+                  </Dragger>
+                  <p className="error_message">{errors.apkfile?.message}</p>
+                  {detailAppWithLang?.data?.app?.file_apk && (
+                    <p
+                      style={{
+                        border: "1px dashed black",
+                        padding: "1rem",
+                        marginTop: "2rem",
+                        cursor: "not-allowed",
+                      }}
+                    >
+                      {getFileName(detailAppWithLang?.data?.app?.file_apk)}
+                    </p>
                   )}
-                />
-              </>
-            ) : (
-              <Loading />
-            )}
+                </Form.Item>
+              )}
+            />
           </>
         )}
 
-        {locale !== "" && <Button htmlType="submit">Update App</Button>}
+        {locale !== "" && (
+          <Button htmlType="submit" loading={isLoadingEditApp}>
+            Update App
+          </Button>
+        )}
       </Form>
     </EditAppWrapper>
   );

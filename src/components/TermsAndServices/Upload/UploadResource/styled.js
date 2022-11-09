@@ -33,9 +33,11 @@ export const WrapUploadResource = styled.div`
 
     .ant-upload-list-item-thumbnail {
       height: 100%;
+      width: 15rem;
       img {
         height: 100%;
         aspect-ratio: 1 / 1;
+        width: 100%;
       }
     }
     .ant-upload-list-item-name {
@@ -83,13 +85,15 @@ export const WrapUploadResource = styled.div`
     align-items: flex-start;
     background: white;
     color: black;
-    width: 52%;
+    width: auto%;
     justify-content: space-between;
     padding: 1rem;
     border-radius: 1rem;
+    gap: 2rem;
     img {
       width: 8rem;
       height: 13rem;
+      border-radius: 5px;
     }
     button {
       height: 100%;

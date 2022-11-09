@@ -10,7 +10,6 @@ export default function SelectController({
   register,
   className,
 }) {
-  console.log(ArrOption);
   const upperCaseFirstLetter = (string) => {
     const stringArray = string.split(" ");
 

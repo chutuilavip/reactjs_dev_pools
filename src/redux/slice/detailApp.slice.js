@@ -29,19 +29,23 @@ export const getDetailApp = createAsyncThunk("getDetailApp", async (slug) => {
   }
 });
 
-export const editApp = createAsyncThunk("editApp", async (data) => {
-  try {
-    const { res, status } = await appApi.editApp(data);
-    if (status === 200) {
-      toast.success("Edit app successfully");
-      return res;
-    } else if (status >= 400) {
-      ToastError(res);
+export const editApp = createAsyncThunk(
+  "editApp",
+  async ({ callBack, data }) => {
+    try {
+      const { res, status } = await appApi.editApp(data);
+      if (status === 200) {
+        toast.success("Edit app successfully");
+        callBack();
+        return res;
+      } else if (status >= 400) {
+        ToastError(res);
+      }
+    } catch (error) {
+      console.log(error);
     }
-  } catch (error) {
-    console.log(error);
   }
-});
+);
 export const deleteScreenshot = createAsyncThunk(
   "deleteScreenshot",
   async ({ name_image, appid, reload }, thunkAPI) => {

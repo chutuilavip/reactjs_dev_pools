@@ -88,7 +88,6 @@ export default function UploadAppDetailWrapper() {
         formData.append(v, finalData[v]);
       }
     }
-    console.log("olalal", finalData);
     dispatch(
       uploadContent({ formData, callback: () => window.location.reload() })
     );
