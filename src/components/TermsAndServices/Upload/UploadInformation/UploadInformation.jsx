@@ -155,7 +155,12 @@ export default function UploadInformation({ setFinalData, finalData }) {
               );
             } else {
               return (
-                <div className="field_item" key={`field-${index}`}>
+                <div
+                  className={`field_item ${
+                    index === row.length * 2 - 2 ? "last_child" : ""
+                  }`}
+                  key={`field-${index}`}
+                >
                   <InputText
                     register={{ ...register(item.name) }}
                     title={item.title}

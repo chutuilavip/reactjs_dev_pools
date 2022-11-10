@@ -33,7 +33,7 @@ const schema = yup
     full_description: yup
       .string()
       .required()
-      .max(4000, "Description must be less than 80 characters"),
+      .max(4000, "Description must be less than 4000 characters"),
   })
   .required();
 const UploadAppDetail = ({ setFinalData, finalData }) => {
@@ -209,12 +209,13 @@ const UploadAppDetail = ({ setFinalData, finalData }) => {
                     <textarea
                       {...register("summary")}
                       placeholder="Enter Description"
+                      maxLength={80}
                     ></textarea>
                     <div className="bottom_des">
                       <p>
                         Promote your app with a description to attract users
                       </p>
-                      <span>0/1000</span>
+                      <span>max 80</span>
                     </div>
                   </div>
                   <p className="error_message">{errors.summary?.message}</p>
@@ -225,12 +226,13 @@ const UploadAppDetail = ({ setFinalData, finalData }) => {
                     <textarea
                       {...register("full_description")}
                       placeholder="Enter Description"
+                      maxLength={4000}
                     ></textarea>
                     <div className="bottom_des">
                       <p>
                         Promote your app with a description to attract users
                       </p>
-                      <span>0/1000</span>
+                      <span>max 4000</span>
                     </div>
                   </div>
                   <p className="error_message">
