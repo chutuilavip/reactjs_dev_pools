@@ -5,7 +5,7 @@ const WrapRegister = styled.div`
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  height: 125vh;
+  min-height: 140vh;
   background-color: #131313;
   .title_form {
     margin-top: 50px;
@@ -37,6 +37,7 @@ const FormRegis = styled.form`
   display: flex;
   align-items: center;
   justify-content: center;
+  flex: 1;
 `;
 
 const StepOne = styled.div`
