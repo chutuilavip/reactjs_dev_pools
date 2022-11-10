@@ -1,5 +1,6 @@
 import axios from "axios";
 import queryString from "query-string";
+import { toast } from "react-toastify";
 const keyLang = localStorage.getItem("i18nextLng");
 
 const axiosClient = axios.create({
@@ -24,12 +25,24 @@ axiosClient.interceptors.request.use(
 
 axiosClient.interceptors.response.use(
   (response) => {
+    console.log(response);
+
     if (response && response.data) {
+      const { status } = response;
+
+      console.log(status);
+      if (status === 401) {
+        toast.error("Please login");
+      }
       return response.data;
     }
+
     return response;
   },
   (error) => {
+    if (error.response.status === 401) {
+      toast.error("Please login again");
+    }
     throw error;
   }
 );

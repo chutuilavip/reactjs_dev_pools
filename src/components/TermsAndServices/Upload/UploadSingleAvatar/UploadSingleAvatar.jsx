@@ -41,6 +41,17 @@ export default function UploadSingleAvatar({
               </p>
               <p className="ant-upload-hint">Upload your new avatar</p>
             </Dragger>
+            <div className="note">
+              <p className="hint">
+                The size of file must be less than{" "}
+                <span className="special">2MB</span>
+              </p>
+              <p className="hint">
+                The type must be <span className="special">image/jpeg</span> or
+                <span className="special"> image/png</span> or
+                <span className="special"> image/jpg</span>
+              </p>
+            </div>
             {defaultAvatar && (
               <div className="cover-wrapper">
                 <p>Current Cover :</p>

@@ -1,6 +1,6 @@
 import { InboxOutlined } from "@ant-design/icons";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Button, Form, Image, Input, Select, Upload } from "antd";
+import { Button, Form, Image, Input, Popconfirm, Select, Upload } from "antd";
 import React, { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
@@ -15,10 +15,9 @@ import {
 import { ConvertToFormData } from "../../../../helpers/formData";
 import Loading from "../../../../layout/components/Loading/Loading";
 import { getFileName, URL_API } from "../../../../utils";
-import { Cost, schema, Types } from "./constant";
-import { EditAppWrapper } from "./styled";
 import UploadSingleAvatar from "../UploadSingleAvatar/UploadSingleAvatar";
-import UploadMultipleImage from "../UploadMultipleImage/UploadMultipleImage";
+import { Cost, InputFields, schema, Types } from "./constant";
+import { EditAppWrapper } from "./styled";
 const { Dragger } = Upload;
 
 export default function EditApp() {
@@ -51,71 +50,7 @@ export default function EditApp() {
   const [locale, setLocale] = useState("");
 
   const navigate = useNavigate();
-  const InputFields = [
-    [
-      {
-        name: "appid",
-        label: "App ID",
-        placeholder: "Enter App ID",
-        disabled: true,
-      },
-      {
-        name: "title",
-        label: "Title",
-        placeholder: "Enter App Title",
-      },
-    ],
-    [
-      {
-        name: "summary",
-        label: "Summary",
-        placeholder: "Enter Summary",
-      },
-      {
-        name: "full_description",
-        label: "Description",
-        placeholder: "Enter Description",
-      },
-    ],
 
-    [
-      {
-        name: "recent_change",
-        label: "Recent Change",
-        placeholder: "Enter Recent Change",
-      },
-      {
-        name: "app_version",
-        label: "App Version",
-        placeholder: "Enter App Version",
-      },
-    ],
-    [
-      {
-        name: "privacy_policy",
-        label: "Privacy Policy",
-        placeholder: "Enter Privacy Policy",
-      },
-      {
-        name: "term_of_policy",
-        label: "Term Of Policy",
-        placeholder: "Enter Term Of Policy",
-      },
-    ],
-    [
-      {
-        name: "app_support",
-        label: "App Support",
-        placeholder: "Enter App Support",
-      },
-    ],
-    // {
-    //   name: "price",
-    //   label: "Price",
-    //   placeholder: "Enter Price",
-    //   type: "number",
-    // },
-  ];
   const SelectField = [
     [
       {
@@ -142,11 +77,6 @@ export default function EditApp() {
         data: languages,
       },
     ],
-    // {
-    //   name: "locale",
-    //   label: "Locale",
-    //   data: languages,
-    // },
   ];
   const renderOption = (data) => {
     const mainOption = data.data?.map((item) => {
@@ -216,13 +146,11 @@ export default function EditApp() {
         }
       }
     }
-    console.log(payload);
     const formData = ConvertToFormData(payload);
     dispatch(editApp({ data: formData, callBack: redirectToAccount }));
   };
   const handleChangeAppCost = (value) => {
     setValue("free", value);
-    console.log(value);
     if (value === "1") {
       setIsAppFree(false);
     } else if (value === "0") {
@@ -231,7 +159,6 @@ export default function EditApp() {
   };
 
   const handleDeleteScreenshot = (imgUrl) => {
-    console.log(imgUrl);
     dispatch(
       deleteScreenshot({
         name_image: imgUrl,
@@ -301,6 +228,9 @@ export default function EditApp() {
   useEffect(() => {
     dispatch(getCategoriesAndLanguage());
   }, []);
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, []);
   return (
     <EditAppWrapper>
       <h1 style={{ textAlign: "center" }}>EDIT APP</h1>
@@ -313,11 +243,9 @@ export default function EditApp() {
               onChange={(e) => {
                 reset({});
                 setLocale(e);
-
                 dispatch(
                   getDetailAppWithLange({ slug: params?.slug, lang: e })
                 );
-                // handleGetDetailApp();
               }}
               options={[
                 {
@@ -349,12 +277,8 @@ export default function EditApp() {
                         control={control}
                         name={item.name}
                         render={({ field }) => (
-                          // <Form.Item label={item.label}>
-
-                          // </Form.Item>
                           <div className="field-item">
                             <label className="fieldLabel">{item.label} :</label>
-
                             <Input
                               disabled={item?.disabled || false}
                               {...field}
@@ -382,9 +306,6 @@ export default function EditApp() {
                         control={control}
                         name={item.name}
                         render={({ field }) => (
-                          // <Form.Item label={item.label}>
-
-                          // </Form.Item>
                           <div className="field-item">
                             <label className="fieldLabel">{item.label} :</label>
                             <Select
@@ -435,43 +356,6 @@ export default function EditApp() {
               name="cover"
               label="App Cover"
             />
-            {/* <Controller
-                  control={control}
-                  name="cover"
-                  render={({ field }) => (
-                    <Form.Item label="App avatar">
-                      <Dragger
-                        {...propsUploadAvatar}
-                        {...field}
-                        maxCount={1}
-                        listType="picture"
-                        accept="image/png, image/jpeg"
-                      >
-                        <p className="ant-upload-drag-icon">
-                          <InboxOutlined />
-                        </p>
-                        <p className="ant-upload-text">
-                          Click or drag file to this area to upload
-                        </p>
-                        <p className="ant-upload-hint">
-                          Upload your new avatar
-                        </p>
-                      </Dragger>
-                      {detailAppWithLang?.data?.app?.cover && (
-                        <div className="cover-wrapper">
-                          <p>Current Cover :</p>
-                          <Image
-                            preview={false}
-                            src={`${URL_API}/${detailAppWithLang?.data?.app?.cover}`}
-                            alt="Current Cover"
-                            className="cover"
-                          />
-                        </div>
-                      )}
-                      <p className="error_message">{errors.cover?.message}</p>
-                    </Form.Item>
-                  )}
-                /> */}
             <Controller
               control={control}
               name="images"
@@ -481,7 +365,6 @@ export default function EditApp() {
                     {...propsUploadAvatar}
                     {...field}
                     multiple={true}
-                    // maxCount={1}
                     listType="picture"
                     accept="image/png, image/jpeg"
                   >
@@ -495,7 +378,18 @@ export default function EditApp() {
                       Upload your new app's screenshot
                     </p>
                   </Dragger>
-
+                  <div className="note">
+                    <p className="hint">
+                      You must upload max
+                      <span className="special"> 8 images</span>
+                    </p>
+                    <p className="hint">
+                      The type must be{" "}
+                      <span className="special">image/jpeg</span> or
+                      <span className="special"> image/png</span> or
+                      <span className="special"> image/jpg</span>
+                    </p>
+                  </div>
                   <div className="screenshots-wrapper">
                     <p
                       style={{
@@ -525,12 +419,19 @@ export default function EditApp() {
                                   alt="screenshot"
                                 />
 
-                                <Button
-                                  type="danger"
-                                  onClick={() => handleDeleteScreenshot(item)}
+                                <Popconfirm
+                                  title="Are you sure wanna delete this image？"
+                                  okText="Yes"
+                                  cancelText="No"
+                                  onConfirm={() => handleDeleteScreenshot(item)}
                                 >
-                                  x
-                                </Button>
+                                  <Button
+                                    type="danger"
+                                    onClick={() => handleDeleteScreenshot(item)}
+                                  >
+                                    x
+                                  </Button>
+                                </Popconfirm>
                               </div>
                             );
                           })
@@ -547,22 +448,17 @@ export default function EditApp() {
                 </Form.Item>
               )}
             />
-            {/* <UploadMultipleImage
-                  control={control}
-                  defaultImages={JSON.parse(
-                    detailAppWithLang?.data?.app?.screenshots
-                  )}
-                  errMessage={errors.images?.message}
-                  name="images"
-                  onDeleteScreenshot={handleDeleteScreenshot}
-                  label="App Screenshots"
-                /> */}
             <Controller
               control={control}
               name="apkfile"
               render={({ field }) => (
                 <Form.Item label="App Apk">
-                  <Dragger {...field} multiple={false} accept=".apk">
+                  <Dragger
+                    {...field}
+                    multiple={false}
+                    accept=".apk"
+                    maxCount={1}
+                  >
                     <p className="ant-upload-drag-icon">
                       <InboxOutlined />
                     </p>
@@ -571,6 +467,15 @@ export default function EditApp() {
                     </p>
                     <p className="ant-upload-hint">Upload your new apk</p>
                   </Dragger>
+                  <div className="note">
+                    <p className="hint">
+                      The size of file must be less than
+                      <span className="special"> 200MB</span>
+                    </p>
+                    <p className="hint">
+                      The type must be <span className="special">APK</span>
+                    </p>
+                  </div>
                   <p className="error_message">{errors.apkfile?.message}</p>
                   {detailAppWithLang?.data?.app?.file_apk && (
                     <p

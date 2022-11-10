@@ -5,7 +5,6 @@ import { Controller, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
-import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import Pen from "../../../assets/Account/buttonchange.png";
 import { ConvertToFormData } from "../../../helpers/formData";
@@ -14,50 +13,7 @@ import { editAccountInfo } from "../../../redux/slice/account.slice";
 import { goToTop } from "../../../utils";
 import fields from "./fields";
 import { InfoDetail, ShowInfo } from "./styled";
-const schema = yup
-  .object({
-    first_name: yup.string().required().min(2).max(10),
-    last_name: yup
-      .string()
-      .required()
-      .min(2, "Min length validate message")
-      .max(10),
-    email: yup.string().required().email(),
-    phone_number: yup.string().required(),
-    // country: yup.string().required(),
-    business_name: yup.string().required(),
-    application_catalog: yup.string().required(),
-    contact_name: yup.string().required(),
-    product_and_services: yup.string().required(),
-    address: yup.string().required(),
-    products_url: yup
-      .string()
-      .required()
-      .matches(
-        /((https?):\/\/)?(www.)?[a-z0-9]+(\.[a-z]{2,}){1,3}(#?\/?[a-zA-Z0-9#]+)*\/?(\?[a-zA-Z0-9-_]+=[a-zA-Z0-9-%]+&?)?$/,
-        "Enter correct url!"
-      ),
-    release_details: yup.string().required(),
-    website: yup
-      .string()
-      .required()
-      .matches(
-        /((https?):\/\/)?(www.)?[a-z0-9]+(\.[a-z]{2,}){1,3}(#?\/?[a-zA-Z0-9#]+)*\/?(\?[a-zA-Z0-9-_]+=[a-zA-Z0-9-%]+&?)?$/,
-        "Enter correct url!"
-      ),
-    year_established: yup
-      .number("Year established can not be characters")
-      .required()
-      .min(
-        new Date().getFullYear(),
-        "Year must be current year or greater than current year"
-      ),
-    password: yup.string(),
-    password_confirmation: yup
-      .string()
-      .oneOf([yup.ref("password"), null], "Password confirm does not match"),
-  })
-  .required();
+import { editInfoUserSchema } from "./schema";
 
 const InfoDetailUser = ({ res }) => {
   const dispatch = useDispatch();
@@ -103,7 +59,7 @@ const InfoDetailUser = ({ res }) => {
       year_established,
       application_catalog,
     },
-    resolver: yupResolver(schema),
+    resolver: yupResolver(editInfoUserSchema),
   });
 
   const handleEdit = (type) => {
@@ -141,18 +97,14 @@ const InfoDetailUser = ({ res }) => {
     dispatch(editAccountInfo(formData));
   };
   useEffect(() => {
-    // const validateErrors = [...Object.values(errors)];
-
-    // if (validateErrors.length > 0) {
-    //   validateErrors.forEach((el) => toast.error(el.message));
-    // }
     const keys = Object.keys(errors);
     const cloneEditFields = [...editFields, ...keys];
-    console.log(cloneEditFields);
     const setOfEditFields = [...new Set(cloneEditFields)];
+    console.log(setOfEditFields);
+
     setEditFields(setOfEditFields);
   }, [errors]);
-
+  console.log(errors);
   return (
     <InfoDetail>
       <div className="title">{t("account.my_account")}</div>
@@ -162,7 +114,8 @@ const InfoDetailUser = ({ res }) => {
           <Form onFinish={handleSubmit(onSubmit)} className="grid_container">
             <div className="grid_item one">{t("account.user_name")}</div>
             <div className="grid_item two">
-              {editFields.includes("first_name") ? (
+              {editFields.includes("first_name") ||
+              editFields.includes("last_name") ? (
                 <div className="userNameField">
                   <Controller
                     name="first_name"

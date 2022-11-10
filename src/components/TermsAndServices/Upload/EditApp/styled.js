@@ -13,8 +13,8 @@ export const EditAppWrapper = styled.div`
       border-radius: 5px;
       box-shadow: rgb(0 0 0 / 24%) 0px 3px 8px;
       color: white;
-      background-color: #0093e9;
-      background-image: linear-gradient(18deg, #0093e9 0%, #80d0c7 100%);
+      background-color: #007fff;
+      /* background-image: linear-gradient(18deg, #0093e9 0%, #80d0c7 100%); */
     }
     .ant-form-item-label {
       width: 20%;
@@ -76,8 +76,8 @@ export const EditAppWrapper = styled.div`
       border-radius: 5px;
       box-shadow: rgb(0 0 0 / 24%) 0px 3px 8px;
       color: white;
-      background-color: #0093e9;
-      background-image: linear-gradient(18deg, #0093e9 0%, #80d0c7 100%);
+      background-color: #007fff;
+      /* background-image: linear-gradient(18deg, #0093e9 0%, #80d0c7 100%); */
     }
   }
   .step_group {
