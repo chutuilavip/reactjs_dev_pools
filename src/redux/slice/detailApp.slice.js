@@ -12,6 +12,9 @@ const initialState = {
   isLoadingSubmit: false,
   isLoadingDeleteScreenshot: false,
   isLoadingEditApp: false,
+  isLoadingDeleteApp: false,
+  isLoadingCreatedApps: false,
+  createdApps: [],
   error: {},
   categories: [],
   languages: [],
@@ -25,7 +28,7 @@ export const getDetailApp = createAsyncThunk("getDetailApp", async (slug) => {
     const { res, status } = await appApi.getDetailApp(slug);
     return res;
   } catch (error) {
-    console.log(error);
+    console.log(error.response);
   }
 });
 
@@ -34,6 +37,7 @@ export const editApp = createAsyncThunk(
   async ({ callBack, data }) => {
     try {
       const { res, status } = await appApi.editApp(data);
+      console.log(status);
       if (status === 200) {
         toast.success("Edit app successfully");
         callBack();
@@ -42,7 +46,19 @@ export const editApp = createAsyncThunk(
         ToastError(res);
       }
     } catch (error) {
-      console.log(error);
+      const errorKeys = Object.keys(error.response?.data?.errors);
+      console.log(error.response);
+      if (error.response.data.status === 401) {
+        toast.error("Please login!!!");
+      } else {
+        toast.error("Something went wrong, Please reload page and try again");
+      }
+      for (let key of errorKeys) {
+        console.log(key);
+        for (let er of error.response?.data?.errors[key]) {
+          toast.error(er);
+        }
+      }
     }
   }
 );
@@ -66,6 +82,25 @@ export const deleteScreenshot = createAsyncThunk(
     }
   }
 );
+
+export const deleteApp = createAsyncThunk(
+  "deleteApp",
+  async ({ appId, callBack }, thunkAPI) => {
+    try {
+      const { res, status } = await appApi.deleteApp(appId);
+      if (status === 200) {
+        toast.success("Delete App successfully");
+        callBack();
+        return res;
+      } else if (status >= 400) {
+        ToastError(res);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+);
+
 export const getDetailAppWithLange = createAsyncThunk(
   "getDetailApp",
   async ({ slug, lang }) => {
@@ -88,6 +123,27 @@ export const getCategoriesAndLanguage = createAsyncThunk(
     }
   }
 );
+
+export const getCreatedApp = createAsyncThunk(
+  "getCreatedApp",
+  async (payload, thunkApi) => {
+    try {
+      const res = await appApi.getCreatedApp(
+        payload.limit,
+        payload.page,
+        payload.title
+      );
+      if (res.status === 200) {
+        return res?.res?.data;
+      } else {
+        throw new Error(res?.status?.error);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  }
+);
+
 export const uploadContent = createAsyncThunk("uploadContent", async (data) => {
   try {
     const res = await userApi.uploadContent(data.formData);
@@ -220,6 +276,39 @@ const detailAppSlice = createSlice({
     },
     [editApp.rejected]: (state) => {
       state.isLoadingEditApp = false;
+    },
+
+    [deleteApp.pending]: (state) => {
+      state.isLoadingDeleteApp = true;
+    },
+    [deleteApp.fulfilled]: (state, action) => {
+      state.isLoadingDeleteApp = false;
+    },
+    [deleteApp.rejected]: (state) => {
+      state.isLoadingDeleteApp = false;
+    },
+
+    // Get created app
+    [getCreatedApp.pending]: (state, action) => {
+      state.isLoadingCreatedApps = true;
+    },
+    [getCreatedApp.fulfilled]: (state, { payload }) => {
+      state.createdApps = payload;
+      state.isLoadingCreatedApps = false;
+    },
+    [getCreatedApp.rejected]: (state, action) => {
+      state.isLoadingCreatedApps = false;
+    },
+
+    //Delete app
+    [deleteApp.pending]: (state, action) => {
+      state.isLoadingCreatedApps = true;
+    },
+    [deleteApp.fulfilled]: (state, { payload }) => {
+      state.isLoadingCreatedApps = false;
+    },
+    [deleteApp.rejected]: (state, action) => {
+      state.isLoadingCreatedApps = false;
     },
   },
 });

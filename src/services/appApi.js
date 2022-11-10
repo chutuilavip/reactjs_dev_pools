@@ -6,7 +6,6 @@ const appApi = {
     const url = `/api/application/search${text}`;
     return axiosClient.get(url);
   },
-
   recommendApp: () => {
     const url = "/api/application/recommended";
     return axiosClient.get(url);
@@ -22,6 +21,10 @@ const appApi = {
   },
   getListGameFollowType: (type) => {
     const url = `api/application/game-list?type=${type}`;
+    return axiosClient.get(url);
+  },
+  getCreatedApp: (limit, page, title) => {
+    const url = `/api/dev/index?limit=${limit}&page=${page}&title=${title}`;
     return axiosClient.get(url);
   },
 
@@ -52,6 +55,11 @@ const appApi = {
   deleteScreenshot: (payload) => {
     const url = `api/dev/remove-screenshot`;
     return axiosClient.post(url, payload);
+  },
+
+  deleteApp: (appId) => {
+    const url = `api/dev/destroy/${appId}`;
+    return axiosClient.post(url);
   },
 };
 export default appApi;

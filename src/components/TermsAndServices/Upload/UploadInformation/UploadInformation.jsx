@@ -70,6 +70,13 @@ export default function UploadInformation({ setFinalData, finalData }) {
   });
 
   const onSubmit = (data) => {
+    if (finalData.free === "1" && getValues().price === "") {
+      setError("price", {
+        type: "required",
+        message: "Price is required when you set app is Pay",
+      });
+      return;
+    }
     handleNextTab();
   };
 
@@ -97,8 +104,8 @@ export default function UploadInformation({ setFinalData, finalData }) {
       },
       {
         type: "input",
-        name: "prices",
-        title: "Prices *",
+        name: "price",
+        title: "Price *",
         placeholder: "Enter The Prices",
       },
     ],
@@ -195,22 +202,18 @@ export default function UploadInformation({ setFinalData, finalData }) {
   useEffect(() => {
     reset({ ...finalData });
   }, [finalData]);
+
   useEffect(() => {
     return () => {
       if (getValues().free === "0") {
         getValues().price = 0;
       }
-      if (finalData.free === "1" && getValues().prices === "") {
-        setError("prices", {
-          type: "required",
-          message: "Price is required when you set app is Pay",
-        });
-        return;
-      }
+
+      console.log("upload information", getValues(), finalData);
+
       setFinalData((prevData) => ({ ...Object.assign(prevData, getValues()) }));
     };
   }, []);
-  console.log("upload information", getValues(), finalData);
 
   return (
     <div className="">

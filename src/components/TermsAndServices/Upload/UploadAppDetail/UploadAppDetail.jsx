@@ -25,8 +25,14 @@ const schema = yup
   .object({
     title: yup.string().required(),
     appid: yup.string().required(),
-    summary: yup.string().required(),
-    full_description: yup.string().required(),
+    summary: yup
+      .string()
+      .required()
+      .max(80, "Summary must be less than 80 characters"),
+    full_description: yup
+      .string()
+      .required()
+      .max(4000, "Description must be less than 80 characters"),
   })
   .required();
 const UploadAppDetail = ({ setFinalData, finalData }) => {
@@ -119,25 +125,26 @@ const UploadAppDetail = ({ setFinalData, finalData }) => {
                     ArrOption={categories}
                     title="Category"
                   />
-                  <SelectController
+                  {/* <SelectController
                     control={control}
                     ArrOption={languages}
                     name="languages"
                     title="Languages"
-                  />
-                </div>
-                <div className="row">
-                  <SelectController
-                    control={control}
-                    name="free"
-                    title="Cost"
-                    ArrOption={Cost}
-                  />
+                  /> */}
                   <SelectController
                     control={control}
                     ArrOption={languages}
                     name="defaultlanguage"
                     title="default languages"
+                  />
+                </div>
+
+                <div className="" style={{ width: "48%" }}>
+                  <SelectController
+                    control={control}
+                    name="free"
+                    title="Cost"
+                    ArrOption={Cost}
                   />
                 </div>
               </div>

@@ -8,6 +8,7 @@ export default function SelectController({
   name,
   title,
   register,
+  style,
   className,
 }) {
   const upperCaseFirstLetter = (string) => {
@@ -24,6 +25,7 @@ export default function SelectController({
   };
   return (
     <Controller
+      style={style}
       name={name}
       control={control}
       render={({ field }) => (

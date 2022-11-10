@@ -1,13 +1,23 @@
 import React, { useState, useEffect } from "react";
 import { ListAppCreatedWrapper } from "./styled";
 import { AudioOutlined } from "@ant-design/icons";
-import { Avatar, Button, Pagination, Space, Switch, Table, Tag } from "antd";
+import {
+  Avatar,
+  Button,
+  Pagination,
+  Popconfirm,
+  Space,
+  Switch,
+  Table,
+  Tag,
+} from "antd";
 import { useDispatch, useSelector } from "react-redux";
-import { getCreatedApp } from "../../../redux/slice/account.slice";
 import Item from "antd/lib/list/Item";
 import { URL_API } from "../../../utils";
 import { columns } from "./constant";
 import { Input } from "antd";
+import { NavLink } from "react-router-dom";
+import { deleteApp, getCreatedApp } from "../../../redux/slice/detailApp.slice";
 const { Search } = Input;
 
 export default function ListAppCreated() {
@@ -16,10 +26,10 @@ export default function ListAppCreated() {
   const [fixedTop, setFixedTop] = useState(false);
   const dispatch = useDispatch();
   const searchRef = React.useRef();
+
   const { createdApps, isLoadingCreatedApps } = useSelector(
-    (state) => state.account
+    (state) => state.detailApp
   );
-  console.log("createdAppscreatedApps", createdApps);
   const [pagingParams, setPagingParams] = useState({
     limit: DEFAULT_LIMIT,
     page: 0,
@@ -35,6 +45,90 @@ export default function ListAppCreated() {
       localStorage.setItem("pagingParams", JSON.stringify(pagingParams));
     };
   }, []);
+
+  const columns = [
+    {
+      title: "Cover",
+      dataIndex: "cover",
+      key: "cover",
+      render: (src) => {
+        console.log(src);
+        return (
+          <Avatar
+            src={
+              src ? `${URL_API}/${src}` : `https://joeschmoe.io/api/v1/random`
+            }
+          />
+        );
+      },
+    },
+    {
+      title: "Developer",
+      dataIndex: "developer",
+      key: "developer",
+    },
+    {
+      title: "Installs",
+      dataIndex: "installs",
+      key: "installs",
+    },
+    {
+      title: "Score",
+      dataIndex: "score",
+      key: "score",
+    },
+    {
+      title: "Slug",
+      dataIndex: "slug",
+      key: "slug",
+    },
+    {
+      title: "Status",
+      dataIndex: "status",
+      key: "status",
+    },
+    {
+      title: "Title",
+      dataIndex: "title",
+      key: "title",
+    },
+    {
+      title: "Action",
+      dataIndex: "action",
+      key: "action",
+      render: ({ slug, appId }) => {
+        return (
+          <Space>
+            <Popconfirm
+              title="Are you sure delete this App？"
+              okText="Yes"
+              cancelText="No"
+              onConfirm={() =>
+                dispatch(
+                  deleteApp({
+                    appId,
+                    callBack: () => {
+                      console.log("callback");
+                      dispatch(getCreatedApp(pagingParams));
+                    },
+                  })
+                )
+              }
+            >
+              <Button type="primary" danger>
+                Delete
+              </Button>
+            </Popconfirm>
+
+            <Button type="primary">
+              <NavLink to={`/for-publishers/edit-app/${slug}`}>Edit</NavLink>
+            </Button>
+          </Space>
+        );
+      },
+    },
+  ];
+
   const renderRowTable = () => {
     let rows = [];
     if (createdApps) {
@@ -58,7 +152,7 @@ export default function ListAppCreated() {
           slug: item.slug,
           status: status,
           title: item.title,
-          action: item.slug,
+          action: { slug: item.slug, appId: item.id },
         });
       });
     }

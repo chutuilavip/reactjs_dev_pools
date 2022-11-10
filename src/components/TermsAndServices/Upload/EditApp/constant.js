@@ -3,8 +3,14 @@ export const schema = yup
   .object({
     title: yup.string().required(),
     appid: yup.string().required(),
-    summary: yup.string().required(),
-    full_description: yup.string().required(),
+    summary: yup
+      .string()
+      .required()
+      .max(80, "Summary must be less than 80 characters"),
+    full_description: yup
+      .string()
+      .required()
+      .max(4000, "Description must be less than 4000 characters"),
     country_of_service: yup.string().required(),
     category: yup.string().required(),
     type: yup.string().required(),
@@ -13,7 +19,7 @@ export const schema = yup
     price: yup.string().max(8, "Price must be less than 8 digits number"),
     cover: yup
       .mixed()
-      .test("fileSize", "The file is too large", (value) => {
+      .test("fileSize", "The size of file must be less than 2MB", (value) => {
         if (!value || value?.fileList?.length === 0) {
           return true;
         }
@@ -25,14 +31,18 @@ export const schema = yup
 
       .test(
         "image-type",
-        "The type must be image/jpeg or image/png",
+        "The type must be image/jpeg or image/png image/jpg",
         (value) => {
           if (!value || value?.fileList?.length === 0) {
             return true;
           }
           if (value.fileList) {
             for (let file of value.fileList) {
-              if (file.type === "image/jpeg" || file.type === "image/png") {
+              if (
+                file.type === "image/jpeg" ||
+                file.type === "image/png" ||
+                file.type === "image/jpg"
+              ) {
                 return true;
               } else {
                 return false;
@@ -42,15 +52,17 @@ export const schema = yup
           return true;
         }
       ),
-    apkfile: yup.mixed().test("fileSize", "The file is too large", (value) => {
-      if (!value || value?.fileList?.length === 0) {
+    apkfile: yup
+      .mixed()
+      .test("fileSize", "The size of file must be less than 200MB", (value) => {
+        if (!value || value?.fileList?.length === 0) {
+          return true;
+        }
+        if (value.fileList) {
+          return value.fileList[0].size / 1024 / 1024 < 200;
+        }
         return true;
-      }
-      if (value.fileList) {
-        return value.fileList[0].size / 1024 / 1024 < 200;
-      }
-      return true;
-    }),
+      }),
     // .test("apk-type", "The type must be apk", async (value) => {
     //   if (!value || value?.fileList?.length === 0) {
     //     return true;
@@ -86,22 +98,16 @@ export const schema = yup
           return true;
         }
       )
-      .test(
-        "fileLength",
-        "You must upload at least 2 images and max is 10 images",
-        (value) => {
-          if (!value || value?.fileList?.length === 0) {
-            return true;
-          }
-          if (value?.fileList?.length < 2) {
-            return false;
-          }
-          if (value?.fileList?.length > 10) {
-            return false;
-          }
+      .test("fileLength", "You must upload max 8 images", (value) => {
+        if (!value || value?.fileList?.length === 0) {
           return true;
         }
-      ),
+
+        if (value?.fileList?.length > 8) {
+          return false;
+        }
+        return true;
+      }),
   })
   .required();
 export const Types = [
@@ -129,4 +135,63 @@ export const Cost = [
     id: 2,
     title: "Free",
   },
+];
+export const InputFields = [
+  [
+    {
+      name: "appid",
+      label: "App ID",
+      placeholder: "Enter App ID",
+      disabled: true,
+    },
+    {
+      name: "title",
+      label: "Title",
+      placeholder: "Enter App Title",
+    },
+  ],
+  [
+    {
+      name: "summary",
+      label: "Summary",
+      placeholder: "Enter Summary",
+    },
+    {
+      name: "full_description",
+      label: "Description",
+      placeholder: "Enter Description",
+    },
+  ],
+
+  [
+    {
+      name: "recent_change",
+      label: "Recent Change",
+      placeholder: "Enter Recent Change",
+    },
+    {
+      name: "app_version",
+      label: "App Version",
+      placeholder: "Enter App Version",
+    },
+  ],
+  [
+    {
+      name: "privacy_policy",
+      label: "Privacy Policy",
+      placeholder: "Enter Privacy Policy",
+    },
+    {
+      name: "term_of_policy",
+      label: "Term Of Policy",
+      placeholder: "Enter Term Of Policy",
+    },
+  ],
+  [
+    {
+      name: "app_support",
+      label: "App Support",
+      placeholder: "Enter App Support",
+    },
+  ],
 ];
