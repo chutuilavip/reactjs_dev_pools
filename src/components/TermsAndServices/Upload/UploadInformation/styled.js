@@ -36,6 +36,9 @@ const UploadInfoWrapper = styled.div`
     display: flex;
     width: 100%;
     gap: 7rem;
+    .last_child {
+      width: calc(50% - 3.5rem) !important;
+    }
   }
   .description {
     width: 90%;
