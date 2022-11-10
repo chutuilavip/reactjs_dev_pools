@@ -9,7 +9,14 @@ const WrapAppDetail = styled.div`
     .btn_submit {
       width: 90%;
     }
+    .ant-select-selector {
+      height: 60px !important;
+      display: flex;
+      align-items: center;
+      flex: 1;
+    }
   }
+
   .title {
     font-weight: 700;
     font-size: 32px;
@@ -88,6 +95,23 @@ const WrapAppDetail = styled.div`
     display: flex;
     flex-direction: column;
     width: 100%;
+    p {
+      font-weight: 700;
+      font-size: 24px;
+      display: flex;
+      align-items: center;
+      letter-spacing: 0.0025em;
+      color: #ffffff;
+      width: 45%;
+    }
+    .free_item {
+      display: flex;
+      width: 100%;
+
+      .ant-select {
+        flex: 1 !important;
+      }
+    }
   }
   .error_message {
     color: red !important;
