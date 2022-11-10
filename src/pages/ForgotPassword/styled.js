@@ -4,6 +4,7 @@ export const ForgotPasswordWrapper = styled.div`
   background-color: var(--bg-dark);
   padding-top: 10rem;
   height: 100%;
+  min-height: 100vh;
   &&& {
     .ant-row {
       display: block;

@@ -102,12 +102,6 @@ export default function UploadInformation({ setFinalData, finalData }) {
         title: "App Support (link) *",
         placeholder: "Enter The Link",
       },
-      {
-        type: "input",
-        name: "price",
-        title: "Price *",
-        placeholder: "Enter The Prices",
-      },
     ],
   ];
   const FieldContentSelect = [
@@ -160,35 +154,16 @@ export default function UploadInformation({ setFinalData, finalData }) {
                 </div>
               );
             } else {
-              if (item.title === "Prices *") {
-                return (
-                  <div key={`field-${index}`} className="field_item">
-                    <InputText
-                      register={{ ...register(item.name) }}
-                      title={item.title}
-                      placeho={item.placeholder}
-                      disabled={finalData.free === "0"}
-                      type="number"
-                    />
-                    <p className="error_message">
-                      {errors[item.name]?.message}
-                    </p>
-                  </div>
-                );
-              } else {
-                return (
-                  <div className="field_item" key={`field-${index}`}>
-                    <InputText
-                      register={{ ...register(item.name) }}
-                      title={item.title}
-                      placeho={item.placeholder}
-                    />
-                    <p className="error_message">
-                      {errors[item.name]?.message}
-                    </p>
-                  </div>
-                );
-              }
+              return (
+                <div className="field_item" key={`field-${index}`}>
+                  <InputText
+                    register={{ ...register(item.name) }}
+                    title={item.title}
+                    placeho={item.placeholder}
+                  />
+                  <p className="error_message">{errors[item.name]?.message}</p>
+                </div>
+              );
             }
           })}
         </div>

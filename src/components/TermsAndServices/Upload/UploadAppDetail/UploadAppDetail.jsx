@@ -1,6 +1,7 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import React, { useContext, useEffect } from "react";
-import { useForm } from "react-hook-form";
+import { Select } from "antd";
+import React, { useContext, useEffect, useRef, useState } from "react";
+import { Controller, useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import * as yup from "yup";
 import Loading from "../../../../layout/components/Loading/Loading";
@@ -11,14 +12,14 @@ import InputText from "./InputText";
 import { GroupInput, WrapAppDetail } from "./styled";
 const Cost = [
   {
+    code: "0",
+    id: 0,
+    title: "Free",
+  },
+  {
     code: "1",
     id: 1,
     title: "Pay",
-  },
-  {
-    code: "0",
-    id: 2,
-    title: "Free",
   },
 ];
 const schema = yup
@@ -38,7 +39,8 @@ const schema = yup
 const UploadAppDetail = ({ setFinalData, finalData }) => {
   const DetailContext = useContext(UploadContextWrapper);
   const { handleNextTab } = DetailContext;
-
+  const [isPay, setIsPay] = useState(false);
+  const priceRef = useRef();
   const { categories, languages, isLoading } = useSelector(
     (state) => state.detailApp
   );
@@ -49,20 +51,18 @@ const UploadAppDetail = ({ setFinalData, finalData }) => {
     getValues,
     reset,
     setValue,
+    setError,
     formState: { errors },
   } = useForm({
-    defaultValues: {
-      free: Cost[0]?.code,
-      genre: categories[0]?.id,
-      languages: languages[0]?.code,
-      defaultlanguage: languages[0]?.code,
-    },
+    defaultValues: {},
     resolver: yupResolver(schema),
   });
   useEffect(() => {
     if (Object.keys(finalData).length > 0) {
+      console.log("ifffffffffffffff", finalData);
       reset({ ...finalData });
     } else {
+      console.log("elllllllllllllllll");
       setValue("genre", categories[0]?.id);
       setValue("free", Cost[0]?.code);
       setValue("languages", languages[0]?.code);
@@ -70,14 +70,26 @@ const UploadAppDetail = ({ setFinalData, finalData }) => {
     }
   }, [categories, languages, Cost]);
   useEffect(() => {
+    console.log("reset", finalData);
+    if (finalData.free === "1") {
+      setIsPay(true);
+    }
     reset({ ...finalData });
   }, [finalData]);
   useEffect(() => {
     return () => {
+      console.log("unMount", getValues());
       setFinalData((prevData) => ({ ...Object.assign(prevData, getValues()) }));
     };
   }, []);
   const onSubmit = (data) => {
+    if (getValues("free") === "1" && !getValues("price")) {
+      setError("price", {
+        type: "required",
+        message: "Price is required when you set app's cost is Pay",
+      });
+      return;
+    }
     handleNextTab();
   };
   useEffect(() => {
@@ -86,7 +98,7 @@ const UploadAppDetail = ({ setFinalData, finalData }) => {
     }
   }, [getValues()]);
   console.log("upload app detail", getValues(), finalData);
-
+  console.log(errors);
   return (
     <div className="">
       {isLoading ? (
@@ -125,12 +137,7 @@ const UploadAppDetail = ({ setFinalData, finalData }) => {
                     ArrOption={categories}
                     title="Category"
                   />
-                  {/* <SelectController
-                    control={control}
-                    ArrOption={languages}
-                    name="languages"
-                    title="Languages"
-                  /> */}
+
                   <SelectController
                     control={control}
                     ArrOption={languages}
@@ -139,13 +146,60 @@ const UploadAppDetail = ({ setFinalData, finalData }) => {
                   />
                 </div>
 
-                <div className="" style={{ width: "48%" }}>
-                  <SelectController
+                <div className="row">
+                  {/* <SelectController
                     control={control}
-                    name="free"
                     title="Cost"
                     ArrOption={Cost}
-                  />
+                  /> */}
+
+                  <div className="field_item">
+                    <div className="free_item">
+                      <p>Cost *</p>
+
+                      <Controller
+                        name="free"
+                        control={control}
+                        render={({ field }) => (
+                          <Select
+                            {...field}
+                            onChange={(e) => {
+                              setIsPay(Number(e) === 1);
+                              setError("price");
+                              field.onChange(e);
+                            }}
+                            className="item_select"
+                            defaultValue={Cost[0].code}
+                          >
+                            {Cost.map((item, index) => {
+                              return (
+                                <Select.Option key={index} value={item.code}>
+                                  {item.title}
+                                </Select.Option>
+                              );
+                            })}
+                          </Select>
+                        )}
+                      />
+                    </div>
+                    <p className="error_message">{errors.free?.message}</p>{" "}
+                  </div>
+
+                  {!isPay ? (
+                    <div className="field_item">
+                      <p className="error_message">{errors?.price?.message}</p>
+                    </div>
+                  ) : (
+                    <div className="field_item">
+                      <InputText
+                        register={{ ...register("price") }}
+                        title="Price *"
+                        placeho="Enter Price"
+                        type="number"
+                      />
+                      <p className="error_message">{errors?.price?.message}</p>
+                    </div>
+                  )}
                 </div>
               </div>
               <div className="description_group">
