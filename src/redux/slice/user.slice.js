@@ -169,6 +169,8 @@ export const checkWalletAccount = createAsyncThunk(
   async (address, thunkAPI) => {
     try {
       const res = await userApi.checkWallet(address);
+      console.log("nhuuuuuuuuuuuuuuuuuuccccccccccccccccccccccc", res);
+
       if (res.status === 200) {
         toast.info(res.success);
       }
