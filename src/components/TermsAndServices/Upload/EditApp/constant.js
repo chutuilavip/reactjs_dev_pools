@@ -1,4 +1,5 @@
 import * as yup from "yup";
+import reactImageSize from "react-image-size";
 export const schema = yup
   .object({
     title: yup.string().required(),
@@ -28,7 +29,24 @@ export const schema = yup
         }
         return true;
       })
+      .test(
+        "widthHeight",
+        "File must be 255 of width and 390 of height",
+        async (value) => {
+          if (!value || value?.fileList?.length === 0) {
+            return true;
+          }
+          const file = value.file;
 
+          const imageUrl = URL.createObjectURL(file?.originFileObj);
+          try {
+            const { width, height } = await reactImageSize(imageUrl);
+            return width === 255 && height === 390;
+          } catch (err) {
+            console.log(err);
+          }
+        }
+      )
       .test(
         "image-type",
         "The type must be image/jpeg or image/png image/jpg",
@@ -186,8 +204,6 @@ export const InputFields = [
       label: "Term Of Policy",
       placeholder: "Enter Term Of Policy",
     },
-  ],
-  [
     {
       name: "app_support",
       label: "App Support",

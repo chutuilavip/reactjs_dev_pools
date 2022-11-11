@@ -29,7 +29,9 @@ const ProfitForUser = React.lazy(() =>
 const ResultSearch = React.lazy(() =>
   import("../pages/ResultSearch/ResultSearch")
 );
-
+const ListCreatedApp = React.lazy(() =>
+  import("../components/Account/ListAppCreated/ListAppCreated")
+);
 export const publicRoutes = [
   { path: "/nft-game", component: NftGame },
   { path: "/metaverse", component: Metaverse },
@@ -51,8 +53,9 @@ export const publicRoutes = [
 export const PrivateRouter = [
   { path: "/terms-and-services/:tabs", component: TermsAndServices },
   { path: "/terms-and-services", component: TermsAndServices },
-  { path: "/account", component: Account },
+  { path: "/account/*", component: Account },
   { path: "/friends", component: Friends },
   { path: "/for-publishers/edit-app/:slug", component: EditApp },
   { path: "/for-publishers/:option", component: Upload },
+  { path: "/created-app", component: ListCreatedApp },
 ];

@@ -19,8 +19,7 @@ const InfoDetailUser = ({ res }) => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const [editFields, setEditFields] = useState([]);
-  const { data } = res;
-  const { first_name, last_name, email, phone_number, country } = data.dev;
+  const { first_name, last_name, email, phone_number, country } = res?.data.dev;
   const {
     business_name,
     application_catalog,
@@ -31,7 +30,7 @@ const InfoDetailUser = ({ res }) => {
     website,
     address,
     year_established,
-  } = data.business_info ? data.business_info : [];
+  } = res?.data.business_info ? res?.data.business_info : [];
   const {
     handleSubmit,
     control,
@@ -100,16 +99,14 @@ const InfoDetailUser = ({ res }) => {
     const keys = Object.keys(errors);
     const cloneEditFields = [...editFields, ...keys];
     const setOfEditFields = [...new Set(cloneEditFields)];
-    console.log(setOfEditFields);
 
     setEditFields(setOfEditFields);
   }, [errors]);
-  console.log(errors);
   return (
     <InfoDetail>
       <div className="title">{t("account.my_account")}</div>
       {/* <Button className="button_logOut">{t("account.log_out")}</Button> */}
-      {data ? (
+      {res?.data ? (
         <ShowInfo>
           <Form onFinish={handleSubmit(onSubmit)} className="grid_container">
             <div className="grid_item one">{t("account.user_name")}</div>
@@ -256,7 +253,8 @@ const InfoDetailUser = ({ res }) => {
                         render={({ field }) => (
                           <div>
                             <Form.Item>
-                              {fieldName === "year_established" ? (
+                              {fieldName === "year_established" ||
+                              fieldName === "phone_number" ? (
                                 <Input
                                   type="number"
                                   {...field}
@@ -274,8 +272,7 @@ const InfoDetailUser = ({ res }) => {
                       />
                     ) : (
                       `${
-                        getValues(fieldName) === "null" ||
-                        getValues(fieldName) === undefined
+                        getValues(fieldName) === "null" || !getValues(fieldName)
                           ? "This field is empty"
                           : getValues(fieldName)
                       }`

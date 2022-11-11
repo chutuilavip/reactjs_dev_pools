@@ -35,6 +35,47 @@ export const WrapTermsAndServices = styled.div`
   height: 100%;
   display: flex;
   flex-direction: column;
+  .active {
+    background-color: #4f3aff !important;
+  }
+  .type_service_wrapper {
+    scroll-margin-top: 100px;
+  }
+  .nav {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    width: 100%;
+    &__button {
+      display: flex;
+      justify-content: center;
+    }
+    &__item {
+      width: calc(100% / 5);
+      height: 6rem;
+      transition: all 0.5s;
+      border-left: 1px solid white;
+      &:hover {
+        button {
+          /* transform: translateY(-2rem); */
+          background: #3b9dff;
+        }
+      }
+      button {
+        border: none;
+        width: 100%;
+        height: 100%;
+        background: var(--bg-blue);
+        color: white;
+      }
+    }
+  }
+
+  .segment {
+    h1 {
+      color: white;
+    }
+  }
   .header_title {
     text-transform: uppercase;
     text-align: center;
@@ -74,6 +115,17 @@ export const WrapTermsAndServices = styled.div`
       transition: all 0.25s ease-in;
     }
   }
+  .type_service_wrapper {
+    width: 95%;
+    margin: auto;
+    padding: 2rem;
+    margin: 5rem auto;
+    border: 1px solid white;
+    border-radius: 10px;
+    h1 {
+      color: white;
+    }
+  }
 `;
 export const PackageCardWrapper = styled.div`
   background-color: ${({ status }) => (status ? "#3b72fe" : "#1c212f")};
@@ -82,6 +134,11 @@ export const PackageCardWrapper = styled.div`
   padding: 2rem;
   min-width: 25rem;
   height: 100%;
+  border-radius: 10px;
+  transition: all 0.5s;
+  &:hover {
+    background: var(--bg-blue);
+  }
   h1 {
     text-align: center;
   }

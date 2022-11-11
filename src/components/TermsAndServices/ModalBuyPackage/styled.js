@@ -30,6 +30,12 @@ export const ModalBuyPackageWrapper = styled.div`
       }
     }
   }
+  .loading_wrapper {
+    .loading {
+      width: 100%;
+      height: 100%;
+    }
+  }
   .buy_banner {
     display: flex;
     flex-direction: column;

@@ -36,8 +36,8 @@ const appApi = {
     const url = `api/application/category-language`;
     return axiosClient.get(url);
   },
-  getService: (type) => {
-    const url = `api/application/dev-service?type=${type}`;
+  getService: () => {
+    const url = `api/application/list-all-service`;
     return axiosClient.get(url);
   },
   buyService: (params) => {
@@ -45,8 +45,8 @@ const appApi = {
     return axiosClient.post(url, params);
   },
   getListAppService: (type) => {
-    const url = `api/dev/app-service?type=${type}`;
-    return axiosClient.post(url);
+    const url = `api/dev/app-service`;
+    return axiosClient.post(url, { type });
   },
   editApp: (data) => {
     const url = "api/dev/update";

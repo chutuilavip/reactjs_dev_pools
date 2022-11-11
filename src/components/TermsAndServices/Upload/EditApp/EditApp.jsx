@@ -26,6 +26,7 @@ export default function EditApp() {
   const {
     getValues,
     control,
+    setFocus,
     handleSubmit,
     reset,
     setError,
@@ -76,14 +77,28 @@ export default function EditApp() {
         label: "Country Of Service",
         data: languages,
       },
+      {
+        name: "otherlanguages",
+        label: "Other Languages",
+        data: languages,
+      },
     ],
   ];
   const renderOption = (data) => {
     const mainOption = data.data?.map((item) => {
-      return {
-        value: item.locale_code || item.id,
-        label: item.language || item.title,
-      };
+      console.log(data);
+
+      if (data.name === "otherlanguages") {
+        return {
+          value: item.code,
+          label: item.language || item.title,
+        };
+      } else {
+        return {
+          value: item.locale_code || item.id,
+          label: item.language || item.title,
+        };
+      }
     });
     const res = [
       {
@@ -112,11 +127,13 @@ export default function EditApp() {
   };
   const submitForm = (value) => {
     let payload = Object.assign(getValues(), { locale });
-    if (!isAppFree && payload.price === undefined) {
+    console.log(isAppFree, payload);
+    if (!isAppFree && !Number(payload.price)) {
       setError("price", {
         type: "required",
         message: "Price is required when you set app is Pay",
       });
+      setFocus("price");
       return;
     }
     if (!detailAppWithLang?.data?.app?.screenshots && !payload.images) {
@@ -206,6 +223,12 @@ export default function EditApp() {
           } else {
             resetValue[v] = "";
           }
+        } else if (v === "otherlanguages") {
+          if (detailAppWithLang?.data.info) {
+            resetValue[v] = detailAppWithLang?.data?.info["other_languages"];
+          } else {
+            resetValue[v] = "";
+          }
         } else if (v === "free") {
           resetValue[v] = detailAppWithLang?.data?.app?.is_pay;
         } else {
@@ -231,13 +254,15 @@ export default function EditApp() {
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, []);
+  console.log(errors);
   return (
     <EditAppWrapper>
       <h1 style={{ textAlign: "center" }}>EDIT APP</h1>
       <Form onFinish={handleSubmit(submitForm)}>
+        <h1>Step 1 : Choo your app's locale</h1>
         {Object.keys(languages).length > 0 ? (
           <div className="locale">
-            <p>Locale :</p>
+            <p className="fieldLabel">Locale :</p>
             <Select
               defaultValue=""
               onChange={(e) => {
@@ -267,6 +292,8 @@ export default function EditApp() {
         )}
         {locale && (
           <>
+            <hr />
+            <h1>Step 2 : Edit your app</h1>
             {InputFields.map((row, index) => {
               return (
                 <div className="row" key={index}>
@@ -496,9 +523,18 @@ export default function EditApp() {
         )}
 
         {locale !== "" && (
-          <Button htmlType="submit" loading={isLoadingEditApp}>
-            Update App
-          </Button>
+          <>
+            <hr />
+            <h1>Step 3: Update your app</h1>
+            <Button
+              style={{ width: "100%" }}
+              type="primary"
+              htmlType="submit"
+              loading={isLoadingEditApp}
+            >
+              Update App
+            </Button>
+          </>
         )}
       </Form>
     </EditAppWrapper>

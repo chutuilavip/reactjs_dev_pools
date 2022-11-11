@@ -3,7 +3,7 @@ import { Loader, SwapLoading } from "./styled";
 
 const Loading = () => {
   return (
-    <SwapLoading>
+    <SwapLoading className="loading">
       <Loader></Loader>
     </SwapLoading>
   );

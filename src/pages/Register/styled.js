@@ -5,7 +5,7 @@ const WrapRegister = styled.div`
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  min-height: 140vh;
+  min-height: 100vh;
   background-color: #131313;
   .title_form {
     margin-top: 50px;
@@ -17,7 +17,7 @@ const WrapRegister = styled.div`
   }
   .validateMessage {
     color: red;
-    font-size: 1.2rem;
+    font-size: 2rem;
   }
   .switch_register_type {
     margin-bottom: 2rem;
@@ -38,6 +38,7 @@ const FormRegis = styled.form`
   align-items: center;
   justify-content: center;
   flex: 1;
+  margin-bottom: 10rem;
 `;
 
 const StepOne = styled.div`

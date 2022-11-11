@@ -6,6 +6,7 @@
   --textGray: #757575;
   --primary: #1c212f;
   --bg-dark: #181818;
+  --bg-blue: #007fff;
 }
 @media only screen and (max-width: 1200px) {
   html {
@@ -82,6 +83,7 @@ input,
 
 a {
   text-decoration: none;
+  color: white;
 }
 
 p {

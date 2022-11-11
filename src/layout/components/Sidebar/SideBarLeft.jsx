@@ -69,53 +69,7 @@ const SideBarLeft = (customLayout) => {
     }
     return false;
   };
-  return (
-    <SideLeft status={customLayout.data}>
-      {location.pathname.startsWith("/terms-and-services") && (
-        <div className="wrap_sidebar">
-          {checkRoute() ? (
-            <div className="navigate_group">
-              <button
-                onClick={handlePrev}
-                className={`${
-                  getCurrentOption()?.index === 1 ? "disabled_btn" : ""
-                } ${
-                  location.pathname.startsWith("/terms-and-services") &&
-                  selectedTabStore === 1
-                    ? "disabled_btn"
-                    : ""
-                }`}
-              >
-                <UpOutlined />
-              </button>
-              <p onClick={(e) => console.log(e)}>
-                {location.pathname.startsWith("/terms-and-services")
-                  ? "Click"
-                  : "Scroll"}
-              </p>
-              <button
-                onClick={handleNext}
-                className={`${
-                  getCurrentOption()?.index === publisherOptions.length
-                    ? "disabled_btn"
-                    : ""
-                } ${
-                  location.pathname.startsWith("/terms-and-services") &&
-                  selectedTabStore === tabContent.length
-                    ? "disabled_btn"
-                    : ""
-                }`}
-              >
-                <DownOutlined />
-              </button>
-            </div>
-          ) : (
-            ""
-          )}
-        </div>
-      )}
-    </SideLeft>
-  );
+  return <SideLeft status={customLayout.data}></SideLeft>;
 };
 
 export default SideBarLeft;

@@ -132,7 +132,7 @@ export const ShowInfo = styled.div`
     gap: 1rem;
   }
   .validateMessage {
-    font-size: 0.9rem;
+    font-size: 2rem;
     color: orange;
   }
 `;

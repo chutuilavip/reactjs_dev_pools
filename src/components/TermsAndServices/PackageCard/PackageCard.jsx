@@ -1,13 +1,10 @@
+import { Modal, Select } from "antd";
 import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { PackageCardWrapper } from "../../../pages/TermsAndServices/styled";
-import { Button, Modal, Select, Upload } from "antd";
-import SelectController from "../Upload/SelctController/SelectController";
 import { useForm } from "react-hook-form";
-import { buyService, listAppNotService } from "../../../redux/slice/game.slice";
+import { useDispatch, useSelector } from "react-redux";
 import PackageVideo from "../../../pages/TermsAndServices/PackageVideo/PackageVideo";
+import { PackageCardWrapper } from "../../../pages/TermsAndServices/styled";
 import ModalBuyPackage from "../ModalBuyPackage/ModalBuyPackage";
-import Loading from "../../../layout/components/Loading/Loading";
 
 const { Option } = Select;
 
@@ -20,18 +17,17 @@ export default function PackageCard({
   setSelectedCard,
   selectedCard,
   selectedTab,
+  cardContent,
 }) {
   const { control, handleSubmit, register, setValue, reset, getValues } =
     useForm();
   const [idBuy, setIdBuy] = useState();
-  const [selectedCardContent, setSelectedCardContent] = useState();
   const arrService = useSelector((state) => state.listGame.listService);
   const listAppService = useSelector(
     (state) => state.listGame.dataListAppNotService
   );
-
+  console.log("cardContentcardContent", cardContent);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const { isLoadingModalBuyBanner } = useSelector((state) => state.listGame);
   const [isModalVideoOpen, setIsModalVideoOpen] = useState(false);
   const dispatch = useDispatch();
 
@@ -47,26 +43,14 @@ export default function PackageCard({
     setIsModalOpen(false);
   };
 
-  const handleShowListApp = (id) => {
-    if (selectedTab !== 5) {
-      showModal();
-    } else {
-      setIsModalVideoOpen(true);
-    }
-    const itemService = arrService.res.data.filter((item) => item.id === id)[0];
-    dispatch(listAppNotService(itemService.type));
-    setSelectedCardContent(itemService);
-    setSelectedCard(id);
-  };
-
   const handleCancelVideoModal = () => {
     setIsModalVideoOpen(false);
   };
-
+  console.log(cardContent);
   return (
     <PackageCardWrapper>
       <Modal
-        title={`${selectedCardContent?.type
+        title={`${cardContent?.type
           .replaceAll("_", " ")
           .toString()
           .toUpperCase()} SERVICES`}
@@ -75,31 +59,25 @@ export default function PackageCard({
         onCancel={handleCancel}
         footer={null}
       >
-        {/* {isLoadingModalBuyBanner ? (
-          <Loading />
+        {cardContent.type === "video" ? (
+          <PackageVideo
+            selectedCardContent={cardContent}
+            listAppService={listAppService}
+            selectedCard={selectedCard}
+          />
         ) : (
-          <ModalBuyPackage selectedCardContent={selectedCardContent} />
-        )} */}
-        {/* {isLoadingModalBuyBanner && (
-          <ModalBuyPackage selectedCardContent={selectedCardContent} />
-        )} */}
-        <ModalBuyPackage selectedCardContent={selectedCardContent} />
+          <ModalBuyPackage selectedCardContent={cardContent} />
+        )}
       </Modal>
-      <Modal
-        title="Video Services"
-        open={isModalVideoOpen}
-        footer={null}
-        onCancel={handleCancelVideoModal}
-      >
-        <PackageVideo
-          listAppService={listAppService}
-          selectedCard={selectedCard}
-        />
-      </Modal>
-      <PackageCardWrapper
+
+      <div
+        style={{ width: "100%", height: "100%" }}
         status={selectedCard === id}
         onClick={() => {
-          handleShowListApp(id);
+          // handleShowListApp(id);
+          showModal();
+          // setSelectedCardContent()
+          setSelectedCard(id);
         }}
       >
         <h1>
@@ -118,7 +96,7 @@ export default function PackageCard({
           - Increase average organic install about {discount}% - Export CSV 1
           time/day
         </p>
-      </PackageCardWrapper>
+      </div>
     </PackageCardWrapper>
   );
 }

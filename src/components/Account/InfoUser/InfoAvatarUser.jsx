@@ -30,10 +30,12 @@ const InfoUser = ({ res }) => {
 
   const beforeUpload = (file) => {
     const isJpgOrPng = file.type === "image/jpeg" || file.type === "image/png";
+
     if (!isJpgOrPng) {
       message.error("You can only upload JPG/PNG file!");
+      return false;
     }
-
+    console.log(isJpgOrPng, file);
     return isJpgOrPng;
   };
   const handleCancel = () => {
@@ -61,30 +63,36 @@ const InfoUser = ({ res }) => {
       setFile(info.file.originFileObj);
     }
   };
-  const { data } = res;
+
   return (
     <MainAvatar>
-      {data ? (
+      {res?.data ? (
         <HeaderInfo>
           <AvatarUser>
-            {!!data.dev?.avatar ? (
-              <img src={`${URL_API}/${data.dev?.avatar}`} alt="avatar user" />
+            {!!res?.data.dev?.avatar ? (
+              <img
+                src={`${URL_API}/${res?.data.dev?.avatar}`}
+                alt="avatar user"
+              />
             ) : (
               <Avatar
                 style={{
                   verticalAlign: "middle",
                 }}
               >
-                {getDefaultAvatarName(data.dev.first_name, data.dev.last_name)}
+                {getDefaultAvatarName(
+                  res?.data?.dev?.first_name,
+                  res?.data?.dev?.last_name
+                )}
               </Avatar>
             )}
           </AvatarUser>
 
           <TextInfoUser>
             <div className="title">
-              {data.dev.first_name} {data.dev.last_name}
+              {res?.data?.dev?.first_name} {res?.data?.dev?.last_name}
             </div>
-            <div className="id"># {data.dev.id}</div>
+            <div className="id"># {res?.data?.dev?.id}</div>
             <Onchange>
               <Button
                 type="primary"
@@ -93,7 +101,7 @@ const InfoUser = ({ res }) => {
               >
                 {t("account.change_avatar")}
               </Button>
-              <img src={Pen} alt="pen " />
+              {/* <img src={Pen} alt="pen " /> */}
             </Onchange>
           </TextInfoUser>
         </HeaderInfo>
