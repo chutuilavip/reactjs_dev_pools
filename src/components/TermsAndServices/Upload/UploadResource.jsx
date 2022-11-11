@@ -168,7 +168,8 @@ const UploadResource = ({ setFinalData, finalData }) => {
             </p>
             <p className="hint">
               - The type must be <span className="special">image/jpeg</span> or
-              <span className="special"> image/png</span>
+              <span className="special"> image/png</span> or{" "}
+              <span className="special"> image/jpg</span>
             </p>
           </div>
           {!avatarImageUrl ? (
@@ -233,8 +234,9 @@ const UploadResource = ({ setFinalData, finalData }) => {
               <span className="special"> 10 images</span>
             </p>
             <p className="hint">
-              - The type must be <span className="special"> image/jpeg</span> or
-              <span className="special"> image/png</span>
+              - The type must be <span className="special">image/jpeg</span> or
+              <span className="special"> image/png</span> or{" "}
+              <span className="special"> image/jpg</span>
             </p>
           </div>
           <Dragger {...propsUploadImages}>
