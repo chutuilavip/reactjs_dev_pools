@@ -18,6 +18,12 @@ export const PackageVideoWrapper = styled.div`
       color: black;
     }
   }
+  .loading_wrapper {
+    .loading {
+      width: 100%;
+      height: 100%;
+    }
+  }
   .media {
     width: 50%;
     display: flex;

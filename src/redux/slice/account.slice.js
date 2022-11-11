@@ -23,6 +23,7 @@ export const getEditAvatar = createAsyncThunk(
     try {
       const result = await accountApi.editAvatarAccount(formData);
       if (result.status === 200) {
+        toast.success("Change avatar successfully");
         thunkAPI.dispatch(getAccount());
       }
       if (result.status >= 400) {

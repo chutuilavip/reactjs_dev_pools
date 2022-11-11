@@ -116,6 +116,7 @@ const WrapAppDetail = styled.div`
   .error_message {
     color: red !important;
     text-align: right;
+    width: 100% !important;
   }
 `;
 

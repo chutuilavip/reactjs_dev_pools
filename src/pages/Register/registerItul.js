@@ -21,27 +21,27 @@ export const InputData = [
     },
   },
 
-  {
-    field_1: {
-      placeholder: "Release details *",
-      register: "release_details",
-    },
-    field_2: {
-      placeholder: "Products URL *",
-      register: "products_url",
-    },
-  },
-  {
-    field_1: {
-      placeholder: "Year Established *",
-      register: "year_established",
-      type: "number",
-    },
-    field_2: {
-      placeholder: "Application catalog *",
-      register: "application_catalog",
-    },
-  },
+  // {
+  //   field_1: {
+  //     placeholder: "Release details *",
+  //     register: "release_details",
+  //   },
+  //   field_2: {
+  //     placeholder: "Products URL *",
+  //     register: "products_url",
+  //   },
+  // },
+  // {
+  //   field_1: {
+  //     placeholder: "Year Established *",
+  //     register: "year_established",
+  //     type: "number",
+  //   },
+  //   field_2: {
+  //     placeholder: "Application catalog *",
+  //     register: "application_catalog",
+  //   },
+  // },
   {
     field_1: {
       placeholder: "First Name *",
@@ -93,22 +93,22 @@ export const schema = yup
       .email("Invalid email address"),
     phone_number: yup.string().required("Phone number is required"),
     business_name: yup.string().required("Business name is required"),
-    application_catalog: yup
-      .string()
-      .required("Application catalog is required"),
+    // application_catalog: yup
+    //   .string()
+    //   .required("Application catalog is required"),
     contact_name: yup.string().required("Contact name is required"),
     product_and_services: yup
       .string()
       .required("Products and Services are required"),
     address: yup.string().required("Address is required"),
-    products_url: yup
-      .string()
-      .required("Products url is required")
-      .matches(
-        /((https?):\/\/)?(www.)?[a-z0-9]+(\.[a-z]{2,}){1,3}(#?\/?[a-zA-Z0-9#]+)*\/?(\?[a-zA-Z0-9-_]+=[a-zA-Z0-9-%]+&?)?$/,
-        "Enter correct url!"
-      ),
-    release_details: yup.string().required("Release Details is required"),
+    // products_url: yup
+    //   .string()
+    //   .required("Products url is required")
+    //   .matches(
+    //     /((https?):\/\/)?(www.)?[a-z0-9]+(\.[a-z]{2,}){1,3}(#?\/?[a-zA-Z0-9#]+)*\/?(\?[a-zA-Z0-9-_]+=[a-zA-Z0-9-%]+&?)?$/,
+    //     "Enter correct url!"
+    //   ),
+    // release_details: yup.string().required("Release Details is required"),
     website: yup
       .string()
       .required("Website is required")
@@ -116,14 +116,14 @@ export const schema = yup
         /((https?):\/\/)?(www.)?[a-z0-9]+(\.[a-z]{2,}){1,3}(#?\/?[a-zA-Z0-9#]+)*\/?(\?[a-zA-Z0-9-_]+=[a-zA-Z0-9-%]+&?)?$/,
         "Enter correct url!"
       ),
-    year_established: yup
-      .number()
-      .typeError("Year established must be a number")
-      .required("Year established is required")
-      .min(
-        new Date().getFullYear(),
-        "Year must be current year or greater than current year"
-      ),
+    // year_established: yup
+    //   .number()
+    //   .typeError("Year established must be a number")
+    //   .required("Year established is required")
+    //   .min(
+    //     new Date().getFullYear(),
+    //     "Year must be current year or greater than current year"
+    //   ),
     password: yup
       .string()
       .required("Password is required")

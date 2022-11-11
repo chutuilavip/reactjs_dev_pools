@@ -75,6 +75,9 @@ export const WrapUploadResource = styled.div`
       gap: 7rem;
       justify-content: space-between;
       margin-bottom: 1rem;
+      .label {
+        width: 30%;
+      }
     }
   }
   .error_message {

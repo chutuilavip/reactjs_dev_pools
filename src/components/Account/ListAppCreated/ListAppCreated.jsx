@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, forwardRef } from "react";
 import { ListAppCreatedWrapper } from "./styled";
 import { AudioOutlined } from "@ant-design/icons";
 import {
@@ -16,11 +16,12 @@ import Item from "antd/lib/list/Item";
 import { URL_API } from "../../../utils";
 import { columns } from "./constant";
 import { Input } from "antd";
-import { NavLink } from "react-router-dom";
+import { NavLink, useSearchParams } from "react-router-dom";
 import { deleteApp, getCreatedApp } from "../../../redux/slice/detailApp.slice";
+import Loading from "../../../layout/components/Loading/Loading";
 const { Search } = Input;
 
-export default function ListAppCreated() {
+function ListAppCreated(_, ref) {
   let DEFAULT_LIMIT = 10;
   const [isShowListApp, setIsShowListApp] = useState(false);
   const [fixedTop, setFixedTop] = useState(false);
@@ -45,7 +46,16 @@ export default function ListAppCreated() {
       localStorage.setItem("pagingParams", JSON.stringify(pagingParams));
     };
   }, []);
-
+  const renderStatusClass = (statusApp) => {
+    switch (statusApp) {
+      case "Active":
+        return "status_active";
+      case "Waiting":
+        return "status_waiting";
+      default:
+        return "status_rejected";
+    }
+  };
   const columns = [
     {
       title: "Cover",
@@ -86,6 +96,12 @@ export default function ListAppCreated() {
       title: "Status",
       dataIndex: "status",
       key: "status",
+      render: (status) => {
+        console.log(status);
+        return (
+          <p className={`button ${renderStatusClass(status)}`}>{status}</p>
+        );
+      },
     },
     {
       title: "Title",
@@ -115,12 +131,12 @@ export default function ListAppCreated() {
                 )
               }
             >
-              <Button type="primary" danger>
+              <Button type="primary" danger className="button">
                 Delete
               </Button>
             </Popconfirm>
 
-            <Button type="primary">
+            <Button type="primary" className="button">
               <NavLink to={`/for-publishers/edit-app/${slug}`}>Edit</NavLink>
             </Button>
           </Space>
@@ -128,11 +144,14 @@ export default function ListAppCreated() {
       },
     },
   ];
-
+  console.log(
+    "createdAppscreatedAppscreatedAppscreatedAppscreatedAppscreatedApps",
+    createdApps
+  );
   const renderRowTable = () => {
     let rows = [];
     if (createdApps) {
-      createdApps.data.forEach((item) => {
+      createdApps.data?.forEach((item) => {
         let status = "";
         switch (Number(item.status)) {
           case 0:
@@ -174,41 +193,56 @@ export default function ListAppCreated() {
     }, 1000);
   };
   return (
-    <ListAppCreatedWrapper>
-      <Button
+    <>
+      {isLoadingCreatedApps ? (
+        <Loading />
+      ) : (
+        <ListAppCreatedWrapper ref={ref} id="created-app">
+          {/* <Button
         type="primary"
         onClick={() => setIsShowListApp((prev) => !prev)}
         style={{ marginBottom: "5rem", width: "40rem", height: "6rem" }}
       >
         {isShowListApp ? "Hide List App Created" : "Show List App Created"}
-      </Button>
-
-      {isShowListApp && (
-        <div className="table">
-          <Search
-            placeholder="input search text"
-            allowClear
-            enterButton="Search"
-            size="large"
-            onChange={onSearch}
-            style={{ marginBottom: "4rem", width: "50%", marginLeft: "auto" }}
-          />
-          <Table
-            columns={columns}
-            dataSource={renderRowTable()}
-            pagination={false}
-            loading={isLoadingCreatedApps}
-          />
-          <div className="pagination">
-            <Pagination
-              onChange={onChangePagination}
-              total={createdApps?.total || DEFAULT_LIMIT}
-              showSizeChanger
-              showQuickJumper
-            />
-          </div>
-        </div>
+      </Button> */}
+          <h1
+            style={{ width: "100%", textAlign: "center", marginBottom: "5rem" }}
+          >
+            CREATED APP
+          </h1>
+          {true && (
+            <div className="table">
+              <Search
+                placeholder="input search text"
+                allowClear
+                enterButton="Search"
+                size="large"
+                onChange={onSearch}
+                style={{
+                  marginBottom: "4rem",
+                  width: "50%",
+                  marginLeft: "auto",
+                }}
+              />
+              <Table
+                columns={columns}
+                dataSource={renderRowTable()}
+                pagination={false}
+                loading={isLoadingCreatedApps}
+              />
+              <div className="pagination">
+                <Pagination
+                  onChange={onChangePagination}
+                  total={createdApps?.total || DEFAULT_LIMIT}
+                  showSizeChanger
+                  showQuickJumper
+                />
+              </div>
+            </div>
+          )}
+        </ListAppCreatedWrapper>
       )}
-    </ListAppCreatedWrapper>
+    </>
   );
 }
+export default forwardRef(ListAppCreated);

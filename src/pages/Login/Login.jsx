@@ -7,12 +7,8 @@ import Loading from "../../layout/components/Loading/Loading";
 import { toast } from "react-toastify";
 
 const Login = () => {
-  const { isLoading, errors } = useSelector((state) => state.user);
-  useEffect(() => {
-    if (errors.login !== "") {
-      toast.error(errors.login);
-    }
-  }, [errors.login]);
+  const { isLoading } = useSelector((state) => state.user);
+
   return (
     <motion.main
       variants={variants}

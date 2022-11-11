@@ -4,7 +4,7 @@ import { ListMenu, WrapHeader, HeaderMiddle, StyleSearch } from "./styled";
 import logo from "../../../assets/Header/logoHeader.png";
 import iconSearch from "../../../assets/Header/search.png";
 import iconMenu from "../../../assets/Header/icon_menu.png";
-import { createSearchParams, useNavigate } from "react-router-dom";
+import { createSearchParams, NavLink, useNavigate } from "react-router-dom";
 import { icon_header } from "../../IconLayout";
 import MenuUser from "../../../components/MenuUser/MenuUser";
 
@@ -30,9 +30,9 @@ const Header = (customLayout) => {
   return (
     <WrapHeader status={customLayout.data} show={show}>
       <div className="logo">
-        <a href="https://v2.poolsplay.store/" target="_blank">
+        <NavLink to="/">
           <LazyLoadImage src={logo} alt="logo" />
-        </a>
+        </NavLink>
       </div>
       {/* <HeaderMiddle>
         <div></div>

@@ -79,11 +79,13 @@ const UploadAppDetail = ({ setFinalData, finalData }) => {
   useEffect(() => {
     return () => {
       console.log("unMount", getValues());
-      setFinalData((prevData) => ({ ...Object.assign(prevData, getValues()) }));
+      setFinalData((prevData) => ({
+        ...Object.assign(prevData, getValues()),
+      }));
     };
   }, []);
   const onSubmit = (data) => {
-    if (getValues("free") === "1" && !getValues("price")) {
+    if (getValues("free") === "1" && !Number(getValues("price"))) {
       setError("price", {
         type: "required",
         message: "Price is required when you set app's cost is Pay",

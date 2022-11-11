@@ -84,7 +84,7 @@ const App = () => {
       <Router>
         <Suspense>
           <Routes>
-            <Route index element={<Navigate to="/terms-and-services" />} />
+            <Route index element={<Navigate to="/for-publishers/upload" />} />
             <Route element={<Layout />}>
               {publicRoutes.map((route, index) => {
                 const Page = route.component;

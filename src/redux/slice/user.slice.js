@@ -2,6 +2,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import userApi from "../../services/userApi";
 import { getDetailApp } from "./detailApp.slice";
 import { toast } from "react-toastify";
+import { ToastError } from "../../utils";
 
 const initialState = {
   statusRegis: {},
@@ -24,6 +25,7 @@ export const loginUser = createAsyncThunk(
       const result = await userApi.loginUser(data);
       console.log(result);
       if (result.user.type === "mod") {
+        toast.error("You have no permission to access this website");
         return thunkAPI.rejectWithValue(
           "You have no permission to access this website"
         );
@@ -72,9 +74,14 @@ export const registerPublisher = createAsyncThunk(
     try {
       const result = await userApi.registerPublisher(params.payload);
       if (result.status === 200) {
-        params.goHome();
+        setTimeout(() => {
+          params.goHome();
+        }, 1000);
         toast.success("Please wait for your account to be approved by admin");
+      } else if (result.status >= 400) {
+        ToastError(result);
       }
+
       return result;
     } catch (error) {
       const fieldErrors = error.response.data.errors;

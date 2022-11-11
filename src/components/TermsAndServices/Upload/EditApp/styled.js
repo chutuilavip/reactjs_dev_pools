@@ -24,11 +24,15 @@ export const EditAppWrapper = styled.div`
     .ant-select {
       width: 100%;
     }
+    .ant-select-selection-item {
+      color: black;
+    }
     .ant-select:not(.ant-select-customize-input) .ant-select-selector {
       height: 4rem;
       display: flex;
       align-items: center;
       border-radius: 4px;
+      background: white;
     }
 
     input.ant-input {
@@ -44,16 +48,32 @@ export const EditAppWrapper = styled.div`
       margin-top: 1rem;
     }
     .locale {
-      margin-bottom: 2.4rem;
       display: flex;
+      flex-direction: column;
+      margin-bottom: 2rem;
       p {
         width: 25%;
+        margin-bottom: 2rem;
       }
     }
   }
   .row {
     display: flex;
     gap: 6rem;
+  }
+  .fieldLabel {
+    text-transform: uppercase;
+    margin-bottom: 4rem;
+    display: inline-block;
+    height: 4rem;
+    display: flex;
+    background: red;
+    padding: 5px 1rem;
+    border-radius: 5px;
+    box-shadow: rgb(0 0 0 / 24%) 0px 3px 8px;
+    color: white;
+    background-color: #007fff;
+    align-items: center;
   }
   .field-item {
     width: 100%;
@@ -66,18 +86,6 @@ export const EditAppWrapper = styled.div`
       &:focus {
         outline: none;
       }
-    }
-    .fieldLabel {
-      text-transform: uppercase;
-      margin: 2rem 0;
-      display: inline-block;
-      background: red;
-      padding: 5px 1rem;
-      border-radius: 5px;
-      box-shadow: rgb(0 0 0 / 24%) 0px 3px 8px;
-      color: white;
-      background-color: #007fff;
-      /* background-image: linear-gradient(18deg, #0093e9 0%, #80d0c7 100%); */
     }
   }
   .step_group {

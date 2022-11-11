@@ -53,21 +53,18 @@ export const dowloadGame = createAsyncThunk("game/dowload", async (params) => {
   }
 });
 
-export const getServiceType = createAsyncThunk(
-  "service/getType",
-  async (type) => {
-    try {
-      const result = await appApi.getService(type);
-      console.log("sẻvices", result);
-      if (result.status === 400) {
-        toast.error(result.message);
-      }
-      return result;
-    } catch (error) {
-      console.log(error);
+export const getServiceType = createAsyncThunk("service/getType", async () => {
+  try {
+    const result = await appApi.getService();
+    console.log("sẻvices", result);
+    if (result.status === 400) {
+      toast.error(result.message);
     }
+    return result;
+  } catch (error) {
+    console.log(error);
   }
-);
+});
 
 export const buyService = createAsyncThunk(
   "service/buyServive",
@@ -75,7 +72,6 @@ export const buyService = createAsyncThunk(
     try {
       const result = await appApi.buyService(type);
       if (result.status === 400) {
-
         if (result.errors) {
           result.errors.forEach((el) => toast.error(el));
         } else if (result.error) {
@@ -84,7 +80,6 @@ export const buyService = createAsyncThunk(
       }
       if (result.status === 200) {
         toast.success("Buy services successfully");
-
       }
       return result;
     } catch (error) {

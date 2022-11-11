@@ -156,6 +156,10 @@ export const uploadContent = createAsyncThunk("uploadContent", async (data) => {
       } else if (res.errors) {
         res.errors.forEach((el) => toast.error(el));
       }
+    } else {
+      toast.error(
+        "Something went wrong !!! Please try again or contact us via email address pool.test@gmail.com"
+      );
     }
     return res;
   } catch (err) {

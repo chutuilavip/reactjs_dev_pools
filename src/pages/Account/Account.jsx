@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { variants } from "../../helpers/motion";
 import InfoAvatarUser from "../../components/Account/InfoUser/InfoAvatarUser";
@@ -12,14 +12,27 @@ import { useDispatch, useSelector } from "react-redux";
 import { getAccount } from "../../redux/slice/account.slice";
 import Loading from "../../layout/components/Loading/Loading";
 import ListAppCreated from "../../components/Account/ListAppCreated/ListAppCreated";
+import { useLocation, useSearchParams } from "react-router-dom";
 
 const Account = () => {
   const { infoAccount, isLoading } = useSelector((state) => state.account);
   const dispatch = useDispatch();
+  const createdAppRef = useRef();
+
+  const params = useLocation();
+
   useEffect(() => {
     dispatch(getAccount());
   }, []);
-
+  useEffect(() => {
+    if (params.hash !== "") {
+      const element = document.querySelector(params.hash);
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth" });
+      }
+    }
+  }, [params, isLoading]);
+  console.log(params);
   return (
     <>
       <motion.main
@@ -36,7 +49,7 @@ const Account = () => {
               <InfoAvatarUser res={infoAccount?.res} />
               <InfoDetailUser res={infoAccount?.res} />
               <MyWallet res={infoAccount?.res} />
-              <ListAppCreated />
+              {/* <ListAppCreated ref={createdAppRef} /> */}
               {/* <MyActivities res={infoAccount?.res} /> */}
               {/* <DownloadApp res={infoAccount?.res} /> */}
               {/* <TodayActivities res={infoAccount?.res} /> */}
