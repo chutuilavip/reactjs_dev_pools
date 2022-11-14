@@ -24,20 +24,24 @@ export default function SelectController({
     return res.join(' ') + '*';
   };
   return (
-    <Controller
-      style={style}
-      name={name}
-      control={control}
-      render={({ field }) => (
-        <InputSelect
-          mode={mode}
-          title={upperCaseFirstLetter(title)}
-          ArrOption={ArrOption}
-          valueDefault={ArrOption[0]?.code || ArrOption[0]?.id}
-          field={{ ...field }}
-          register
+    <>
+      {ArrOption && ArrOption.length > 0 && (
+        <Controller
+          style={style}
+          name={name}
+          control={control}
+          render={({ field }) => (
+            <InputSelect
+              mode={mode}
+              title={upperCaseFirstLetter(title)}
+              ArrOption={ArrOption}
+              valueDefault={ArrOption[0]?.code || ArrOption[0]?.id}
+              field={{ ...field }}
+              register
+            />
+          )}
         />
       )}
-    />
+    </>
   );
 }

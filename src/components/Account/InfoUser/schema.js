@@ -1,34 +1,35 @@
-import * as yup from "yup";
+import * as yup from 'yup';
 export const editInfoUserSchema = yup
   .object({
-    first_name: yup.string().required().min(2).max(10),
+    first_name: yup
+      .string()
+      .required('First name is required')
+      .min(2, 'min length of first name is 2')
+      .max(10, 'min length of first name is 10'),
     last_name: yup
       .string()
-      .required()
-      .min(2, "Min length validate message")
-      .max(10),
-    email: yup.string().required().email(),
+      .required('Last name is required')
+      .min(2, 'min length of first name is 2')
+      .max(10, 'min length of first name is 10'),
+    email: yup.string().required('Email is required').email('Invalid email address'),
     phone_number: yup
       .string()
-      .required()
-      .min(5, "phone number must be greater than 4 numbers")
-      .max(13, "phone number must be less or equal 13 numbers")
-      .matches(
-        /\(?([0-9]{3})\)?([ .-]?)([0-9]{3})\2([0-9]{4})/,
-        "invalid phone number"
-      ),
+      .required('Phone number is required')
+      .min(5, 'phone number must be greater than 4 numbers')
+      .max(13, 'phone number must be less or equal 13 numbers')
+      .matches(/\(?([0-9]{3})\)?([ .-]?)([0-9]{3})\2([0-9]{4})/, 'invalid phone number'),
 
-    business_name: yup.string().required(),
+    business_name: yup.string().required('Business name is required'),
     // application_catalog: yup.string().required(),
     contact_name: yup
       .string()
-      .required()
-      .max(255, "Contact name must be less than 255 characters"),
+      .required('Contact name is required')
+      .max(255, 'Contact name must be less than 255 characters'),
     product_and_services: yup
       .string()
-      .required()
-      .max(255, "Contact name must be less than 255 characters"),
-    address: yup.string().required(),
+      .required('Product and services is required')
+      .max(255, 'Contact name must be less than 255 characters'),
+    address: yup.string().required('Address is required'),
     // products_url: yup
     //   .string()
     //   .required()
@@ -42,10 +43,10 @@ export const editInfoUserSchema = yup
     //   .max(255, "Contact name must be less than 255 characters"),
     website: yup
       .string()
-      .required()
+      .required('Website is required')
       .matches(
         /((https?):\/\/)?(www.)?[a-z0-9]+(\.[a-z]{2,}){1,3}(#?\/?[a-zA-Z0-9#]+)*\/?(\?[a-zA-Z0-9-_]+=[a-zA-Z0-9-%]+&?)?$/,
-        "Enter correct url!"
+        'Enter correct url!'
       ),
     // year_established: yup
     //   .number("Year established can not be characters")
@@ -57,6 +58,6 @@ export const editInfoUserSchema = yup
     password: yup.string(),
     password_confirmation: yup
       .string()
-      .oneOf([yup.ref("password"), null], "Password confirm does not match"),
+      .oneOf([yup.ref('password'), null], 'Password confirm does not match'),
   })
   .required();

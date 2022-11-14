@@ -34,10 +34,10 @@ axiosClient.interceptors.response.use(
   },
   (error) => {
     if (error.response.status === 401) {
-      toast.error('Token expired ,please login again');
+      toast.error('Login again');
       setTimeout(() => {
         AuthUtil.logout();
-      }, 400);
+      }, 1000);
     }
     throw error;
   }

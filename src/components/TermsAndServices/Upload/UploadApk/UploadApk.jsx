@@ -11,7 +11,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 const schema = yup.object().shape({
   fileapk: yup
     .mixed()
-    .required()
+    .required('File APK is required')
     .test('fileSize', 'The file is too large', (value) => {
       if (!value) {
         return true;

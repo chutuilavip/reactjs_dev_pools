@@ -7,7 +7,7 @@ export const schema = yup
     summary: yup.string().required().max(80, 'Summary must be less than 80 characters'),
     full_description: yup
       .string()
-      .required()
+      .required('Full description is required')
       .max(4000, 'Description must be less than 4000 characters'),
     country_of_service: yup.string().required(),
     facebook: yup
@@ -40,9 +40,9 @@ export const schema = yup
         /^\s*$|(?:https?:\/\/)?(?:www\.)?(mbasic.twitter|m\.twitter|twitter|tw)\.(com\/*)?(?:[\w\-\.]*\/)*()/gi,
         'Invalid Twitter Link'
       ),
-    category: yup.string().required(),
-    type: yup.string().required(),
-    free: yup.string().required(),
+    category: yup.string().required('Category is required'),
+    type: yup.string().required('Type is required'),
+    free: yup.string().required('Cost of app required'),
     // locale: yup.string().required(),
     price: yup.string().max(8, 'Price must be less than 8 digits number'),
     cover: yup
