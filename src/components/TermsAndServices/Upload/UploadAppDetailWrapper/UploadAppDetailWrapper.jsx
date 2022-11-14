@@ -1,19 +1,14 @@
-import React, { createContext, useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
-import {
-  getCategoriesAndLanguage,
-  uploadContent,
-} from "../../../../redux/slice/detailApp.slice";
-import PackageButton from "../../Button/PackageButton";
-import PackageTabs from "../../PackageTabs/PackageTabs";
-import StepButtonGroup, {
-  tabContent,
-} from "../StepButtonGroup/StepButtonGroup";
-import UploadApk from "../UploadApk/UploadApk";
-import UploadAppDetail from "../UploadAppDetail/UploadAppDetail";
-import UploadInformation from "../UploadInformation/UploadInformation";
-import UploadResource from "../UploadResource";
-import { WrapperAppDetail } from "./styled";
+import React, { createContext, useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { getCategoriesAndLanguage, uploadContent } from '../../../../redux/slice/detailApp.slice';
+import PackageButton from '../../Button/PackageButton';
+import PackageTabs from '../../PackageTabs/PackageTabs';
+import StepButtonGroup, { tabContent } from '../StepButtonGroup/StepButtonGroup';
+import UploadApk from '../UploadApk/UploadApk';
+import UploadAppDetail from '../UploadAppDetail/UploadAppDetail';
+import UploadInformation from '../UploadInformation/UploadInformation';
+import UploadResource from '../UploadResource';
+import { WrapperAppDetail } from './styled';
 export const UploadContextWrapper = createContext();
 export default function UploadAppDetailWrapper() {
   const dispatch = useDispatch();
@@ -45,7 +40,7 @@ export default function UploadAppDetailWrapper() {
   };
 
   const handleNextTab = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    window.scrollTo({ top: 0, behavior: 'smooth' });
     if (selectedTab <= tabContent.length - 1) {
       setSelectedTab((selectedTab) => {
         if (selectedTab < tabContent.length - 1) {
@@ -59,7 +54,7 @@ export default function UploadAppDetailWrapper() {
   };
 
   const handlePrevTab = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    window.scrollTo({ top: 0, behavior: 'smooth' });
     if (selectedTab > 0) {
       setSelectedTab((selectedTab) => {
         return selectedTab - 1;
@@ -71,26 +66,27 @@ export default function UploadAppDetailWrapper() {
     const formData = new FormData();
     const keys = Object.keys(finalData);
     for (let v of keys) {
-      if (v === "uploadavatar") {
+      if (v === 'uploadavatar') {
         formData.append(v, finalData[v][0]?.originFileObj);
-      } else if (v === "images") {
+      } else if (v === 'images') {
         const newImages = [];
         for (let image of finalData[v]) {
           let item = image.originFileObj;
           newImages.push(item);
         }
         for (let i = 0; i < newImages.length; i++) {
-          formData.append("images[]", newImages[i], newImages[i].name);
+          formData.append('images[]', newImages[i], newImages[i].name);
         }
-      } else if (v === "fileapk") {
+      } else if (v === 'fileapk') {
         formData.append(v, finalData[v][0]?.originFileObj);
+      } else if (v === 'information' || v === 'app_permissions') {
+        finalData[v] = finalData[v].join();
+        formData.append(v, finalData[v]);
       } else {
         formData.append(v, finalData[v]);
       }
     }
-    dispatch(
-      uploadContent({ formData, callback: () => window.location.reload() })
-    );
+    dispatch(uploadContent({ formData, callback: () => 1 }));
   };
 
   const value = {

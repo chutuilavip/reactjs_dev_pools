@@ -1,20 +1,21 @@
-import axios from "axios";
-import queryString from "query-string";
-import { toast } from "react-toastify";
-const keyLang = localStorage.getItem("i18nextLng");
+import axios from 'axios';
+import queryString from 'query-string';
+import { toast } from 'react-toastify';
+import AuthUtil from '../utils/AuthUtils';
+const keyLang = localStorage.getItem('i18nextLng');
 
 const axiosClient = axios.create({
   baseURL: process.env.REACT_APP_URL_API,
   headers: {
-    "content-type": "application/json",
-    "X-localization": keyLang,
+    'content-type': 'application/json',
+    'X-localization': keyLang,
   },
   paramsSerializer: (params) => queryString.stringify(params),
 });
 
 axiosClient.interceptors.request.use(
   async (config) => {
-    const token = JSON.parse(localStorage.getItem("tokens"));
+    const token = JSON.parse(localStorage.getItem('tokens'));
     if (token) {
       config.headers.authorization = `Bearer ${token}`;
     }
@@ -32,6 +33,12 @@ axiosClient.interceptors.response.use(
     return response;
   },
   (error) => {
+    if (error.response.status === 401) {
+      toast.error('Token expired ,please login again');
+      setTimeout(() => {
+        AuthUtil.logout();
+      }, 400);
+    }
     throw error;
   }
 );

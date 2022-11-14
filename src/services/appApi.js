@@ -1,4 +1,4 @@
-import axiosClient from "./axiosClient";
+import axiosClient from './axiosClient';
 
 const appApi = {
   searchApp: (text) => {
@@ -7,10 +7,13 @@ const appApi = {
     return axiosClient.get(url);
   },
   recommendApp: () => {
-    const url = "/api/application/recommended";
+    const url = '/api/application/recommended';
     return axiosClient.get(url);
   },
-
+  getPermissionAndInfoCollection: () => {
+    const url = 'api/dev/information';
+    return axiosClient(url);
+  },
   getDetailApp: (slug) => {
     const url = `/api/application/detail/${slug}`;
     return axiosClient.get(url);
@@ -49,7 +52,7 @@ const appApi = {
     return axiosClient.post(url, { type });
   },
   editApp: (data) => {
-    const url = "api/dev/update";
+    const url = 'api/dev/update';
     return axiosClient.post(url, data);
   },
   deleteScreenshot: (payload) => {

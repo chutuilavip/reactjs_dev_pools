@@ -1,21 +1,19 @@
-import { Button, Form, Input, Select, Upload } from "antd";
-import React, { useState, useEffect } from "react";
-import { PackageVideoWrapper } from "./styled";
-import { UploadOutlined } from "@ant-design/icons";
-import { getBase64 } from "../../../utils";
-import TextArea from "antd/lib/input/TextArea";
-import { useDispatch, useSelector } from "react-redux";
-import { ConvertToFormData } from "../../../helpers/formData";
-import { buyServiceVideo } from "../../../redux/slice/detailApp.slice";
-import { listAppNotService } from "../../../redux/slice/game.slice";
-import Loading from "../../../layout/components/Loading/Loading";
+import { Button, Form, Input, Select, Upload } from 'antd';
+import React, { useState, useEffect, useRef } from 'react';
+import { PackageVideoWrapper } from './styled';
+import { UploadOutlined } from '@ant-design/icons';
+import { getBase64 } from '../../../utils';
+import TextArea from 'antd/lib/input/TextArea';
+import { useDispatch, useSelector } from 'react-redux';
+import { ConvertToFormData } from '../../../helpers/formData';
+import { buyServiceVideo } from '../../../redux/slice/detailApp.slice';
+import { listAppNotService } from '../../../redux/slice/game.slice';
+import Loading from '../../../layout/components/Loading/Loading';
 
-export default function PackageVideo({
-  listAppService,
-  selectedCard,
-  selectedCardContent,
-}) {
+export default function PackageVideo({ listAppService, selectedCard, selectedCardContent }) {
   const dispatch = useDispatch();
+  const formRef = useRef();
+
   const [video, setVideo] = useState([]);
   const [thumbnail, setThumbnail] = useState([]);
   const [previewVideo, setPreviewVideo] = useState();
@@ -40,27 +38,33 @@ export default function PackageVideo({
     values.creator_address = account;
     values.id_service = selectedCard;
     const formData = ConvertToFormData(values);
-    dispatch(buyServiceVideo(formData));
+    dispatch(buyServiceVideo(formData))
+      .unwrap()
+      .then((res) => {
+        console.log(res);
+        if (res.status === 200) {
+          setPreviewThumbnail();
+          setPreviewVideo();
+          formRef.current.resetFields();
+        }
+      });
   };
   useEffect(() => {
     dispatch(listAppNotService(selectedCardContent?.type));
   }, []);
   const dummyRequest = ({ file, onSuccess }) => {
     setTimeout(() => {
-      onSuccess("ok");
+      onSuccess('ok');
     }, 0);
   };
   return (
     <PackageVideoWrapper>
       {isLoadingBuyVideoService ? (
-        <div
-          className="loading_wrapper"
-          style={{ width: "100%", height: "30rem" }}
-        >
+        <div className="loading_wrapper" style={{ width: '100%', height: '30rem' }}>
           <Loading />
         </div>
       ) : (
-        <Form onFinish={onFinish}>
+        <Form onFinish={onFinish} ref={formRef}>
           <div className="media">
             <div className="video flex_item">
               <Form.Item
@@ -68,15 +72,13 @@ export default function PackageVideo({
                 rules={[
                   {
                     required: true,
-                    message: "This field is required",
+                    message: 'This field is required',
                   },
                   {
                     validator: (rule, value, callback) => {
-                      console.log("validate", value);
+                      console.log('validate', value);
                       if (value.file?.size / 1024 / 1024 > 10) {
-                        return Promise.reject(
-                          new Error("The file size is too large")
-                        );
+                        return Promise.reject(new Error('The file size is too large'));
                       } else {
                         return Promise.resolve();
                       }
@@ -104,7 +106,7 @@ export default function PackageVideo({
                 rules={[
                   {
                     required: true,
-                    message: "This field is required",
+                    message: 'This field is required',
                   },
                 ]}
               >
@@ -130,16 +132,15 @@ export default function PackageVideo({
               rules={[
                 {
                   required: true,
-                  message: "This field is required",
+                  message: 'This field is required',
                 },
                 {
                   min: 10,
-                  message:
-                    "Min length of title must greater than 10 characters",
+                  message: 'Min length of title must greater than 10 characters',
                 },
                 {
                   whitespace: true,
-                  message: "You can not set title only with whitespace ",
+                  message: 'You can not set title only with whitespace ',
                 },
               ]}
             >
@@ -150,21 +151,16 @@ export default function PackageVideo({
               rules={[
                 {
                   required: true,
-                  message: "This field is required",
+                  message: 'This field is required',
                 },
                 {
                   min: 10,
-                  message:
-                    "Min length of description must greater than 10 characters",
+                  message: 'Min length of description must greater than 10 characters',
                 },
               ]}
               label="Description"
             >
-              <TextArea
-                rows={4}
-                placeholder="Enter video description"
-                maxLength={500}
-              />
+              <TextArea rows={4} placeholder="Enter video description" maxLength={500} />
             </Form.Item>
 
             <Form.Item
@@ -173,18 +169,16 @@ export default function PackageVideo({
               rules={[
                 {
                   required: true,
-                  message: "This field is required",
+                  message: 'This field is required',
                 },
               ]}
             >
-              <Select name="app" defaultValue="" style={{ width: "100%" }}>
+              <Select name="app" defaultValue="" style={{ width: '100%' }}>
                 <Select.Option value="" disabled>
                   Select App
                 </Select.Option>
                 {listAppService?.res?.data?.my_apps?.map((item, index) => {
-                  return (
-                    <Select.Option value={item.id}>{item.title}</Select.Option>
-                  );
+                  return <Select.Option value={item.id}>{item.title}</Select.Option>;
                 })}
               </Select>
             </Form.Item>
