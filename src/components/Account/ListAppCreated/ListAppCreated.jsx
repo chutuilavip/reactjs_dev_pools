@@ -173,13 +173,6 @@ function ListAppCreated(_, ref) {
   return (
     <>
       <ListAppCreatedWrapper ref={ref} id="created-app">
-        {/* <Button
-        type="primary"
-        onClick={() => setIsShowListApp((prev) => !prev)}
-        style={{ marginBottom: "5rem", width: "40rem", height: "6rem" }}
-      >
-        {isShowListApp ? "Hide List App Created" : "Show List App Created"}
-      </Button> */}
         <h1 style={{ width: '100%', textAlign: 'center', marginBottom: '5rem' }}>CREATED APP</h1>
         {true && (
           <div className="table">
