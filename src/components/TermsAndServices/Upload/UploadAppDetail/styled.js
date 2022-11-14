@@ -124,6 +124,12 @@ const WrapAppDetail = styled.div`
       display: flex;
     }
     p {
+      font-weight: 700;
+      font-size: 24px;
+      line-height: 130%;
+      letter-spacing: 0.0025em;
+      color: #ffffff;
+      margin-bottom: 2rem;
       width: 45%;
     }
   }

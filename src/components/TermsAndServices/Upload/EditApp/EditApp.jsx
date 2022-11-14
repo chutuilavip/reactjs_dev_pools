@@ -256,7 +256,7 @@ export default function EditApp() {
   }, []);
   const generateVideoPreview = () => {
     if (!previewVideo) {
-      return `${URL_API}/${getValues('video')}`;
+      return `${URL_API}${getValues('video')}`;
     } else {
       return previewVideo;
     }

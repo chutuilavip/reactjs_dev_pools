@@ -25,14 +25,17 @@ const Cost = [
 ];
 const schema = yup
   .object({
-    title: yup.string().required(),
-    appid: yup.string().required(),
-    app_permissions: yup.array().required(),
-    information: yup.array().required(),
-    summary: yup.string().required().max(80, 'Summary must be less than 80 characters'),
+    title: yup.string().required('App name is required'),
+    appid: yup.string().required('AppID is required'),
+    app_permissions: yup.array().required('App Permissions is required'),
+    information: yup.array().required('Collect information of user is reuqired'),
+    summary: yup
+      .string()
+      .required('Summary is required')
+      .max(80, 'Summary must be less than 80 characters'),
     full_description: yup
       .string()
-      .required()
+      .required('Full description is required')
       .max(4000, 'Description must be less than 4000 characters'),
   })
   .required();
@@ -60,12 +63,20 @@ const UploadAppDetail = ({ setFinalData, finalData }) => {
   });
 
   const onSubmit = (data) => {
-    if (getValues('free') === '1' && !Number(getValues('price'))) {
-      setError('price', {
-        type: 'required',
-        message: "Price is required when you set app's cost is Pay",
-      });
-      return;
+    if (getValues('free') === '1') {
+      if (!Number(getValues('price'))) {
+        setError('price', {
+          type: 'required',
+          message: "Price is required when you set app's cost is Pay",
+        });
+        return;
+      } else if (getValues('price').length > 8) {
+        setError('price', {
+          type: 'maxLength',
+          message: 'Max length of price is 8 digits',
+        });
+        return;
+      }
     }
     handleNextTab();
   };
