@@ -1,15 +1,16 @@
-import { Select } from "antd";
-import React from "react";
-import styled from "styled-components";
+import { Select } from 'antd';
+import React from 'react';
+import styled from 'styled-components';
 const { Option } = Select;
 
-const InputSelect = ({ title, ArrOption, valueDefault, register, field }) => {
+const InputSelect = ({ title, ArrOption, valueDefault, register, field, mode }) => {
   return (
     <StyleInputSelect>
       <p>{title}</p>
       <Select
         {...register}
         {...field}
+        mode={mode}
         className="item_select"
         defaultValue={valueDefault}
       >
@@ -17,11 +18,7 @@ const InputSelect = ({ title, ArrOption, valueDefault, register, field }) => {
           return (
             <Option
               key={index}
-              value={
-                title === "Country Of Service*"
-                  ? item.locale_code
-                  : item.code || item.id
-              }
+              value={title === 'Country Of Service*' ? item.locale_code : item.code || item.id}
             >
               {item.title || item.language}
             </Option>

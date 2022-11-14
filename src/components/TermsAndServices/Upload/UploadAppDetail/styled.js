@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 const WrapAppDetail = styled.div`
   display: flex;
@@ -14,6 +14,9 @@ const WrapAppDetail = styled.div`
       display: flex;
       align-items: center;
       flex: 1;
+    }
+    .ant-select-multiple .ant-select-selection-item-content {
+      color: black;
     }
   }
 
@@ -111,6 +114,17 @@ const WrapAppDetail = styled.div`
       .ant-select {
         flex: 1 !important;
       }
+    }
+  }
+  .fieldItem {
+    width: 100%;
+
+    .field {
+      width: 100%;
+      display: flex;
+    }
+    p {
+      width: 45%;
     }
   }
   .error_message {

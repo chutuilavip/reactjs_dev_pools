@@ -1,4 +1,4 @@
-import axiosClient from "./axiosClient";
+import axiosClient from './axiosClient';
 
 const accountApi = {
   getAccountInfo: () => {
@@ -12,8 +12,12 @@ const accountApi = {
   },
 
   editAvatarAccount: (formData) => {
-    const url = "/api/dev/account-edit-avatar";
+    const url = '/api/dev/account-edit-avatar';
     return axiosClient.post(url, formData);
+  },
+  addMoney: (usd) => {
+    const url = `/api/payment/process-transaction?usd=${usd}`;
+    return axiosClient.get(url);
   },
 };
 export default accountApi;

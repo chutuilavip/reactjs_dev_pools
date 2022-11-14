@@ -1,24 +1,15 @@
-import React, { useState, useEffect, forwardRef } from "react";
-import { ListAppCreatedWrapper } from "./styled";
-import { AudioOutlined } from "@ant-design/icons";
-import {
-  Avatar,
-  Button,
-  Pagination,
-  Popconfirm,
-  Space,
-  Switch,
-  Table,
-  Tag,
-} from "antd";
-import { useDispatch, useSelector } from "react-redux";
-import Item from "antd/lib/list/Item";
-import { URL_API } from "../../../utils";
-import { columns } from "./constant";
-import { Input } from "antd";
-import { NavLink, useSearchParams } from "react-router-dom";
-import { deleteApp, getCreatedApp } from "../../../redux/slice/detailApp.slice";
-import Loading from "../../../layout/components/Loading/Loading";
+import React, { useState, useEffect, forwardRef } from 'react';
+import { ListAppCreatedWrapper } from './styled';
+import { AudioOutlined } from '@ant-design/icons';
+import { Avatar, Button, Pagination, Popconfirm, Space, Switch, Table, Tag } from 'antd';
+import { useDispatch, useSelector } from 'react-redux';
+import Item from 'antd/lib/list/Item';
+import { URL_API } from '../../../utils';
+import { columns } from './constant';
+import { Input } from 'antd';
+import { NavLink, useSearchParams } from 'react-router-dom';
+import { deleteApp, getCreatedApp } from '../../../redux/slice/detailApp.slice';
+import Loading from '../../../layout/components/Loading/Loading';
 const { Search } = Input;
 
 function ListAppCreated(_, ref) {
@@ -28,13 +19,11 @@ function ListAppCreated(_, ref) {
   const dispatch = useDispatch();
   const searchRef = React.useRef();
 
-  const { createdApps, isLoadingCreatedApps } = useSelector(
-    (state) => state.detailApp
-  );
+  const { createdApps, isLoadingCreatedApps } = useSelector((state) => state.detailApp);
   const [pagingParams, setPagingParams] = useState({
     limit: DEFAULT_LIMIT,
     page: 0,
-    title: "",
+    title: '',
   });
 
   useEffect(() => {
@@ -43,75 +32,67 @@ function ListAppCreated(_, ref) {
 
   useEffect(() => {
     return () => {
-      localStorage.setItem("pagingParams", JSON.stringify(pagingParams));
+      localStorage.setItem('pagingParams', JSON.stringify(pagingParams));
     };
   }, []);
   const renderStatusClass = (statusApp) => {
     switch (statusApp) {
-      case "Active":
-        return "status_active";
-      case "Waiting":
-        return "status_waiting";
+      case 'Active':
+        return 'status_active';
+      case 'Waiting':
+        return 'status_waiting';
       default:
-        return "status_rejected";
+        return 'status_rejected';
     }
   };
   const columns = [
     {
-      title: "Cover",
-      dataIndex: "cover",
-      key: "cover",
+      title: 'Cover',
+      dataIndex: 'cover',
+      key: 'cover',
       render: (src) => {
         console.log(src);
-        return (
-          <Avatar
-            src={
-              src ? `${URL_API}/${src}` : `https://joeschmoe.io/api/v1/random`
-            }
-          />
-        );
+        return <Avatar src={src ? `${URL_API}/${src}` : `https://joeschmoe.io/api/v1/random`} />;
       },
     },
     {
-      title: "Developer",
-      dataIndex: "developer",
-      key: "developer",
+      title: 'Developer',
+      dataIndex: 'developer',
+      key: 'developer',
     },
     {
-      title: "Installs",
-      dataIndex: "installs",
-      key: "installs",
+      title: 'Installs',
+      dataIndex: 'installs',
+      key: 'installs',
     },
     {
-      title: "Score",
-      dataIndex: "score",
-      key: "score",
+      title: 'Score',
+      dataIndex: 'score',
+      key: 'score',
     },
     {
-      title: "Slug",
-      dataIndex: "slug",
-      key: "slug",
+      title: 'Slug',
+      dataIndex: 'slug',
+      key: 'slug',
     },
     {
-      title: "Status",
-      dataIndex: "status",
-      key: "status",
+      title: 'Status',
+      dataIndex: 'status',
+      key: 'status',
       render: (status) => {
         console.log(status);
-        return (
-          <p className={`button ${renderStatusClass(status)}`}>{status}</p>
-        );
+        return <p className={`button ${renderStatusClass(status)}`}>{status}</p>;
       },
     },
     {
-      title: "Title",
-      dataIndex: "title",
-      key: "title",
+      title: 'Title',
+      dataIndex: 'title',
+      key: 'title',
     },
     {
-      title: "Action",
-      dataIndex: "action",
-      key: "action",
+      title: 'Action',
+      dataIndex: 'action',
+      key: 'action',
       render: ({ slug, appId }) => {
         return (
           <Space>
@@ -124,7 +105,7 @@ function ListAppCreated(_, ref) {
                   deleteApp({
                     appId,
                     callBack: () => {
-                      console.log("callback");
+                      console.log('callback');
                       dispatch(getCreatedApp(pagingParams));
                     },
                   })
@@ -144,24 +125,21 @@ function ListAppCreated(_, ref) {
       },
     },
   ];
-  console.log(
-    "createdAppscreatedAppscreatedAppscreatedAppscreatedAppscreatedApps",
-    createdApps
-  );
+  console.log('createdAppscreatedAppscreatedAppscreatedAppscreatedAppscreatedApps', createdApps);
   const renderRowTable = () => {
     let rows = [];
     if (createdApps) {
       createdApps.data?.forEach((item) => {
-        let status = "";
+        let status = '';
         switch (Number(item.status)) {
           case 0:
-            status = "Not approve";
+            status = 'Not approve';
             break;
           case 1:
-            status = "Active";
+            status = 'Active';
             break;
           default:
-            status = "Waiting";
+            status = 'Waiting';
         }
         rows.push({
           cover: item.cover,
@@ -194,54 +172,46 @@ function ListAppCreated(_, ref) {
   };
   return (
     <>
-      {isLoadingCreatedApps ? (
-        <Loading />
-      ) : (
-        <ListAppCreatedWrapper ref={ref} id="created-app">
-          {/* <Button
+      <ListAppCreatedWrapper ref={ref} id="created-app">
+        {/* <Button
         type="primary"
         onClick={() => setIsShowListApp((prev) => !prev)}
         style={{ marginBottom: "5rem", width: "40rem", height: "6rem" }}
       >
         {isShowListApp ? "Hide List App Created" : "Show List App Created"}
       </Button> */}
-          <h1
-            style={{ width: "100%", textAlign: "center", marginBottom: "5rem" }}
-          >
-            CREATED APP
-          </h1>
-          {true && (
-            <div className="table">
-              <Search
-                placeholder="input search text"
-                allowClear
-                enterButton="Search"
-                size="large"
-                onChange={onSearch}
-                style={{
-                  marginBottom: "4rem",
-                  width: "50%",
-                  marginLeft: "auto",
-                }}
+        <h1 style={{ width: '100%', textAlign: 'center', marginBottom: '5rem' }}>CREATED APP</h1>
+        {true && (
+          <div className="table">
+            <Search
+              placeholder="input search text"
+              allowClear
+              enterButton="Search"
+              size="large"
+              onChange={onSearch}
+              style={{
+                marginBottom: '4rem',
+                width: '50%',
+                marginLeft: 'auto',
+              }}
+            />
+            <Table
+              columns={columns}
+              dataSource={renderRowTable()}
+              pagination={false}
+              loading={isLoadingCreatedApps}
+            />
+            <div className="pagination">
+              <Pagination
+                onChange={onChangePagination}
+                total={createdApps?.total || DEFAULT_LIMIT}
+                showSizeChanger
+                showQuickJumper
               />
-              <Table
-                columns={columns}
-                dataSource={renderRowTable()}
-                pagination={false}
-                loading={isLoadingCreatedApps}
-              />
-              <div className="pagination">
-                <Pagination
-                  onChange={onChangePagination}
-                  total={createdApps?.total || DEFAULT_LIMIT}
-                  showSizeChanger
-                  showQuickJumper
-                />
-              </div>
             </div>
-          )}
-        </ListAppCreatedWrapper>
-      )}
+          </div>
+        )}
+      </ListAppCreatedWrapper>
     </>
   );
 }
