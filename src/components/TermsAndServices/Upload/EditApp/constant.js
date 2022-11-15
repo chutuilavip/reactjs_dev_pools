@@ -4,12 +4,16 @@ export const schema = yup
   .object({
     title: yup.string().required(),
     appid: yup.string().required(),
-    summary: yup.string().required().max(80, 'Summary must be less than 80 characters'),
+    summary: yup
+      .string()
+      .required('Summary is required')
+      .max(80, 'Summary must be less than 80 characters'),
+    otherlanguages: yup.string().required('Other languages is required'),
     full_description: yup
       .string()
       .required('Full description is required')
       .max(4000, 'Description must be less than 4000 characters'),
-    country_of_service: yup.string().required(),
+    country_of_service: yup.string().required('Country of service is required'),
     facebook: yup
       .string()
       .matches(
