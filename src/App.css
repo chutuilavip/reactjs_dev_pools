@@ -44,8 +44,27 @@
 .ant-modal {
   width: fit-content !important;
 }
+.ant-modal-body .user_avatar {
+  width: 5rem;
+  border-radius: 50%;
+}
+.pagination_modal {
+  margin: 1rem 0;
+}
+.ant-modal-body {
+  max-height: 66vh;
+  overflow-y: scroll;
+}
 .ant-modal-content {
   width: 100% !important;
+}
+.error_message {
+  color: red !important;
+  text-align: right;
+  width: 45%;
+  padding-right: 2rem;
+  font-size: 1.6rem !important;
+  text-align: left;
 }
 * {
   margin: 0;

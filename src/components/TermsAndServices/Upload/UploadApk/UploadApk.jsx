@@ -76,7 +76,7 @@ export default function UploadApk({ setFinalData, finalData }) {
             <label style={{ marginRight: '1rem' }} htmlFor="apk">
               Choose APK file
             </label>
-            <p className="error_field">{errors.fileapk?.message}</p>
+            <p className="error_message">{errors.fileapk?.message}</p>
             <p className="hint">
               - The file sime must be less than <span className="special">200MB</span>
             </p>

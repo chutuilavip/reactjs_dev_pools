@@ -1,8 +1,8 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import userApi from "../../services/userApi";
-import { getDetailApp } from "./detailApp.slice";
-import { toast } from "react-toastify";
-import { ToastError } from "../../utils";
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import userApi from '../../services/userApi';
+import { getDetailApp } from './detailApp.slice';
+import { toast } from 'react-toastify';
+import { ToastError } from '../../utils';
 
 const initialState = {
   statusRegis: {},
@@ -15,61 +15,55 @@ const initialState = {
     review: {},
     login: {},
   },
-  lang: "en",
+  lang: 'en',
 };
 
-export const loginUser = createAsyncThunk(
-  "users/login",
-  async (data, thunkAPI) => {
-    try {
-      const result = await userApi.loginUser(data);
-      console.log(result);
-      if (result.user.type === "mod") {
-        toast.error("You have no permission to access this website");
-        return thunkAPI.rejectWithValue(
-          "You have no permission to access this website"
-        );
-      }
-      if (result.access_token) {
-        localStorage.setItem("tokens", JSON.stringify(result.access_token));
-      }
-      if (result.status === 200) {
-        toast.success(result.message);
-      }
-      return result;
-    } catch (error) {
-      console.log(error.response.data);
-      return thunkAPI.rejectWithValue(error.response.data.messages);
+export const loginUser = createAsyncThunk('users/login', async (data, thunkAPI) => {
+  try {
+    const result = await userApi.loginUser(data);
+    console.log(result);
+    if (result.user.type === 'mod') {
+      toast.error('You have no permission to access this website');
+      return thunkAPI.rejectWithValue('You have no permission to access this website');
     }
+    if (result.access_token) {
+      localStorage.setItem('tokens', JSON.stringify(result.access_token));
+    }
+    if (result.status === 200) {
+      toast.success(result.message);
+      window.location.reload();
+    }
+    return result;
+  } catch (error) {
+    console.log(error.response.data);
+    toast.error(error.response.data.messages);
+    return thunkAPI.rejectWithValue(error.response.data.messages);
   }
-);
+});
 
-export const checkLogin = createAsyncThunk("user/checkLogin", async (token) => {
+export const checkLogin = createAsyncThunk('user/checkLogin', async (token) => {
   try {
     const result = await userApi.checkLogin(token);
     return result;
   } catch (error) {
-    console.log("error");
-    localStorage.removeItem("tokens");
+    console.log('error');
+    localStorage.removeItem('tokens');
   }
 });
 
-export const registerUser = createAsyncThunk(
-  "user/register",
-  async (params, thunkAPI) => {
-    try {
-      const result = await userApi.registerUser(params.data);
-      if (result.status === 200) {
-        // params.goHome();
-      }
-      return result;
-    } catch (error) {
-      return thunkAPI.rejectWithValue(error.response.data);
+export const registerUser = createAsyncThunk('user/register', async (params, thunkAPI) => {
+  try {
+    const result = await userApi.registerUser(params.data);
+    if (result.status === 200) {
+      // params.goHome();
     }
+    return result;
+  } catch (error) {
+    return thunkAPI.rejectWithValue(error.response.data);
   }
-);
+});
 export const registerPublisher = createAsyncThunk(
-  "publisher/register",
+  'publisher/register',
   async (params, thunkAPI) => {
     try {
       const result = await userApi.registerPublisher(params.payload);
@@ -77,7 +71,7 @@ export const registerPublisher = createAsyncThunk(
         setTimeout(() => {
           params.goHome();
         }, 1000);
-        toast.success("Please wait for your account to be approved by admin");
+        toast.success('Please wait for your account to be approved by admin');
       } else if (result.status >= 400) {
         ToastError(result);
       }
@@ -93,22 +87,19 @@ export const registerPublisher = createAsyncThunk(
     }
   }
 );
-export const forgotPassword = createAsyncThunk(
-  "user/forgot_password",
-  async (data) => {
-    try {
-      const result = await userApi.forgotPassword(data);
-      toast.success(result.message);
-      console.log("res", result);
-    } catch (err) {
-      toast.error(err.response.data[0]);
+export const forgotPassword = createAsyncThunk('user/forgot_password', async (data) => {
+  try {
+    const result = await userApi.forgotPassword(data);
+    toast.success(result.message);
+    console.log('res', result);
+  } catch (err) {
+    toast.error(err.response.data[0]);
 
-      console.log(err);
-    }
+    console.log(err);
   }
-);
+});
 export const resetPassword = createAsyncThunk(
-  "user/reset_password",
+  'user/reset_password',
   async ({ payload, goToLogin }, thunkAPI) => {
     try {
       const result = await userApi.resetPassword(payload);
@@ -116,67 +107,58 @@ export const resetPassword = createAsyncThunk(
       goToLogin();
     } catch (err) {
       toast.error(err.response?.data?.message);
-      console.log("errors", err);
+      console.log('errors', err);
     }
   }
 );
-export const reviewApp = createAsyncThunk(
-  "user/reviewApp",
-  async (params, thunkAPI) => {
-    const { slug, ...param } = params;
-    try {
-      const result = await userApi.reviewApp(param, slug);
-      if (result.status === 200) {
-        thunkAPI.dispatch(getDetailApp(slug));
-      } else {
-        toast.error(result.error);
-      }
-      return result;
-    } catch (error) {
-      console.log("error");
-      return thunkAPI.rejectWithValue(error.response.data);
+export const reviewApp = createAsyncThunk('user/reviewApp', async (params, thunkAPI) => {
+  const { slug, ...param } = params;
+  try {
+    const result = await userApi.reviewApp(param, slug);
+    if (result.status === 200) {
+      thunkAPI.dispatch(getDetailApp(slug));
+    } else {
+      toast.error(result.error);
     }
+    return result;
+  } catch (error) {
+    console.log('error');
+    return thunkAPI.rejectWithValue(error.response.data);
   }
-);
-export const likeReview = createAsyncThunk(
-  "user/likeReview",
-  async (data, thunkAPI) => {
-    const { slug, id } = data;
-    try {
-      const res = await userApi.likeReview(id);
-      if (res.status === 200) {
-        thunkAPI.dispatch(getDetailApp(slug));
-        toast.success(res.success);
-      }
-    } catch (err) {
-      console.log(err);
-      return thunkAPI.rejectWithValue(err);
+});
+export const likeReview = createAsyncThunk('user/likeReview', async (data, thunkAPI) => {
+  const { slug, id } = data;
+  try {
+    const res = await userApi.likeReview(id);
+    if (res.status === 200) {
+      thunkAPI.dispatch(getDetailApp(slug));
+      toast.success(res.success);
     }
+  } catch (err) {
+    console.log(err);
+    return thunkAPI.rejectWithValue(err);
   }
-);
+});
 
-export const disLikeReview = createAsyncThunk(
-  "user/disLikeReview",
-  async (data, thunkAPI) => {
-    const { slug, id } = data;
-    try {
-      const res = await userApi.disLikeReview(id);
-      if (res.status === 200) {
-        thunkAPI.dispatch(getDetailApp(slug));
-        toast.success(res.success);
-      }
-    } catch (err) {
-      console.log(err);
-      return thunkAPI.rejectWithValue(err);
+export const disLikeReview = createAsyncThunk('user/disLikeReview', async (data, thunkAPI) => {
+  const { slug, id } = data;
+  try {
+    const res = await userApi.disLikeReview(id);
+    if (res.status === 200) {
+      thunkAPI.dispatch(getDetailApp(slug));
+      toast.success(res.success);
     }
+  } catch (err) {
+    console.log(err);
+    return thunkAPI.rejectWithValue(err);
   }
-);
+});
 export const checkWalletAccount = createAsyncThunk(
-  "user/checkWallet",
+  'user/checkWallet',
   async (address, thunkAPI) => {
     try {
       const res = await userApi.checkWallet(address);
-      console.log("nhuuuuuuuuuuuuuuuuuuccccccccccccccccccccccc", res);
+      console.log('nhuuuuuuuuuuuuuuuuuuccccccccccccccccccccccc', res);
 
       if (res.status === 200) {
         toast.info(res.success);
@@ -190,14 +172,14 @@ export const checkWalletAccount = createAsyncThunk(
 );
 
 const userSlice = createSlice({
-  name: "user",
+  name: 'user',
   initialState,
   reducers: {
     setLanguage: (state, action) => {
       state.lang = action.payload;
     },
     logOut: (state) => {
-      localStorage.removeItem("tokens");
+      localStorage.removeItem('tokens');
       state.infoUser = {};
     },
   },
@@ -205,12 +187,12 @@ const userSlice = createSlice({
     // Login
     [loginUser.pending]: (state) => {
       state.isLoading = true;
-      state.errors.login = "";
+      state.errors.login = '';
     },
     [loginUser.fulfilled]: (state, action) => {
       state.infoUser = action.payload;
       state.isLoading = false;
-      state.errors.login = "";
+      state.errors.login = '';
     },
     [loginUser.rejected]: (state, action) => {
       state.isLoading = false;
@@ -234,13 +216,13 @@ const userSlice = createSlice({
     // Register
     [registerUser.pending]: (state) => {
       state.isLoading = true;
-      state.errors.register = "";
+      state.errors.register = '';
       state.statusRegis = 0;
     },
     [registerUser.fulfilled]: (state, action) => {
       state.isLoading = false;
       state.statusRegis = action.payload;
-      state.errors.register = "";
+      state.errors.register = '';
     },
     [registerUser.rejected]: (state, action) => {
       state.isLoading = false;
@@ -250,12 +232,12 @@ const userSlice = createSlice({
     //Register Publisher
     [registerPublisher.pending]: (state) => {
       state.isLoading = true;
-      state.errors.register = "";
+      state.errors.register = '';
     },
     [registerPublisher.fulfilled]: (state, action) => {
       state.isLoading = false;
       state.statusRegis = action.payload;
-      state.errors.register = "";
+      state.errors.register = '';
     },
     [registerPublisher.rejected]: (state, action) => {
       state.isLoading = false;

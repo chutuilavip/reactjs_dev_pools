@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const ListAppCreatedWrapper = styled.div`
   background: var(--bg-dark);
@@ -12,6 +12,16 @@ export const ListAppCreatedWrapper = styled.div`
     }
     .ant-pagination {
       color: white;
+    }
+    .ant-table table {
+      padding: 5rem;
+    }
+    .ant-table-row {
+      transition: all 0.4s;
+      &:hover {
+        transform: scale(1.05);
+        box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+      }
     }
   }
   .button {

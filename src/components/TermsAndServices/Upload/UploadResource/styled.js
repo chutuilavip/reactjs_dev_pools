@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 export const WrapUploadResource = styled.div`
   &&& {
     .ant-upload.ant-upload-drag {
@@ -17,11 +17,11 @@ export const WrapUploadResource = styled.div`
     }
     .upload_item.item_1 {
       .ant-upload.ant-upload-drag {
-        display: ${(props) => props.imagesDisplay && "inline-block"};
+        display: ${(props) => props.imagesDisplay && 'inline-block'};
         opacity: ${(props) => props.imagesDisplay && 0};
         height: ${(props) => props.imagesDisplay && 0};
-        cursor: ${(props) => props.imagesDisplay && "not-allowed"};
-        pointer-events: ${(props) => props.imagesDisplay && "none"};
+        cursor: ${(props) => props.imagesDisplay && 'not-allowed'};
+        pointer-events: ${(props) => props.imagesDisplay && 'none'};
       }
     }
     .ant-upload-list-picture .ant-upload-list-item-error {
@@ -82,6 +82,7 @@ export const WrapUploadResource = styled.div`
   }
   .error_message {
     color: red;
+    width: 100%;
   }
   .avatar_uploaded {
     display: flex;

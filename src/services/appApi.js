@@ -64,5 +64,9 @@ const appApi = {
     const url = `api/dev/destroy/${appId}`;
     return axiosClient.post(url);
   },
+  getComments: ({ appId, limit, page, search = '' }) => {
+    const url = `api/dev/list-comment-of-app?appid=${appId}&limit=${limit}&page=${page}?search=${search}`;
+    return axiosClient(url);
+  },
 };
 export default appApi;

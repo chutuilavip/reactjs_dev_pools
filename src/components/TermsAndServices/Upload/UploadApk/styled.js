@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const UploadAplWrapper = styled.div`
   &&& {
@@ -39,8 +39,5 @@ export const UploadAplWrapper = styled.div`
     justify-content: center;
     align-items: center;
     flex-direction: column;
-  }
-  .error_field {
-    color: red;
   }
 `;

@@ -7,13 +7,6 @@ import { ToastError } from '../../utils';
 const initialState = {
   detailApp: {},
   detailAppWithLang: {},
-  isLoading: true,
-  isLoadingBuyVideoService: false,
-  isLoadingSubmit: false,
-  isLoadingDeleteScreenshot: false,
-  isLoadingEditApp: false,
-  isLoadingDeleteApp: false,
-  isLoadingCreatedApps: false,
   createdApps: [],
   error: {},
   categories: [],
@@ -23,6 +16,15 @@ const initialState = {
   handleNextTabStore: null,
   handlePrevTabStore: null,
   selectedTabStore: 1,
+  appComments: [],
+  isLoading: true,
+  isLoadingBuyVideoService: false,
+  isLoadingSubmit: false,
+  isLoadingDeleteScreenshot: false,
+  isLoadingEditApp: false,
+  isLoadingDeleteApp: false,
+  isLoadingCreatedApps: false,
+  isLoadingGetComment: false,
 };
 
 export const getDetailApp = createAsyncThunk('getDetailApp', async (slug) => {
@@ -167,7 +169,16 @@ export const uploadContent = createAsyncThunk('uploadContent', async (data) => {
     console.log(err.response.data.errors);
   }
 });
+export const getAllAppComments = createAsyncThunk('app/getComments', async (payload) => {
+  try {
+    const res = await appApi.getComments(payload);
+    console.log(res);
 
+    return res.res.data;
+  } catch (err) {
+    console.log(err);
+  }
+});
 export const buyServiceVideo = createAsyncThunk('service/buyVideo', async (data, thunkAPI) => {
   try {
     const res = await userApi.buyServiceVideo(data);
@@ -319,6 +330,18 @@ const detailAppSlice = createSlice({
     },
     [deleteApp.rejected]: (state, action) => {
       state.isLoadingCreatedApps = false;
+    },
+
+    // Get app comment
+    [getAllAppComments.pending]: (state, action) => {
+      state.isLoadingGetComment = true;
+    },
+    [getAllAppComments.fulfilled]: (state, { payload }) => {
+      state.isLoadingGetComment = false;
+      state.appComments = payload;
+    },
+    [getAllAppComments.rejected]: (state, action) => {
+      state.isLoadingGetComment = false;
     },
   },
 });
