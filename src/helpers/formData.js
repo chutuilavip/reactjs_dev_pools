@@ -14,6 +14,9 @@ export const ConvertToFormData = (data) => {
       for (let i = 0; i < newImages.length; i++) {
         formData.append('images[]', newImages[i], newImages[i].name);
       }
+    } else if (v === 'information' || v === 'app_permissions') {
+      data[v] = data[v].join();
+      formData.append(v, data[v]);
     } else {
       formData.append(v, data[v]);
     }

@@ -253,4 +253,16 @@ export const InputFields = [
       placeholder: 'Enter Link Twitter',
     },
   ],
+  [
+    {
+      name: 'phone_number',
+      label: 'Phone Number',
+      placeholder: 'Enter Phone Number',
+    },
+    {
+      name: 'email',
+      label: 'Email',
+      placeholder: 'Enter Email',
+    },
+  ],
 ];

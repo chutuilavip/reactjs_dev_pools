@@ -10,7 +10,7 @@ const WrapAppDetail = styled.div`
       width: 90%;
     }
     .ant-select-selector {
-      height: 60px !important;
+      min-height: 60px !important;
       display: flex;
       align-items: center;
       flex: 1;
@@ -56,6 +56,7 @@ const WrapAppDetail = styled.div`
       letter-spacing: 0.0025em;
       color: #ffffff;
       margin-bottom: 2rem;
+      text-align: left;
     }
     .textarea {
       width: 100%;
@@ -131,6 +132,7 @@ const WrapAppDetail = styled.div`
       color: #ffffff;
       margin-bottom: 2rem;
       width: 45%;
+      text-align: left;
     }
   }
   .error_message {
