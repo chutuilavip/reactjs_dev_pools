@@ -8,6 +8,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import {
   deleteScreenshot,
   editApp,
+  getAppPermissionAndInfoCollection,
   getCategoriesAndLanguage,
   getDetailAppWithLange,
 } from '../../../../redux/slice/detailApp.slice';
@@ -46,6 +47,8 @@ export default function EditApp() {
     detailAppWithLang,
     isLoadingDeleteScreenshot,
     isLoadingEditApp,
+    app_permission,
+    information,
   } = useSelector((state) => state.detailApp);
   const [isAppFree, setIsAppFree] = useState(true);
   const [locale, setLocale] = useState('');
@@ -85,7 +88,16 @@ export default function EditApp() {
       },
     ],
   ];
+  const renderOption2 = (options) => {
+    return options.map((option, index) => {
+      return {
+        value: `${option.id}`,
+        label: option.language || option.title,
+      };
+    });
+  };
   const renderOption = (data) => {
+    console.log();
     const mainOption = data.data?.map((item) => {
       if (data.name === 'otherlanguages') {
         return {
@@ -99,15 +111,19 @@ export default function EditApp() {
         };
       }
     });
-    const res = [
-      {
-        value: '',
-        label: `Select App ${data.label}`,
-        disabled: true,
-      },
-      ...mainOption,
-    ];
-    return res;
+    console.log('---------------------------------------------------', data);
+
+    if (mainOption) {
+      const res = [
+        {
+          value: '',
+          label: `Select App ${data.label}`,
+          disabled: true,
+        },
+        ...mainOption,
+      ];
+      return res;
+    }
   };
 
   const propsUploadAvatar = {
@@ -188,6 +204,9 @@ export default function EditApp() {
       })
     );
   };
+  useEffect(() => {
+    dispatch(getAppPermissionAndInfoCollection());
+  }, []);
   // Initial value of form
   useEffect(() => {
     const formKeys = Object.keys(getValues());
@@ -233,6 +252,18 @@ export default function EditApp() {
           } else {
             resetValue[v] = '';
           }
+        } else if (v === 'app_permission_id') {
+          if (detailAppWithLang?.data.info) {
+            resetValue[v] = detailAppWithLang?.data?.app['app_permission_id']?.split(',');
+          } else {
+            resetValue[v] = '';
+          }
+        } else if (v === 'information_collected_id') {
+          if (detailAppWithLang?.data.info) {
+            resetValue[v] = detailAppWithLang?.data?.app['information_collected_id']?.split(',');
+          } else {
+            resetValue[v] = '';
+          }
         } else if (v === 'free') {
           resetValue[v] = detailAppWithLang?.data?.app?.is_pay;
         } else {
@@ -246,6 +277,7 @@ export default function EditApp() {
       }
     }
     resetValue['price'] = Number(detailAppWithLang?.data?.app?.price).toFixed(0);
+    console.log('resetValueresetValueresetValueresetValueresetValueresetValue', resetValue);
     reset(resetValue);
   }, [detailAppWithLang, getValues]);
   useEffect(() => {
@@ -353,6 +385,52 @@ export default function EditApp() {
                 </div>
               );
             })}
+            <div className="row">
+              <div className="fieldItem">
+                <div className="field">
+                  <p>App Permissions</p>
+                  <Controller
+                    name="app_permission_id"
+                    control={control}
+                    render={({ field }) => (
+                      <Select
+                        {...field}
+                        mode="multiple"
+                        allowClear
+                        style={{
+                          flex: 1,
+                        }}
+                        placeholder="Please select"
+                        options={renderOption2(app_permission)}
+                      />
+                    )}
+                  />
+                </div>
+                <p className="error_message">{errors.app_permissions?.message}</p>{' '}
+              </div>
+              <div className="fieldItem">
+                <div className="field">
+                  <p>Information Collection</p>
+                  <Controller
+                    name="information_collected_id"
+                    control={control}
+                    render={({ field }) => (
+                      <Select
+                        {...field}
+                        mode="multiple"
+                        allowClear
+                        style={{
+                          flex: 1,
+                        }}
+                        placeholder="Please select"
+                        options={renderOption2(information)}
+                      />
+                    )}
+                  />
+                </div>
+                <p className="error_message">{errors.information?.message}</p>{' '}
+              </div>
+            </div>
             {!isAppFree && (
               <div className="field-item">
                 {' '}

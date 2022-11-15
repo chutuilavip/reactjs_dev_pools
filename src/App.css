@@ -1,6 +1,6 @@
-@import url("https://fonts.googleapis.com/css2?family=Quantico:wght@400;700&display=swap");
-@import "antd/dist/antd.css";
-@import "react-toastify/dist/ReactToastify.css";
+@import url('https://fonts.googleapis.com/css2?family=Quantico:wght@400;700&display=swap');
+@import 'antd/dist/antd.css';
+@import 'react-toastify/dist/ReactToastify.css';
 :root {
   height: 100%;
   --textGray: #757575;
@@ -34,7 +34,10 @@
 .ant-upload-list-picture .ant-upload-list-item-error {
   border-color: black;
 }
-
+.ant-select-multiple .ant-select-selection-item {
+  background-color: transparent;
+  border: 1px solid black;
+}
 .ant-upload-list-item-name {
   color: black !important;
 }
@@ -48,7 +51,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: "Quantico", sans-serif !important;
+  font-family: 'Quantico', sans-serif !important;
   font-style: normal;
   letter-spacing: 0.0025em;
   position: relative;

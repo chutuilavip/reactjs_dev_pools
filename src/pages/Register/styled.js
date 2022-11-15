@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 const WrapRegister = styled.div`
   display: flex;
@@ -32,8 +32,7 @@ const WrapRegister = styled.div`
 
 const FormRegis = styled.form`
   width: 100%;
-  height: ${(props) => props.height || "43%"};
-  position: relative;
+  height: ${(props) => props.height || '43%'};
   display: flex;
   align-items: center;
   justify-content: center;
@@ -48,7 +47,6 @@ const StepOne = styled.div`
   justify-content: center;
   align-items: center;
   gap: 14px;
-  position: absolute;
   opacity: ${({ status }) => (status ? 1 : 0)};
   z-index: ${({ status }) => (status ? 99 : -99)};
   .btn_form {
@@ -302,13 +300,4 @@ const ListBtnStep = styled.div`
     }
   }
 `;
-export {
-  WrapRegister,
-  FormRegis,
-  StepOne,
-  ListInput,
-  ListBtnStep,
-  StepTwo,
-  FormMeta,
-  ListApp,
-};
+export { WrapRegister, FormRegis, StepOne, ListInput, ListBtnStep, StepTwo, FormMeta, ListApp };

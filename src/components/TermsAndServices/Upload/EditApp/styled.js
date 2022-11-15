@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const EditAppWrapper = styled.div`
   padding: 1rem;
@@ -28,7 +28,7 @@ export const EditAppWrapper = styled.div`
       color: black;
     }
     .ant-select:not(.ant-select-customize-input) .ant-select-selector {
-      height: 4rem;
+      min-height: 4rem;
       display: flex;
       align-items: center;
       border-radius: 4px;
@@ -39,6 +39,9 @@ export const EditAppWrapper = styled.div`
       border: none;
       border-bottom: 1px solid #d7d7d7;
     }
+  }
+  .fieldItem {
+    width: 100%;
   }
   form {
     width: 80%;
@@ -104,7 +107,8 @@ export const EditAppWrapper = styled.div`
     text-transform: uppercase;
   }
   .cover {
-    width: 50%;
+    width: 255px;
+    height: 390px;
     border-radius: 5px;
     margin-top: 1rem;
   }

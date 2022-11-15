@@ -157,6 +157,8 @@ export const uploadContent = createAsyncThunk('uploadContent', async (data) => {
   } catch (err) {
     if (err?.response?.data?.error) {
       toast.error(err.response.data.error);
+    } else if (err?.response?.status === 413) {
+      toast.error('File too large. Please upload another file');
     }
     const keysErrors = Object.keys(err.response?.data?.errors);
     for (let key of keysErrors) {
