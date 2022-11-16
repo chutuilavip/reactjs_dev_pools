@@ -213,7 +213,7 @@ const UploadAppDetail = ({ setFinalData, finalData }) => {
                 </div>
                 <div className="row">
                   <div className="field_item">
-                    <div className="free_item">
+                    <div className="free_item field">
                       <p>Cost *</p>
 
                       <Controller

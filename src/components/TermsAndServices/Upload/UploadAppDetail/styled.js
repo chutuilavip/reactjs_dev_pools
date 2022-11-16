@@ -15,8 +15,11 @@ const WrapAppDetail = styled.div`
       align-items: center;
       flex: 1;
     }
+    .ant-select-multiple .ant-select-selection-item {
+      border: 1px solid white;
+    }
     .ant-select-multiple .ant-select-selection-item-content {
-      color: black;
+      color: white;
     }
   }
 
@@ -111,7 +114,7 @@ const WrapAppDetail = styled.div`
     .free_item {
       display: flex;
       width: 100%;
-
+      gap: 2rem;
       .ant-select {
         flex: 1 !important;
       }
@@ -123,6 +126,7 @@ const WrapAppDetail = styled.div`
     .field {
       width: 100%;
       display: flex;
+      gap: 2rem;
     }
     p {
       font-weight: 700;
@@ -134,11 +138,6 @@ const WrapAppDetail = styled.div`
       width: 45%;
       text-align: left;
     }
-  }
-  .error_message {
-    color: red !important;
-    text-align: right;
-    width: 100% !important;
   }
 `;
 

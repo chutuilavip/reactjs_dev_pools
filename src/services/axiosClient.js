@@ -33,12 +33,17 @@ axiosClient.interceptors.response.use(
     return response;
   },
   (error) => {
-    if (error.response.status === 401) {
-      toast.error('Login again');
-      setTimeout(() => {
-        AuthUtil.logout();
-      }, 1000);
+    console.log(error);
+    if (error.config.url === '/api/auth/login' || error.config.url === '/api/dev/account') {
+      throw error;
+    } else {
+      if (error.response.status === 401) {
+        setTimeout(() => {
+          AuthUtil.logout();
+        }, 1000);
+      }
     }
+
     throw error;
   }
 );

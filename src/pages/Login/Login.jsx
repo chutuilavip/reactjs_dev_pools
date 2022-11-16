@@ -1,21 +1,14 @@
-import React, { useEffect } from "react";
-import { motion } from "framer-motion";
-import { variants } from "../../helpers/motion";
-import LoginForm from "../../components/Login/LoginForm";
-import { useSelector } from "react-redux";
-import Loading from "../../layout/components/Loading/Loading";
-import { toast } from "react-toastify";
+import { motion } from 'framer-motion';
+import React from 'react';
+import { useSelector } from 'react-redux';
+import LoginForm from '../../components/Login/LoginForm';
+import { variants } from '../../helpers/motion';
+import Loading from '../../layout/components/Loading/Loading';
 
 const Login = () => {
   const { isLoading } = useSelector((state) => state.user);
-
   return (
-    <motion.main
-      variants={variants}
-      initial="hidden"
-      animate="visible"
-      exit="hidden"
-    >
+    <motion.main variants={variants} initial="hidden" animate="visible" exit="hidden">
       {isLoading ? <Loading /> : <LoginForm />}
     </motion.main>
   );

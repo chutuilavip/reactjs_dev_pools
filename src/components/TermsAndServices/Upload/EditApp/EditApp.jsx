@@ -17,7 +17,7 @@ import { ConvertToFormData } from '../../../../helpers/formData';
 import Loading from '../../../../layout/components/Loading/Loading';
 import { getBase64, getFileName, URL_API } from '../../../../utils';
 import UploadSingleAvatar from '../UploadSingleAvatar/UploadSingleAvatar';
-import { Cost, InputFields, schema, Types } from './constant';
+import { Cost, InputFields, EditAppSchema, Types } from './constant';
 import { EditAppWrapper } from './styled';
 const { Dragger } = Upload;
 
@@ -37,7 +37,7 @@ export default function EditApp() {
     defaultValues: {
       price: null,
     },
-    resolver: yupResolver(schema),
+    resolver: yupResolver(EditAppSchema),
   });
 
   const {

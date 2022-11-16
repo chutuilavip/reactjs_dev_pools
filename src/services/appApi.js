@@ -64,5 +64,13 @@ const appApi = {
     const url = `api/dev/destroy/${appId}`;
     return axiosClient.post(url);
   },
+  getComments: ({ appId, limit, page, search = '' }) => {
+    const url = `api/dev/list-comment-of-app?appid=${appId}&limit=${limit}&page=${page}?search=${search}`;
+    return axiosClient(url);
+  },
+  getHistoryUpdateOfApp: (appId, keyword = '', locale) => {
+    const url = `api/dev/list-history-version-of-app?id=${appId}&keyword=${keyword}&locale=${locale}`;
+    return axiosClient(url);
+  },
 };
 export default appApi;

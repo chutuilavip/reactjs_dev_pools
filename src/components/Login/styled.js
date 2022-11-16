@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const BgContent = styled.div`
   width: 100%;
@@ -51,10 +51,10 @@ export const BgContent = styled.div`
       }
       .register_link {
         font-weight: 400;
-        font-size: 12px;
+        font-size: 1.6rem;
         letter-spacing: 0.0025em;
-        span {
-          color: #ffffff;
+        a {
+          color: #096dd9;
         }
       }
     }
@@ -99,7 +99,7 @@ export const ListInput = styled.div`
     }
     .forgot_pass {
       font-weight: 400;
-      font-size: 12px;
+      font-size: 1.6rem;
       letter-spacing: 0.0025em;
       color: #3b72fe;
     }

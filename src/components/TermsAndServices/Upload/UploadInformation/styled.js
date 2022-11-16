@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 const UploadInfoWrapper = styled.div`
   display: flex;
@@ -91,10 +91,6 @@ const UploadInfoWrapper = styled.div`
   }
   .field_item {
     width: 100%;
-  }
-  .error_message {
-    color: red;
-    text-align: right;
   }
 `;
 

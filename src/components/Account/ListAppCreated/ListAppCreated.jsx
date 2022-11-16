@@ -1,21 +1,16 @@
-import React, { useState, useEffect, forwardRef } from 'react';
-import { ListAppCreatedWrapper } from './styled';
-import { AudioOutlined } from '@ant-design/icons';
-import { Avatar, Button, Pagination, Popconfirm, Space, Switch, Table, Tag } from 'antd';
+import { Avatar, Button, Input, Pagination, Popconfirm, Space, Table } from 'antd';
+import React, { forwardRef, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import Item from 'antd/lib/list/Item';
-import { URL_API } from '../../../utils';
-import { columns } from './constant';
-import { Input } from 'antd';
-import { NavLink, useSearchParams } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { deleteApp, getCreatedApp } from '../../../redux/slice/detailApp.slice';
-import Loading from '../../../layout/components/Loading/Loading';
-const { Search } = Input;
+import { URL_API } from '../../../utils';
+import ActionGroup from './ActionGroup/ActionGroup';
+import CommentModal from './CommentModal/CommentModal';
+import HistoryUpdateAppModal from './HistoryUpdateAppModal/HistoryUpdateAppModal.';
+import { ListAppCreatedWrapper } from './styled';
 
 function ListAppCreated(_, ref) {
   let DEFAULT_LIMIT = 10;
-  const [isShowListApp, setIsShowListApp] = useState(false);
-  const [fixedTop, setFixedTop] = useState(false);
   const dispatch = useDispatch();
   const searchRef = React.useRef();
 
@@ -25,7 +20,8 @@ function ListAppCreated(_, ref) {
     page: 0,
     title: '',
   });
-
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isModalOpenHistory, setIsModalOpenHistory] = useState(false);
   useEffect(() => {
     dispatch(getCreatedApp(pagingParams));
   }, [pagingParams]);
@@ -51,7 +47,6 @@ function ListAppCreated(_, ref) {
       dataIndex: 'cover',
       key: 'cover',
       render: (src) => {
-        console.log(src);
         return <Avatar src={src ? `${URL_API}/${src}` : `https://joeschmoe.io/api/v1/random`} />;
       },
     },
@@ -64,6 +59,23 @@ function ListAppCreated(_, ref) {
       title: 'Installs',
       dataIndex: 'installs',
       key: 'installs',
+    },
+    {
+      title: 'History Update',
+      dataIndex: 'history',
+      key: 'history',
+      render: (id) => {
+        return (
+          <Button
+            type="primary"
+            className="button"
+            style={{ width: '90%' }}
+            onClick={() => setIsModalOpenHistory(true)}
+          >
+            <NavLink to={`/created-app/history-update/${id}`}>History</NavLink>
+          </Button>
+        );
+      },
     },
     {
       title: 'Score',
@@ -80,7 +92,6 @@ function ListAppCreated(_, ref) {
       dataIndex: 'status',
       key: 'status',
       render: (status) => {
-        console.log(status);
         return <p className={`button ${renderStatusClass(status)}`}>{status}</p>;
       },
     },
@@ -93,39 +104,19 @@ function ListAppCreated(_, ref) {
       title: 'Action',
       dataIndex: 'action',
       key: 'action',
-      render: ({ slug, appId }) => {
+      render: ({ slug, appId, appId2 }) => {
         return (
-          <Space>
-            <Popconfirm
-              title="Are you sure delete this App？"
-              okText="Yes"
-              cancelText="No"
-              onConfirm={() =>
-                dispatch(
-                  deleteApp({
-                    appId,
-                    callBack: () => {
-                      console.log('callback');
-                      dispatch(getCreatedApp(pagingParams));
-                    },
-                  })
-                )
-              }
-            >
-              <Button type="primary" danger className="button">
-                Delete
-              </Button>
-            </Popconfirm>
-
-            <Button type="primary" className="button">
-              <NavLink to={`/for-publishers/edit-app/${slug}`}>Edit</NavLink>
-            </Button>
-          </Space>
+          <ActionGroup
+            slug={slug}
+            appId={appId}
+            appId2={appId2}
+            pagingParams={pagingParams}
+            setIsModalOpen={setIsModalOpen}
+          />
         );
       },
     },
   ];
-  console.log('createdAppscreatedAppscreatedAppscreatedAppscreatedAppscreatedApps', createdApps);
   const renderRowTable = () => {
     let rows = [];
     if (createdApps) {
@@ -145,11 +136,12 @@ function ListAppCreated(_, ref) {
           cover: item.cover,
           developer: item.developer,
           installs: item.installs,
+          history: item.id,
           score: item.score,
           slug: item.slug,
           status: status,
           title: item.title,
-          action: { slug: item.slug, appId: item.id },
+          action: { slug: item.slug, appId: item.id, appId2: item.appid },
         });
       });
     }
@@ -160,7 +152,7 @@ function ListAppCreated(_, ref) {
       return { ...prev, limit: pageSize, page: page };
     });
   };
-  const onSearch = (e) => {
+  const handleSearch = (e) => {
     if (searchRef.current) {
       clearTimeout(searchRef.current);
     }
@@ -170,18 +162,35 @@ function ListAppCreated(_, ref) {
       });
     }, 1000);
   };
+  const handleOk = () => {
+    setIsModalOpen(false);
+  };
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
+
+  const handleOkHistory = () => {
+    setIsModalOpenHistory(false);
+  };
+  const handleCancelHistory = () => {
+    setIsModalOpenHistory(false);
+  };
   return (
     <>
+      {isModalOpen && <CommentModal onOk={handleOk} onCancel={handleCancel} />}
+      {isModalOpenHistory && (
+        <HistoryUpdateAppModal onOk={handleOkHistory} onCancel={handleCancelHistory} />
+      )}
+
       <ListAppCreatedWrapper ref={ref} id="created-app">
         <h1 style={{ width: '100%', textAlign: 'center', marginBottom: '5rem' }}>CREATED APP</h1>
         {true && (
           <div className="table">
-            <Search
-              placeholder="input search text"
+            <Input
+              placeholder="Find somethings...."
               allowClear
-              enterButton="Search"
               size="large"
-              onChange={onSearch}
+              onChange={handleSearch}
               style={{
                 marginBottom: '4rem',
                 width: '50%',

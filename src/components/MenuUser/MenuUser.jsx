@@ -1,19 +1,19 @@
-import React, { useRef, useEffect } from "react";
-import edit_icon from "../../assets/Profile/edit_on_menu.png";
-import avatar from "../../assets/Profile/Avatar.png";
-import { LazyLoadImage } from "react-lazy-load-image-component";
-import "react-lazy-load-image-component/src/effects/blur.css";
-import { Link, NavLink, useNavigate } from "react-router-dom";
-import { ContentMenu, WrapMenuUser } from "./styled";
-import { CgLogOut } from "react-icons/cg";
-import useClickOutside from "../../hooks/useClickOutSide";
-import { useDispatch, useSelector } from "react-redux";
-import { setShowPopup } from "../../redux/slice/customLayout.slice";
-import { checkLogin, logOut } from "../../redux/slice/user.slice";
+import React, { useRef, useEffect } from 'react';
+import edit_icon from '../../assets/Profile/edit_on_menu.png';
+import avatar from '../../assets/Profile/Avatar.png';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
+import 'react-lazy-load-image-component/src/effects/blur.css';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
+import { ContentMenu, WrapMenuUser } from './styled';
+import { CgLogOut } from 'react-icons/cg';
+import useClickOutside from '../../hooks/useClickOutSide';
+import { useDispatch, useSelector } from 'react-redux';
+import { setShowPopup } from '../../redux/slice/customLayout.slice';
+import { checkLogin, logOut } from '../../redux/slice/user.slice';
 
-import { Avatar, Button } from "antd";
-import { URL_API } from "../../constants/constants";
-import { getDefaultAvatarName } from "../../helpers";
+import { Avatar, Button } from 'antd';
+import { URL_API } from '../../constants/constants';
+import { getDefaultAvatarName } from '../../helpers';
 
 export const IsEmpty = (obj) => {
   return Object.keys(obj).length === 0;
@@ -24,7 +24,7 @@ const MenuUser = ({ show, setShow }) => {
   const ref = useRef();
   const navigater = useNavigate();
 
-  const token = JSON.parse(localStorage.getItem("tokens"));
+  const token = JSON.parse(localStorage.getItem('tokens'));
   const user = useSelector((state) => state.user.infoUser);
 
   // Get data user when login
@@ -46,7 +46,7 @@ const MenuUser = ({ show, setShow }) => {
     <WrapMenuUser show={show} ref={ref}>
       {token ? (
         <NavLink to="/account">
-          {" "}
+          {' '}
           <div className="avt">
             <div className="img_avatar">
               {user.avatar ? (
@@ -54,12 +54,12 @@ const MenuUser = ({ show, setShow }) => {
                   src={`${URL_API}/${user.avatar}`}
                   alt="avatar"
                   width="100%"
-                  style={{ boderRadius: "50%" }}
+                  style={{ boderRadius: '50%' }}
                 />
               ) : (
                 <Avatar
                   style={{
-                    verticalAlign: "middle",
+                    verticalAlign: 'middle',
                   }}
                 >
                   {getDefaultAvatarName(user?.first_name, user?.last_name)}
@@ -72,19 +72,17 @@ const MenuUser = ({ show, setShow }) => {
                 <span>
                   {user.first_name} {user.last_name}
                 </span>
-                <Link to="/account">
-                  <LazyLoadImage src={edit_icon} alt="icon" />
-                </Link>
+                <LazyLoadImage src={edit_icon} alt="icon" />
               </div>
             </div>
           </div>
         </NavLink>
       ) : (
         <Button
-          style={{ width: "100%" }}
+          style={{ width: '100%' }}
           type="primary"
           onClick={() => {
-            navigater("/login");
+            navigater('/login');
           }}
         >
           Login
@@ -100,12 +98,12 @@ const MenuUser = ({ show, setShow }) => {
                 key={index}
                 onClick={showSettingPopup}
                 style={{
-                  fontSize: "20px",
-                  fontWeight: "500",
-                  paddingTop: "10px",
-                  paddingLeft: "20px",
-                  cursor: "pointer",
-                  color: "white",
+                  fontSize: '20px',
+                  fontWeight: '500',
+                  paddingTop: '10px',
+                  paddingLeft: '20px',
+                  cursor: 'pointer',
+                  color: 'white',
                 }}
               >
                 {item.name}
@@ -122,7 +120,7 @@ const MenuUser = ({ show, setShow }) => {
       </ContentMenu>
       <div className="logout_regis">
         {token ? (
-          <div className="logout" style={{ marginLeft: "20px" }}>
+          <div className="logout" style={{ marginLeft: '20px' }}>
             <CgLogOut />
             <span
               onClick={() => {
@@ -134,10 +132,10 @@ const MenuUser = ({ show, setShow }) => {
           </div>
         ) : (
           <Button
-            style={{ width: "100%" }}
+            style={{ width: '100%' }}
             type="primary"
             onClick={() => {
-              navigater("/register");
+              navigater('/register');
             }}
           >
             Register
@@ -152,8 +150,8 @@ export default MenuUser;
 
 const listMenu = [
   {
-    name: "Created App",
-    path: "/created-app",
+    name: 'Created App',
+    path: '/created-app',
   },
   // {
   //   name: "Notifications",
