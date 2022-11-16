@@ -17,6 +17,8 @@ const initialState = {
   handlePrevTabStore: null,
   selectedTabStore: 1,
   appComments: [],
+  historyUpdate: [],
+  statusGetHistory: 'idle',
   isLoading: true,
   isLoadingBuyVideoService: false,
   isLoadingSubmit: false,
@@ -25,6 +27,7 @@ const initialState = {
   isLoadingDeleteApp: false,
   isLoadingCreatedApps: false,
   isLoadingGetComment: false,
+  isLoadingGetHistory: false,
 };
 
 export const getDetailApp = createAsyncThunk('getDetailApp', async (slug) => {
@@ -105,6 +108,23 @@ export const getDetailAppWithLange = createAsyncThunk('getDetailApp', async ({ s
     console.log(error);
   }
 });
+
+export const getAppHistoryUpdate = createAsyncThunk(
+  'getDetailApp',
+  async ({ appId, keyword, locale }, thunkAPI) => {
+    try {
+      const res = await appApi.getHistoryUpdateOfApp(appId, keyword, locale);
+      if (res.status >= 400) {
+        ToastError(res);
+        return thunkAPI.rejectWithValue('error');
+      }
+      return res.res.data;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+);
+
 export const getCategoriesAndLanguage = createAsyncThunk('getCategories', async () => {
   try {
     const res = await appApi.getCategories();
@@ -115,9 +135,12 @@ export const getCategoriesAndLanguage = createAsyncThunk('getCategories', async 
 });
 export const getAppPermissionAndInfoCollection = createAsyncThunk(
   'getAppPermissionAndInfoCollection',
-  async () => {
+  async (_, thunkAPI) => {
     try {
       const res = await appApi.getPermissionAndInfoCollection();
+      if (res.status >= 400) {
+        return thunkAPI.rejectWithValue('error');
+      }
       console.log(res);
       return res.res.data;
     } catch (err) {
@@ -342,6 +365,21 @@ const detailAppSlice = createSlice({
     },
     [getAllAppComments.rejected]: (state, action) => {
       state.isLoadingGetComment = false;
+    },
+
+    // get app's history update
+    [getAppHistoryUpdate.pending]: (state, action) => {
+      state.isLoadingGetHistory = true;
+      state.statusGetHistory = 'idle';
+    },
+    [getAppHistoryUpdate.fulfilled]: (state, { payload }) => {
+      state.isLoadingGetHistory = false;
+      state.historyUpdate = payload;
+      state.statusGetHistory = 'success';
+    },
+    [getAppHistoryUpdate.rejected]: (state, action) => {
+      state.isLoadingGetHistory = false;
+      state.statusGetHistory = 'fail';
     },
   },
 });

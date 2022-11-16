@@ -34,12 +34,12 @@ axiosClient.interceptors.response.use(
   },
   (error) => {
     console.log(error);
-    if (error.config.url === '/api/auth/login') {
+    if (error.config.url === '/api/auth/login' || error.config.url === '/api/dev/account') {
       throw error;
     } else {
       if (error.response.status === 401) {
         setTimeout(() => {
-          // AuthUtil.logout();
+          AuthUtil.logout();
         }, 1000);
       }
     }

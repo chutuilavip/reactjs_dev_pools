@@ -4,7 +4,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import { deleteApp, getCreatedApp } from '../../../redux/slice/detailApp.slice';
 import { URL_API } from '../../../utils';
+import ActionGroup from './ActionGroup/ActionGroup';
 import CommentModal from './CommentModal/CommentModal';
+import HistoryUpdateAppModal from './HistoryUpdateAppModal/HistoryUpdateAppModal.';
 import { ListAppCreatedWrapper } from './styled';
 
 function ListAppCreated(_, ref) {
@@ -19,6 +21,7 @@ function ListAppCreated(_, ref) {
     title: '',
   });
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isModalOpenHistory, setIsModalOpenHistory] = useState(false);
   useEffect(() => {
     dispatch(getCreatedApp(pagingParams));
   }, [pagingParams]);
@@ -58,6 +61,23 @@ function ListAppCreated(_, ref) {
       key: 'installs',
     },
     {
+      title: 'History Update',
+      dataIndex: 'history',
+      key: 'history',
+      render: (id) => {
+        return (
+          <Button
+            type="primary"
+            className="button"
+            style={{ width: '90%' }}
+            onClick={() => setIsModalOpenHistory(true)}
+          >
+            <NavLink to={`/created-app/history-update/${id}`}>History</NavLink>
+          </Button>
+        );
+      },
+    },
+    {
       title: 'Score',
       dataIndex: 'score',
       key: 'score',
@@ -86,44 +106,13 @@ function ListAppCreated(_, ref) {
       key: 'action',
       render: ({ slug, appId, appId2 }) => {
         return (
-          <Space>
-            <Popconfirm
-              title="Are you sure delete this App？"
-              okText="Yes"
-              cancelText="No"
-              onConfirm={() =>
-                dispatch(
-                  deleteApp({
-                    appId,
-                    callBack: () => {
-                      dispatch(getCreatedApp(pagingParams));
-                    },
-                  })
-                )
-              }
-            >
-              <Button type="primary" danger className="button">
-                Delete
-              </Button>
-            </Popconfirm>
-
-            <Button type="primary" className="button">
-              <NavLink to={`/for-publishers/edit-app/${slug}`}>Edit</NavLink>
-            </Button>
-            <Button
-              type="primary"
-              className="button"
-              style={{ backgroundColor: 'yellow', border: 'none', color: 'black' }}
-              onClick={() => setIsModalOpen(true)}
-            >
-              <NavLink
-                style={{ backgroundColor: 'yellow', border: 'none', color: 'black' }}
-                to={`/created-app/${appId2}`}
-              >
-                Comment
-              </NavLink>
-            </Button>
-          </Space>
+          <ActionGroup
+            slug={slug}
+            appId={appId}
+            appId2={appId2}
+            pagingParams={pagingParams}
+            setIsModalOpen={setIsModalOpen}
+          />
         );
       },
     },
@@ -147,6 +136,7 @@ function ListAppCreated(_, ref) {
           cover: item.cover,
           developer: item.developer,
           installs: item.installs,
+          history: item.id,
           score: item.score,
           slug: item.slug,
           status: status,
@@ -173,15 +163,24 @@ function ListAppCreated(_, ref) {
     }, 1000);
   };
   const handleOk = () => {
-    console.log('olll');
     setIsModalOpen(false);
   };
   const handleCancel = () => {
     setIsModalOpen(false);
   };
+
+  const handleOkHistory = () => {
+    setIsModalOpenHistory(false);
+  };
+  const handleCancelHistory = () => {
+    setIsModalOpenHistory(false);
+  };
   return (
     <>
       {isModalOpen && <CommentModal onOk={handleOk} onCancel={handleCancel} />}
+      {isModalOpenHistory && (
+        <HistoryUpdateAppModal onOk={handleOkHistory} onCancel={handleCancelHistory} />
+      )}
 
       <ListAppCreatedWrapper ref={ref} id="created-app">
         <h1 style={{ width: '100%', textAlign: 'center', marginBottom: '5rem' }}>CREATED APP</h1>

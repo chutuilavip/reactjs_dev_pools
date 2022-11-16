@@ -1,24 +1,24 @@
-import { createSlice } from "@reduxjs/toolkit";
-import Web3 from "web3";
+import { createSlice } from '@reduxjs/toolkit';
+import Web3 from 'web3';
 
 const initialState = {
   isLoading: true,
-  account: "",
+  account: '',
   balance: 0,
 };
 
-export const getAccount = async () => {
+export const getAccountWeb3 = async () => {
   if (window.ethereum) {
     const account = window.ethereum.selectedAddress;
     if (account) return account;
     else {
       const accounts = await window.ethereum.request({
-        method: "eth_requestAccounts",
+        method: 'eth_requestAccounts',
       });
       return accounts[0];
     }
   } else {
-    alert("Install metamask extension !");
+    alert('Install metamask extension !');
   }
 };
 
@@ -34,7 +34,7 @@ export const getBalance = async () => {
 };
 
 const web3Slice = createSlice({
-  name: "web3",
+  name: 'web3',
   initialState,
   reducers: {
     getAccountMetaMask: (state, action) => {

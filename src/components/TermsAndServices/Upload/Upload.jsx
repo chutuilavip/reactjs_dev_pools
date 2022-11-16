@@ -1,10 +1,28 @@
-import React, { useState } from "react";
-import UploadAppDetail from "./UploadAppDetail/UploadAppDetail";
-import styled from "styled-components";
-import UploadResource from "./UploadResource";
-import UploadAppDetailWrapper from "./UploadAppDetailWrapper/UploadAppDetailWrapper";
+import React, { useState } from 'react';
+import UploadAppDetail from './UploadAppDetail/UploadAppDetail';
+import styled from 'styled-components';
+import UploadResource from './UploadResource';
+import UploadAppDetailWrapper from './UploadAppDetailWrapper/UploadAppDetailWrapper';
+import { useEffect } from 'react';
+import { requiredFieldsWhenCreateNewApp } from '../../../utils/UploadUtils';
 
 const Upload = () => {
+  useEffect(() => {
+    const currentDevInfo = JSON.parse(localStorage.getItem('dev'));
+    if (currentDevInfo) {
+      for (let v of requiredFieldsWhenCreateNewApp) {
+        if (!currentDevInfo[v]) {
+          setTimeout(() => {
+            alert(
+              'Your information lack somethings!! You need complete your information before creating new app'
+            );
+            window.location = '/account';
+          }, 500);
+          return;
+        }
+      }
+    }
+  }, []);
   return (
     <div>
       <UploadAppDetailWrapper />

@@ -1,4 +1,4 @@
-import styled, { keyframes } from "styled-components";
+import styled, { keyframes } from 'styled-components';
 
 const spin = keyframes`
     0% {
@@ -9,7 +9,7 @@ const spin = keyframes`
     }`;
 
 const SwapLoading = styled.div`
-  height: 100vh;
+  max-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;

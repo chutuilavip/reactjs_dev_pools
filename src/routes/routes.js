@@ -52,5 +52,6 @@ export const PrivateRouter = [
   { path: '/for-publishers/edit-app/:slug', component: EditApp },
   { path: '/for-publishers/:option', component: Upload },
   { path: '/created-app', component: ListCreatedApp },
+  { path: '/created-app/history-update/:id', component: ListCreatedApp },
   { path: '/created-app/:appId', component: ListCreatedApp },
 ];

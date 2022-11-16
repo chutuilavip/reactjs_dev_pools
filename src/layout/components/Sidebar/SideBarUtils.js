@@ -1,13 +1,13 @@
 export const publisherOptions = [
   {
     index: 1,
-    content: "Terms And Services For Publishers",
-    url: "",
+    content: 'Buy Services',
+    url: '',
   },
   {
     index: 2,
-    content: "Upload",
-    url: "upload",
+    content: 'Upload',
+    url: 'upload',
   },
   // {
   //   index: 3,

@@ -6,11 +6,18 @@ const initialState = {
   // newInfo: [],
   infoAccount: {},
   isLoading: true,
+  statusGetAccount: 'idle',
 };
 
 export const getAccount = createAsyncThunk('getAccount', async () => {
   try {
     const result = await accountApi.getAccountInfo();
+    console.log(result);
+    if (result.status === 200) {
+      console.log(JSON.stringify(result.res.data.business_info));
+      localStorage.removeItem('dev');
+      localStorage.setItem('dev', JSON.stringify(result.res.data.business_info));
+    }
     return result;
   } catch (error) {
     console.log(error);
@@ -79,13 +86,16 @@ const getAccountSlice = createSlice({
     //get account
     [getAccount.pending]: (state, action) => {
       state.isLoading = true;
+      state.statusGetAccount = 'idle';
     },
     [getAccount.fulfilled]: (state, action) => {
       state.isLoading = false;
       state.infoAccount = action.payload;
+      state.statusGetAccount = 'success';
     },
     [getAccount.rejected]: (state, action) => {
       state.isLoading = false;
+      state.statusGetAccount = 'fail';
     },
 
     //edit avatar

@@ -1,24 +1,20 @@
-import React, { Suspense, useEffect } from "react";
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  Navigate,
-} from "react-router-dom";
-import { PrivateRouter, publicRoutes } from "../src/routes";
-import { useTranslation } from "react-i18next";
-import { useDispatch, useSelector } from "react-redux";
-import "./App.css";
-import { checkLogin, checkWalletAccount } from "./redux/slice/user.slice";
-import HomePage from "./pages/HomePage/HomePage";
-import Layout from "./layout/index";
-import Redirect from "./components/Redirect/Redirect";
-import ProviderRouter from "./ProviderRouter";
-import { getAccount, getAccountMetaMask } from "./redux/slice/web3.slice";
+import React, { Suspense, useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { PrivateRouter, publicRoutes } from '../src/routes';
+import { useTranslation } from 'react-i18next';
+import { useDispatch, useSelector } from 'react-redux';
+import './App.css';
+import { checkLogin, checkWalletAccount } from './redux/slice/user.slice';
+import HomePage from './pages/HomePage/HomePage';
+import Layout from './layout/index';
+import Redirect from './components/Redirect/Redirect';
+import ProviderRouter from './ProviderRouter';
+import { getAccountWeb3, getAccountMetaMask } from './redux/slice/web3.slice';
 // Toast
-import { ToastContainer } from "react-toastify";
-import TermsAndServices from "./pages/TermsAndServices/TermsAndServices";
-import { getLanguagesTranslations } from "./redux/slice/app.slice";
+import { ToastContainer } from 'react-toastify';
+import TermsAndServices from './pages/TermsAndServices/TermsAndServices';
+import { getLanguagesTranslations } from './redux/slice/app.slice';
+import { getAccount } from './redux/slice/account.slice';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -35,19 +31,22 @@ const App = () => {
   useEffect(() => {
     handleChangeLanguage(lang);
   }, [lang]);
-
+  const getDevAccount = () => {
+    dispatch(getAccount());
+  };
   const accountChangeHandler = (account) => {
     dispatch(getAccountMetaMask(account));
   };
 
   useEffect(() => {
     const handleConnectWallet = async () => {
-      accountChangeHandler(await getAccount());
+      accountChangeHandler(await getAccountWeb3());
     };
     handleConnectWallet();
+    getDevAccount();
   }, []);
 
-  const token = JSON.parse(localStorage.getItem("tokens"));
+  const token = JSON.parse(localStorage.getItem('tokens'));
   // Get data user when login
   useEffect(() => {
     const getAccountFromLocal = () => {
@@ -103,10 +102,7 @@ const App = () => {
                 );
               })}
             </Route>
-            <Route
-              path="/nft-market"
-              element={<Redirect url="https://snailhouse.io/" />}
-            />
+            <Route path="/nft-market" element={<Redirect url="https://snailhouse.io/" />} />
           </Routes>
         </Suspense>
       </Router>
