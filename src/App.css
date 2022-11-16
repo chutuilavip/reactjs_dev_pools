@@ -26,7 +26,7 @@
   font-size: 1.5rem;
 }
 .special {
-  color: red;
+  color: #ffe3b1;
 }
 .ant-select-selection-item {
   color: white;
@@ -177,7 +177,7 @@ p {
   background-color: var(--textGray) !important;
 }
 .upload_avatar_btn {
-  width: 25rem;
+  width: 40rem;
 }
 .ant-tooltip-inner {
   display: none;

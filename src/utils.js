@@ -1,9 +1,9 @@
-import axios from "axios";
-import { useDispatch } from "react-redux";
-import { toast } from "react-toastify";
+import axios from 'axios';
+import { useDispatch } from 'react-redux';
+import { toast } from 'react-toastify';
 
 export const goToTop = () => {
-  window.scrollTo({ top: 0, behavior: "smooth" });
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 };
 export const AppDispatcher = (action) => {
   const dispatch = useDispatch();
@@ -18,8 +18,8 @@ export const getBase64 = (file) =>
   });
 export const changeStringToAlias = (string) => {
   console.log(string);
-  console.log(string.toLowerCase().replaceAll(" ", "-"));
-  return string.toLowerCase().replaceAll(" ", "-");
+  console.log(string.toLowerCase().replaceAll(' ', '-'));
+  return string.toLowerCase().replaceAll(' ', '-');
 };
 export const URL_API = process.env.REACT_APP_URL_API;
 export const getFileName = (link) => {
@@ -31,12 +31,12 @@ export const getFileName = (link) => {
 export const convertLinkToObjectFile = (link) => {
   // link = `https://api.v2.poolsplay.store/${link}`;
   let file = null;
-  if (link !== "") {
+  if (link !== '') {
     const fileName = getFileName(link);
     axios(link)
       .then(async (response) => {
-        console.log("ollllllllllllll");
-        const contentType = response.headers.get("content-type");
+        console.log('ollllllllllllll');
+        const contentType = response.headers.get('content-type');
         const blob = await response.blob();
         file = new File([blob], fileName, { contentType });
         console.log(file);
@@ -54,4 +54,9 @@ export const ToastError = (res) => {
   } else if (res.errors) {
     res.errors.forEach((el) => toast.error(el));
   }
+};
+
+export const getLanguages = () => {
+  const languages = JSON.parse(localStorage.getItem('languages'));
+  return languages;
 };

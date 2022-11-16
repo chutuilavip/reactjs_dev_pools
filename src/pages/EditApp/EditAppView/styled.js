@@ -78,4 +78,19 @@ export const EditAppViewWrapper = styled.div`
       }
     }
   }
+  .btn_submit {
+    width: 100%;
+    margin: auto;
+    margin-bottom: 2rem;
+    position: sticky;
+    bottom: 10px;
+    height: 5rem;
+    border-radius: 9px;
+    border: none;
+    box-shadow: rgb(0 0 0 / 24%) 0px 3px 8px;
+    transition: all 0.5s;
+    &:hover {
+      transform: scale(1.05);
+    }
+  }
 `;

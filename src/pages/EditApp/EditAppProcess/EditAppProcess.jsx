@@ -88,7 +88,7 @@ const EditAppProcess = ({
       form.setFocus('price');
       return;
     }
-    if (form.getValues('app_version') === '') {
+    if (form.getValues('app_version') === '' && form.getValues('apkfile').fileList?.[0]) {
       form.setError('app_version', {
         type: 'required',
         message: 'App version is required when you update new file apk',

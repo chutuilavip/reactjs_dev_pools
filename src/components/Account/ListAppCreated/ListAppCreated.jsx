@@ -70,9 +70,15 @@ function ListAppCreated(_, ref) {
             type="primary"
             className="button"
             style={{ width: '90%' }}
-            onClick={() => setIsModalOpenHistory(true)}
+            // onClick={() => setIsModalOpenHistory(true)}
           >
-            <NavLink to={`/created-app/history-update/${id}`}>History</NavLink>
+            <NavLink
+              onClick={() => setIsModalOpenHistory(true)}
+              to={`/created-app/history-update/${id}`}
+              style={{ width: '100%', display: 'block' }}
+            >
+              History
+            </NavLink>
           </Button>
         );
       },
@@ -175,6 +181,9 @@ function ListAppCreated(_, ref) {
   const handleCancelHistory = () => {
     setIsModalOpenHistory(false);
   };
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, []);
   return (
     <>
       {isModalOpen && <CommentModal onOk={handleOk} onCancel={handleCancel} />}

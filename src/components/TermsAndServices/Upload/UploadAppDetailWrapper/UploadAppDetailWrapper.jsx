@@ -62,30 +62,7 @@ export default function UploadAppDetailWrapper() {
     } else return;
   };
 
-  const submitForm = () => {
-    const formData = new FormData();
-    const keys = Object.keys(finalData);
-    for (let v of keys) {
-      if (v === 'uploadavatar') {
-        formData.append(v, finalData[v][0]?.originFileObj);
-      } else if (v === 'images') {
-        const newImages = [];
-        for (let image of finalData[v]) {
-          let item = image.originFileObj;
-          newImages.push(item);
-        }
-        for (let i = 0; i < newImages.length; i++) {
-          formData.append('images[]', newImages[i], newImages[i].name);
-        }
-      } else if (v === 'fileapk') {
-        formData.append(v, finalData[v][0]?.originFileObj);
-      } else if (v === 'information' || v === 'app_permissions') {
-        finalData[v] = finalData[v].join();
-        formData.append(v, finalData[v]);
-      } else {
-        formData.append(v, finalData[v]);
-      }
-    }
+  const submitForm = (formData) => {
     dispatch(uploadContent({ formData, callback: () => 1 }));
   };
 

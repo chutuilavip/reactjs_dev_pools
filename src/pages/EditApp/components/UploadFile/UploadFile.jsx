@@ -15,10 +15,9 @@ const UploadFile = ({ errMessage, control, hints, name, label, accept, onChange 
             {...field}
             multiple={false}
             onChange={(e) => {
-              console.log(e);
-              e.file.status = 'done';
-              onChange && onChange(e);
               field.onChange(e);
+              onChange && onChange(e);
+              e.file.status = 'done';
             }}
             accept={accept}
             maxCount={1}

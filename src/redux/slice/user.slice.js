@@ -21,12 +21,12 @@ const initialState = {
 export const loginUser = createAsyncThunk('users/login', async (data, thunkAPI) => {
   try {
     const result = await userApi.loginUser(data);
-    console.log(result);
     if (result.user.type === 'mod') {
       toast.error('You have no permission to access this website');
       return thunkAPI.rejectWithValue('You have no permission to access this website');
     }
     if (result.access_token) {
+      localStorage.removeItem('tokens');
       localStorage.setItem('tokens', JSON.stringify(result.access_token));
     }
     if (result.status === 200) {

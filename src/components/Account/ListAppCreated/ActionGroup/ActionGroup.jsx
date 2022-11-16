@@ -35,9 +35,10 @@ const ActionGroup = ({ slug, appId, appId2, pagingParams, setIsModalOpen }) => {
         type="primary"
         className="button"
         style={{ backgroundColor: 'yellow', border: 'none', color: 'black' }}
-        onClick={() => setIsModalOpen(true)}
+        // onClick={() => setIsModalOpen(true)}
       >
         <NavLink
+          onClick={() => setIsModalOpen(true)}
           style={{ backgroundColor: 'yellow', border: 'none', color: 'black' }}
           to={`/created-app/${appId2}`}
         >

@@ -14,7 +14,6 @@ export const getAccount = createAsyncThunk('getAccount', async () => {
     const result = await accountApi.getAccountInfo();
     console.log(result);
     if (result.status === 200) {
-      console.log(JSON.stringify(result.res.data.business_info));
       localStorage.removeItem('dev');
       localStorage.setItem('dev', JSON.stringify(result.res.data.business_info));
     }

@@ -1,6 +1,8 @@
 import { Button } from 'antd';
 import React, { useState } from 'react';
+import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
 import { InputFields } from '../../../components/TermsAndServices/Upload/EditApp/constant';
 import CustomInput from '../components/Input/CustomInput';
 import InputList from '../components/InputList/InputList';
@@ -23,7 +25,9 @@ const EditAppView = (props) => {
   } = props;
   const {
     getValues,
+    setValue,
     control,
+    setFocus,
     handleSubmit,
     formState: { errors, isSubmitting },
   } = form;
@@ -44,6 +48,14 @@ const EditAppView = (props) => {
       form.setError('price');
     }
   };
+  useEffect(() => {
+    if (errors) {
+      const keys = Object.keys(errors);
+      for (let v of keys) {
+        toast.error('Invalid value at ' + v.split('_').join(' ') + ' field');
+      }
+    }
+  }, [errors]);
   console.log(errors);
   return (
     <EditAppViewWrapper>
@@ -83,6 +95,7 @@ const EditAppView = (props) => {
           </div>
           <InputList inputList={InputFields} control={control} errors={errors} />
           <UploadResource
+            setValue={setValue}
             control={control}
             errors={errors}
             defaultValues={getValues()}
@@ -92,7 +105,7 @@ const EditAppView = (props) => {
             loading={isLoadingEditApp}
             htmlType="submit"
             type="primary"
-            style={{ width: '100%', marginBottom: '2rem' }}
+            className="btn_submit"
           >
             Update
           </Button>

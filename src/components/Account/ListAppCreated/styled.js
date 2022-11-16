@@ -19,7 +19,7 @@ export const ListAppCreatedWrapper = styled.div`
     .ant-table-row {
       transition: all 0.4s;
       &:hover {
-        transform: scale(1.05);
+        /* transform: scale(1.05); */
         box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
       }
     }
@@ -27,13 +27,18 @@ export const ListAppCreatedWrapper = styled.div`
   .button {
     transition: all 0.5s;
     color: white;
-    padding: 5px 1rem;
     border-radius: 4px;
     box-shadow: rgb(0 0 0 / 24%) 0px 3px 8px;
     text-align: center;
 
     &:active {
       transform: scale(1.1);
+    }
+    a {
+      background: transparent !important;
+
+      &:active {
+      }
     }
   }
   .status_active {
