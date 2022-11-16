@@ -1,12 +1,13 @@
 import { UploadOutlined } from '@ant-design/icons';
+import { yupResolver } from '@hookform/resolvers/yup';
 import { Button, Upload } from 'antd';
 import React, { useContext, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import * as yup from 'yup';
 import StepButtonGroup from '../StepButtonGroup/StepButtonGroup';
+import InputText from '../UploadAppDetail/InputText';
 import { UploadContextWrapper } from '../UploadAppDetailWrapper/UploadAppDetailWrapper';
 import { UploadAplWrapper } from './styled';
-import * as yup from 'yup';
-import { yupResolver } from '@hookform/resolvers/yup';
 
 const schema = yup.object().shape({
   fileapk: yup
@@ -18,6 +19,7 @@ const schema = yup.object().shape({
       }
       return value[0].size / 1024 / 1024 < 200;
     }),
+  app_version: yup.string().required('App version is required'),
 });
 export default function UploadApk({ setFinalData, finalData }) {
   const DetailContext = useContext(UploadContextWrapper);
@@ -38,11 +40,7 @@ export default function UploadApk({ setFinalData, finalData }) {
     reset({ ...finalData });
   }, [finalData]);
   useEffect(() => {
-    return () => {
-      setFinalData((prevData) => ({
-        ...Object.assign(prevData, getValues()),
-      }));
-    };
+    return () => {};
   }, []);
   useEffect(() => {
     setApk(finalData.fileapk);
@@ -63,10 +61,46 @@ export default function UploadApk({ setFinalData, finalData }) {
       ...Object.assign(prevData, getValues()),
     }));
   };
-  const onSubmit = () => {
-    submitForm();
+  const promiseSetState = () => {
+    return new Promise((resolve) =>
+      setFinalData((prevData) => ({
+        ...Object.assign(prevData, getValues()),
+        resolve,
+      }))
+    );
   };
-  console.log('upload apk', getValues(), finalData);
+  const onSubmit = async () => {
+    const cloneFinalData = Object.assign(Object.assign(finalData, getValues()));
+    const formData = new FormData();
+    const keys = Object.keys(cloneFinalData);
+    console.log('Clone data', cloneFinalData);
+    for (let v of keys) {
+      if (v === 'uploadavatar') {
+        formData.append(v, cloneFinalData[v][0]?.originFileObj);
+      } else if (v === 'images') {
+        const newImages = [];
+        for (let image of cloneFinalData[v]) {
+          let item = image.originFileObj;
+          newImages.push(item);
+        }
+        for (let i = 0; i < newImages.length; i++) {
+          formData.append('images[]', newImages[i], newImages[i].name);
+        }
+      } else if (v === 'fileapk') {
+        formData.append(v, cloneFinalData[v][0]?.originFileObj);
+      } else if (v === 'information' || v === 'app_permissions') {
+        if (cloneFinalData[v] && cloneFinalData[v].length > 0) {
+          console.log(cloneFinalData[v]);
+          cloneFinalData[v] = cloneFinalData[v].toString();
+          formData.append(v, cloneFinalData[v]);
+        }
+      } else {
+        formData.append(v, cloneFinalData[v]);
+      }
+    }
+
+    submitForm(formData);
+  };
 
   return (
     <UploadAplWrapper>
@@ -91,6 +125,14 @@ export default function UploadApk({ setFinalData, finalData }) {
           >
             <Button icon={<UploadOutlined />}>Upload</Button>
           </Upload>
+        </div>
+        <div className="field_item">
+          <InputText
+            register={{ ...register('app_version') }}
+            title="App Version *"
+            placeho="Enter App Version"
+          />{' '}
+          <p className="error_message">{errors.app_version?.message}</p>
         </div>
         <StepButtonGroup disabledSubmit={disabledSubmit} />
       </form>

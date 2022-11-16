@@ -9,7 +9,7 @@ const spin = keyframes`
     }`;
 
 const SwapLoading = styled.div`
-  max-height: 100vh;
+  min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;

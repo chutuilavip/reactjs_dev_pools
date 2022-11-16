@@ -110,7 +110,7 @@ export const getDetailAppWithLange = createAsyncThunk('getDetailApp', async ({ s
 });
 
 export const getAppHistoryUpdate = createAsyncThunk(
-  'getDetailApp',
+  'getAppHistoryUpdate',
   async ({ appId, keyword, locale }, thunkAPI) => {
     try {
       const res = await appApi.getHistoryUpdateOfApp(appId, keyword, locale);
@@ -128,6 +128,8 @@ export const getAppHistoryUpdate = createAsyncThunk(
 export const getCategoriesAndLanguage = createAsyncThunk('getCategories', async () => {
   try {
     const res = await appApi.getCategories();
+    localStorage.removeItem('languages');
+    localStorage.setItem('languages', JSON.stringify(res.language));
     return res;
   } catch (err) {
     console.log(err);
@@ -371,6 +373,7 @@ const detailAppSlice = createSlice({
     [getAppHistoryUpdate.pending]: (state, action) => {
       state.isLoadingGetHistory = true;
       state.statusGetHistory = 'idle';
+      state.historyUpdate = [];
     },
     [getAppHistoryUpdate.fulfilled]: (state, { payload }) => {
       state.isLoadingGetHistory = false;
@@ -380,6 +383,7 @@ const detailAppSlice = createSlice({
     [getAppHistoryUpdate.rejected]: (state, action) => {
       state.isLoadingGetHistory = false;
       state.statusGetHistory = 'fail';
+      state.historyUpdate = [];
     },
   },
 });

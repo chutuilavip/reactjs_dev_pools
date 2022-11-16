@@ -1,20 +1,19 @@
 import React, { Suspense, useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import { PrivateRouter, publicRoutes } from '../src/routes';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
+import { BrowserRouter as Router, Navigate, Route, Routes } from 'react-router-dom';
+import { PrivateRouter, publicRoutes } from '../src/routes';
 import './App.css';
-import { checkLogin, checkWalletAccount } from './redux/slice/user.slice';
-import HomePage from './pages/HomePage/HomePage';
-import Layout from './layout/index';
 import Redirect from './components/Redirect/Redirect';
+import Layout from './layout/index';
 import ProviderRouter from './ProviderRouter';
-import { getAccountWeb3, getAccountMetaMask } from './redux/slice/web3.slice';
+import { checkLogin, checkWalletAccount } from './redux/slice/user.slice';
+import { getAccountMetaMask, getAccountWeb3 } from './redux/slice/web3.slice';
 // Toast
 import { ToastContainer } from 'react-toastify';
-import TermsAndServices from './pages/TermsAndServices/TermsAndServices';
-import { getLanguagesTranslations } from './redux/slice/app.slice';
 import { getAccount } from './redux/slice/account.slice';
+import { getLanguagesTranslations } from './redux/slice/app.slice';
+import { getCategoriesAndLanguage } from './redux/slice/detailApp.slice';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -37,15 +36,18 @@ const App = () => {
   const accountChangeHandler = (account) => {
     dispatch(getAccountMetaMask(account));
   };
-
+  const getCategoryAndLanguage = () => {
+    dispatch(getCategoriesAndLanguage());
+  };
   useEffect(() => {
     const handleConnectWallet = async () => {
       accountChangeHandler(await getAccountWeb3());
     };
     handleConnectWallet();
-    getDevAccount();
   }, []);
-
+  useEffect(() => {
+    getDevAccount();
+  }, [localStorage.getItem('tokens')]);
   const token = JSON.parse(localStorage.getItem('tokens'));
   // Get data user when login
   useEffect(() => {
@@ -55,6 +57,7 @@ const App = () => {
       }
     };
     getAccountFromLocal();
+    getCategoryAndLanguage();
   }, []);
 
   //Check connect wallet with account

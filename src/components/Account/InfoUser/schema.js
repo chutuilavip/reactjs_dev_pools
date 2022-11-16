@@ -11,7 +11,6 @@ export const editInfoUserSchema = yup
       .required('Last name is required')
       .min(2, 'min length of first name is 2')
       .max(10, 'min length of first name is 10'),
-    email: yup.string().required('Email is required').email('Invalid email address'),
     phone_number: yup
       .string()
       .required('Phone number is required')

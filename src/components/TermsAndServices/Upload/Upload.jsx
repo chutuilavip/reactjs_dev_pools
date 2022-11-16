@@ -21,6 +21,13 @@ const Upload = () => {
           return;
         }
       }
+    } else {
+      setTimeout(() => {
+        alert(
+          'Your information lack somethings!! You need complete your information before creating new app'
+        );
+        window.location = '/account';
+      }, 500);
     }
   }, []);
   return (

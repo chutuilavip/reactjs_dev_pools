@@ -18,10 +18,11 @@ export const UploadAplWrapper = styled.div`
   form {
     width: 100%;
     .field_item {
+      margin-bottom: 5rem;
       display: flex;
       justify-content: space-between;
       flex-direction: column;
-      gap: 10rem;
+      gap: 2rem;
       border: 1px solid white;
       border-radius: 14px;
       padding: 2rem;

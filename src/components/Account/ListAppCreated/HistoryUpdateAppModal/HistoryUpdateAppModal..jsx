@@ -2,12 +2,14 @@ import { Input, Modal, Select } from 'antd';
 import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import Loading from '../../../../layout/components/Loading/Loading';
+import SmallLoading from '../../../../layout/components/SmallLoading/SmallLoading';
 import {
   getAppHistoryUpdate,
   getCategoriesAndLanguage,
 } from '../../../../redux/slice/detailApp.slice';
+import { getLanguages } from '../../../../utils';
 import HistoryCardList from './HistoryCard/HistoryCardList';
+import { HistoryModalWrapper } from './styled';
 
 const HistoryUpdateAppModal = ({ onOk, onCancel }) => {
   const params = useParams();
@@ -17,12 +19,13 @@ const HistoryUpdateAppModal = ({ onOk, onCancel }) => {
   const [defaultLocale, setDefaultLocale] = useState(null);
   const { historyUpdate, isLoadingGetHistory, statusGetHistory, languages, isLoading } =
     useSelector((state) => state.detailApp);
-  const getHistoryUpdate = (locale) => {
+  const getHistoryUpdate = () => {
+    const languages = getLanguages();
     dispatch(
       getAppHistoryUpdate({
         appId: params.id,
         keyword: historyParams.keyword,
-        locale: locale || historyParams.locale,
+        locale: historyParams.locale || languages[0]?.code,
       })
     );
   };
@@ -45,10 +48,12 @@ const HistoryUpdateAppModal = ({ onOk, onCancel }) => {
   const handleChangeLocale = (e) => {
     setHistoryParams((prev) => ({ ...prev, locale: e }));
   };
+
   useEffect(() => {
-    getCategoryAndLanguage();
-  }, []);
-  useEffect(() => {
+    const languages = getLanguages();
+    if (languages) {
+      setDefaultLocale(languages[0].code);
+    }
     if (!isLoading) {
       getHistoryUpdate();
     }
@@ -67,8 +72,14 @@ const HistoryUpdateAppModal = ({ onOk, onCancel }) => {
   };
   console.log(defaultLocale);
   return (
-    <div>
-      <Modal title="History update of app" open={true} onOk={onOk} onCancel={onCancel}>
+    <HistoryModalWrapper>
+      <Modal
+        title="History update of app"
+        open={true}
+        onOk={onOk}
+        onCancel={onCancel}
+        footer={null}
+      >
         {defaultLocale !== null && (
           <>
             <p>Choose Locale</p>
@@ -95,14 +106,14 @@ const HistoryUpdateAppModal = ({ onOk, onCancel }) => {
               }}
             />
             {isLoadingGetHistory && statusGetHistory !== 'success' ? (
-              <Loading />
+              <SmallLoading />
             ) : (
               <HistoryCardList historyUpdate={historyUpdate} />
             )}
           </>
         )}
       </Modal>
-    </div>
+    </HistoryModalWrapper>
   );
 };
 

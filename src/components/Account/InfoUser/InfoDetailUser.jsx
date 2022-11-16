@@ -100,6 +100,7 @@ const InfoDetailUser = ({ res }) => {
 
     setEditFields(setOfEditFields);
   }, [errors]);
+  console.log(errors);
   return (
     <InfoDetail>
       <div className="title">{t('account.my_account')}</div>
@@ -118,7 +119,7 @@ const InfoDetailUser = ({ res }) => {
                     render={({ field }) => (
                       <div className="userNameInput">
                         <Form.Item>
-                          <Input {...field} onBlur={field.onBlur} />
+                          <Input {...field} onBlur={field.onBlur} id="first_name" />
                         </Form.Item>
                         <p className="validateMessage"> {errors.first_name?.message}</p>
                       </div>
@@ -143,7 +144,13 @@ const InfoDetailUser = ({ res }) => {
               )}
             </div>
             <div className="grid_item">
-              <Button type="primary" onClick={() => handleEdit('first_name')}>
+              <Button
+                type="primary"
+                onClick={() => {
+                  // document.getElementById('first_name').autofocus = true;
+                  handleEdit('first_name');
+                }}
+              >
                 {t('account.edit')} <img src={Pen} alt="pen " />
               </Button>
             </div>

@@ -1,16 +1,16 @@
 import { Image } from 'antd';
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { deleteScreenshot } from '../../../../redux/slice/detailApp.slice';
-import { getBase64, getFileName, URL_API } from '../../../../utils';
-import { hintUploadAPK, hintUploadCover, hintUploadScreenshot } from '../../constant';
+import { getBase64, URL_API } from '../../../../utils';
+import { hintUploadCover, hintUploadScreenshot } from '../../constant';
 import ScreenshotList from '../ScreenshotList/ScreenshotList';
 import UpdateAPKDetail from '../UpdateAPKDetail/UpdateAPKDetail';
-import UploadFile from '../UploadFile/UploadFile';
 import UploadImage from '../UploadImage/UploadImage';
 import { UploadResourceWrapper } from './styled';
+import UploadAPK from './UploadAPK/UploadAPK';
+import UploadVideo from './UploadVideo/UploadVideo';
 
-const UploadResource = ({ control, errors, defaultValues, setError }) => {
+const UploadResource = ({ control, errors, defaultValues, setError, setValue }) => {
   const dispatch = useDispatch();
   const [forceRerender, setForceRerender] = React.useState(false);
   const [previewVideo, setPreviewVideo] = React.useState(null);
@@ -24,7 +24,6 @@ const UploadResource = ({ control, errors, defaultValues, setError }) => {
     setPreviewVideo(preview);
   };
   const handleChangeAPK = (data) => {
-    console.log(data.fileList.length);
     if (data.fileList.length === 1) {
       setIsUpdateAPK(true);
       setError('app_version', {
@@ -35,8 +34,18 @@ const UploadResource = ({ control, errors, defaultValues, setError }) => {
       setIsUpdateAPK(false);
       setError('app_version');
     }
+    setValue('apkfile', data.fileList[0] || []);
   };
-  console.log('defaultValuesdefaultValuesdefaultValues', defaultValues);
+  const handleChangeAppVersion = (e) => {
+    if (e.target.value !== '') {
+      setError('app_version');
+    } else {
+      setError('app_version', {
+        type: 'required',
+        message: 'App version is required when you update new app apk',
+      });
+    }
+  };
   return (
     <UploadResourceWrapper>
       <div className="upload_resource__item upload-cover">
@@ -75,62 +84,22 @@ const UploadResource = ({ control, errors, defaultValues, setError }) => {
           <ScreenshotList defaultValues={defaultValues} />
         </div>
       </div>
-      <div className="upload_resource__item upload_apk">
-        {' '}
-        <UploadFile
-          control={control}
-          hints={hintUploadAPK}
-          errMessage={errors?.apkfile?.message}
-          onChange={handleChangeAPK}
-          name="apkfile"
-          label="Upload APK"
-          maxCount={1}
-          accept=".apk"
-        />
-        <div className="initial_content">
-          <p
-            style={{
-              border: '1px dashed black',
-              padding: '1rem',
-              marginTop: '2rem',
-              cursor: 'not-allowed',
-            }}
-          >
-            {getFileName(defaultValues.apkfile_init)}
-          </p>
-        </div>
-      </div>
-      {isUpdateAPK && <UpdateAPKDetail control={control} errors={errors} />}
-
-      <div className="upload_resource__item upload_video">
-        {' '}
-        <UploadFile
-          control={control}
-          hints={hintUploadAPK}
-          errMessage={errors?.video?.message}
-          name="video"
-          label="Upload Video"
-          maxCount={1}
-          accept=".mp4"
-          onChange={handleChangeVideo}
-        />
-        <div className="initial_content">
-          <div className="video">
-            {previewVideo && (
-              <div className="new_video video__item">
-                <p>New Video</p>
-                <video controls src={`${previewVideo}`} />
-              </div>
-            )}
-            {defaultValues.video_init && (
-              <div className="current_video video__item">
-                <p>Current video</p>
-                <video controls src={`${URL_API}${defaultValues?.video_init}`} />
-              </div>
-            )}
-          </div>
-        </div>
-      </div>
+      <UploadAPK
+        control={control}
+        errors={errors}
+        onChange={handleChangeAPK}
+        apkfile_init={defaultValues?.apkfile_init}
+      />
+      {isUpdateAPK && (
+        <UpdateAPKDetail control={control} errors={errors} onChange={handleChangeAppVersion} />
+      )}
+      <UploadVideo
+        control={control}
+        errors={errors}
+        onChange={handleChangeVideo}
+        video_init={defaultValues?.video_init}
+        previewVideo={previewVideo}
+      />
     </UploadResourceWrapper>
   );
 };

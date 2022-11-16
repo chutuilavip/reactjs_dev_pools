@@ -1,7 +1,7 @@
 import React from 'react';
 import CustomInput from '../Input/CustomInput';
 
-const UpdateAPKDetail = ({ control, errors }) => {
+const UpdateAPKDetail = ({ control, errors, onChange }) => {
   const appVersionUpdate = [
     {
       name: 'app_version',
@@ -33,6 +33,7 @@ const UpdateAPKDetail = ({ control, errors }) => {
           key={`update-app-version-${index}`}
           fieldProps={item}
           control={control}
+          customOnchange={onChange}
           errors={errors}
           mod={item.mode}
         />
