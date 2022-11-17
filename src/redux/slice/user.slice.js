@@ -90,8 +90,10 @@ export const registerPublisher = createAsyncThunk(
 export const forgotPassword = createAsyncThunk('user/forgot_password', async (data) => {
   try {
     const result = await userApi.forgotPassword(data);
-    toast.success(result.message);
-    console.log('res', result);
+    if (result.status === 200) {
+      toast.success(result.message);
+      console.log('res', result);
+    }
   } catch (err) {
     toast.error(err.response.data[0]);
 

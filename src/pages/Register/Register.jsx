@@ -19,8 +19,8 @@ import { ConvertToFormData } from '../../helpers/formData';
 import { variants } from '../../helpers/motion';
 import { registerPublisher } from '../../redux/slice/user.slice';
 import FieldList from './components/FieldList/FieldList';
-import { InputData, schema } from './registerItul';
-import { FormRegis, ListInput, StepOne, WrapRegister } from './styled';
+import { schema } from './registerItul';
+import { FormRegis, StepOne, WrapRegister } from './styled';
 const arrWallet = [
   global,
   K,
