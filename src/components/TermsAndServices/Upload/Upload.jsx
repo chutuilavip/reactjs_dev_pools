@@ -9,6 +9,7 @@ import { requiredFieldsWhenCreateNewApp } from '../../../utils/UploadUtils';
 const Upload = () => {
   useEffect(() => {
     const currentDevInfo = JSON.parse(localStorage.getItem('dev'));
+    console.log(currentDevInfo);
     if (currentDevInfo) {
       for (let v of requiredFieldsWhenCreateNewApp) {
         if (!currentDevInfo[v]) {

@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 const WrapMenuUser = styled.div`
   &&& {
@@ -13,9 +13,9 @@ const WrapMenuUser = styled.div`
   bottom: -1px;
   transform: translateY(100%);
   transition: all 0.25s ease-in-out;
-  right: ${({ show }) => (show ? "0px" : "200px")};
-  opacity: ${({ show }) => (show ? "1" : "0")};
-  pointer-events: ${({ show }) => !show && "none"};
+  right: ${({ show }) => (show ? '0px' : '200px')};
+  opacity: ${({ show }) => (show ? '1' : '0')};
+  pointer-events: ${({ show }) => !show && 'none'};
   background: #212121;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   backdrop-filter: blur(8px);
@@ -66,12 +66,12 @@ const ContentMenu = styled.div`
   display: flex;
   flex-direction: column;
   a {
-    font-size: 20px;
+    text-transform: uppercase;
+    font-size: 16px;
     font-weight: 500;
-    padding-top: 10px;
-    padding-left: 20px;
     cursor: pointer;
     color: #ffffff;
+    margin-top: 2rem;
   }
 `;
 

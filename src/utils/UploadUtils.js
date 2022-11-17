@@ -4,4 +4,6 @@ export const requiredFieldsWhenCreateNewApp = [
   'contact_name',
   'product_and_services',
   'website',
+  'products_url',
+  'release_details',
 ];

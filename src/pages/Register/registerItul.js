@@ -46,12 +46,12 @@ export const schema = yup
       .string()
       .required('First name is required')
       .min(2, 'Min length of First Name is 2')
-      .max(10, 'Max length of First Name is 10'),
+      .max(20, 'Max length of First Name is 20'),
     last_name: yup
       .string()
       .required('Last name is required')
       .min(2, 'Min length validate message')
-      .max(10),
+      .max(20, 'Max length of Last Name is 20'),
     email: yup.string().required('Email is required').email('Invalid email address'),
     phone_number: yup
       .string()
