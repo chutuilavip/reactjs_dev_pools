@@ -1,16 +1,16 @@
-import React, { useEffect, useState } from "react";
-import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
-import { LazyLoadImage } from "react-lazy-load-image-component";
-import { ListIconPage, SideRight } from "./styled";
-import arrowdown from "../../../assets/AroundRight/meta/arrow_down.png";
+import React, { useEffect, useState } from 'react';
+import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
+import { ListIconPage, SideRight } from './styled';
+import arrowdown from '../../../assets/AroundRight/meta/arrow_down.png';
 
 import {
   icon_right_meta,
   icon_right_nft,
   icon_right_pool,
   icon_right_play,
-} from "../../IconLayout";
-import { publisherOptions } from "./SideBarUtils";
+} from '../../IconLayout';
+import { publisherOptions } from './SideBarUtils';
 
 const SideBarRight = ({ data }) => {
   const [isOpenCategory, setIsOpenCategory] = useState(false);
@@ -22,16 +22,16 @@ const SideBarRight = ({ data }) => {
 
   const SetListIconLayout = (url) => {
     switch (url) {
-      case "/nft-game":
+      case '/nft-game':
         setListIcon(icon_right_nft);
         break;
-      case "/metaverse":
+      case '/metaverse':
         setListIcon(icon_right_meta);
         break;
-      case "/play-to-earn":
+      case '/play-to-earn':
         setListIcon(icon_right_play);
         break;
-      case "/service":
+      case '/service':
         setListIcon(icon_right_pool);
         break;
       default:
@@ -41,10 +41,10 @@ const SideBarRight = ({ data }) => {
   };
 
   const checkUrl =
-    currentUrl === "/nft-game" ||
-    currentUrl === "/metaverse" ||
-    currentUrl === "/play-to-earn" ||
-    currentUrl === "/service";
+    currentUrl === '/nft-game' ||
+    currentUrl === '/metaverse' ||
+    currentUrl === '/play-to-earn' ||
+    currentUrl === '/service';
 
   useEffect(() => {
     SetListIconLayout(currentUrl);
@@ -53,34 +53,6 @@ const SideBarRight = ({ data }) => {
 
   return (
     <SideRight status={data} anima={isOpenCategory}>
-      {publisherOptions.map((item, index) => {
-        if (item.url === "") {
-          return (
-            <NavLink
-              className={`wrap_sidebar`}
-              key={index}
-              to={`/terms-and-services/${item.url}`}
-            >
-              <div className="left_bar">
-                <span>{item.content}</span>
-              </div>
-            </NavLink>
-          );
-        } else {
-          return (
-            <NavLink
-              className={`wrap_sidebar`}
-              key={index}
-              to={`/for-publishers/${item.url}`}
-            >
-              <div className="left_bar">
-                <span>{item.content}</span>
-              </div>
-            </NavLink>
-          );
-        }
-      })}
-
       <ListIconPage status={isOpenCategory}>
         {listIcon?.map((item, index) => {
           return (

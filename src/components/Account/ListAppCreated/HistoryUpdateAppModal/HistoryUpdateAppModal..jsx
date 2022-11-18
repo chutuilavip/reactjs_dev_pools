@@ -82,7 +82,9 @@ const HistoryUpdateAppModal = ({ onOk, onCancel }) => {
       >
         {defaultLocale !== null && (
           <>
-            <p>Choose Locale</p>
+            <p style={{ color: 'white', textTransform: 'uppercase', marginBottom: '1rem' }}>
+              Choose Locale
+            </p>
             <Select
               style={{
                 width: '100%',
@@ -100,7 +102,7 @@ const HistoryUpdateAppModal = ({ onOk, onCancel }) => {
               onChange={handleSearch}
               style={{
                 marginBottom: '4rem',
-                width: '50%',
+                width: '100%',
                 marginLeft: 'auto',
                 borderRadius: '5px',
               }}

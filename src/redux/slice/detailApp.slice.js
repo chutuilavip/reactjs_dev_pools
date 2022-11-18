@@ -28,6 +28,9 @@ const initialState = {
   isLoadingCreatedApps: false,
   isLoadingGetComment: false,
   isLoadingGetHistory: false,
+  status: {
+    getPermissionAndInformation: 'idle',
+  },
 };
 
 export const getDetailApp = createAsyncThunk('getDetailApp', async (slug) => {
@@ -51,11 +54,12 @@ export const editApp = createAsyncThunk('editApp', async ({ callBack, data }) =>
       ToastError(res);
     }
   } catch (error) {
-    const errorKeys = Object.keys(error.response?.data?.errors);
     console.log(error.response);
-    if (error.response.data.status === 401) {
-      toast.error('Please login!!!');
+    if (error.response.status === 413) {
+      toast.error('APK File to large, Server can not handle it.');
     }
+    const errorKeys = Object.keys(error.response?.data?.errors);
+
     for (let key of errorKeys) {
       console.log(key);
       for (let er of error.response?.data?.errors[key]) {
@@ -265,14 +269,17 @@ const detailAppSlice = createSlice({
 
     [getAppPermissionAndInfoCollection.pending]: (state, action) => {
       state.isLoading = true;
+      state.status.getPermissionAndInformation = 'idle';
     },
     [getAppPermissionAndInfoCollection.fulfilled]: (state, action) => {
       state.app_permission = action.payload?.app_permission;
       state.information = action.payload?.information;
+      state.status.getPermissionAndInformation = 'success';
       state.isLoading = false;
     },
     [getAppPermissionAndInfoCollection.rejected]: (state, action) => {
       state.isLoading = false;
+      state.status.getPermissionAndInformation = 'fail';
     },
     //Buy package video
     [buyServiceVideo.pending]: (state) => {

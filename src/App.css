@@ -33,6 +33,8 @@
 }
 .ant-select:not(.ant-select-customize-input) .ant-select-selector {
   background: #007fff;
+  border: none;
+  outline: none;
 }
 .ant-upload-list-picture .ant-upload-list-item-error {
   border-color: black;
@@ -44,22 +46,81 @@
 .ant-upload-list-item-name {
   color: black !important;
 }
+
+/* ant modal */
 .ant-modal {
   width: fit-content !important;
+  width: 520px;
+  transform-origin: -189.266px 669px;
+  -webkit-backdrop-filter: blur(19px);
+  backdrop-filter: blur(17px);
+  border-radius: 13px;
+  overflow: hidden;
+  box-shadow: 0 3px 6px -4px rgb(0 0 0 / 12%), 0 6px 16px 0 rgb(0 0 0 / 8%),
+    0 9px 28px 8px rgb(0 0 0 / 5%);
+  background: #ffffff6b;
+}
+.ant-select-arrow {
+  color: white;
+}
+.rowClassName1 td:first-child {
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+}
+
+.rowClassName1 td:last-child {
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+.ant-modal-mask {
+  background: #222222b8;
+  /* backdrop-filter: blur(10px); */
 }
 .ant-modal-body .user_avatar {
   width: 5rem;
   border-radius: 50%;
 }
-.pagination_modal {
-  margin: 1rem 0;
+.ant-modal-header {
+  background-color: transparent;
+}
+.ant-modal-title {
+  color: white;
+  text-transform: uppercase;
+  text-align: center;
+  font-size: 3rem;
+  margin: 0 2rem 2rem 2rem;
 }
 .ant-modal-body {
   max-height: 66vh;
   overflow-y: scroll;
 }
+.ant-modal-body {
+  -ms-overflow-style: none;
+  scrollbar-width: 1px;
+  overflow-y: scroll;
+}
+
+.ant-modal-body::-webkit-scrollbar {
+  display: inline-block;
+}
+.ant-modal-body p {
+  color: black;
+}
 .ant-modal-content {
   width: 100% !important;
+  background: transparent;
+  box-shadow: none;
+}
+.pagination_modal {
+  margin: 1rem 0;
+}
+/* End ant modal */
+
+.ck.ck-editor__main > .ck-editor__editable {
+  height: 15rem;
+}
+.ck.ck-editor__main > .ck-editor__editable .ant-modal-body p {
+  color: red;
 }
 .error_message {
   color: red !important;
@@ -83,10 +144,15 @@ html {
   font-size: 62.5%;
 }
 
+select {
+  outline: none;
+  border: none;
+}
 body {
   font-size: 1.6rem;
   line-height: 1.5;
   text-rendering: optimizeSpeed;
+  background: #181818;
 }
 
 body {
@@ -120,7 +186,15 @@ li {
 }
 
 /* color */
-
+.section_title {
+  font-weight: 700;
+  font-size: 32px;
+  line-height: 130%;
+  letter-spacing: 0.0025em;
+  text-transform: uppercase;
+  color: #ffffff;
+  text-align: center;
+}
 .t-white {
   color: #fff !important;
 }

@@ -28,19 +28,36 @@ const ActionGroup = ({ slug, appId, appId2, pagingParams, setIsModalOpen }) => {
         </Button>
       </Popconfirm>
 
-      <Button type="primary" className="button">
-        <NavLink to={`/for-publishers/edit-app/${slug}`}>Edit</NavLink>
+      <Button type="primary" className="button" style={{ border: 'none', padding: '0' }}>
+        <NavLink
+          style={{
+            border: 'none',
+            display: 'inline-block',
+            padding: '4px 15px',
+          }}
+          to={`/for-publishers/edit-app/${slug}`}
+        >
+          Edit
+        </NavLink>
       </Button>
       <Button
         type="primary"
         className="button"
-        style={{ backgroundColor: 'yellow', border: 'none', color: 'black' }}
+        style={{ backgroundColor: 'yellow', border: 'none', color: 'black', padding: '0' }}
         // onClick={() => setIsModalOpen(true)}
       >
         <NavLink
           onClick={() => setIsModalOpen(true)}
-          style={{ backgroundColor: 'yellow', border: 'none', color: 'black' }}
-          to={`/created-app/${appId2}`}
+          style={{
+            backgroundColor: 'yellow',
+            border: 'none',
+            color: 'black',
+            width: '100%',
+            height: '100%',
+            display: 'inline-block',
+            padding: '4px 15px',
+          }}
+          to={`/for-publishers/created-app/${appId2}`}
         >
           Comment
         </NavLink>

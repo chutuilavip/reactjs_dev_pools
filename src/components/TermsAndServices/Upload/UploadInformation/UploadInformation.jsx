@@ -1,48 +1,48 @@
-import React, { useContext, useEffect } from "react";
-import { useForm } from "react-hook-form";
-import { useSelector } from "react-redux";
-import SelectController from "../SelctController/SelectController";
-import InputText from "../UploadAppDetail/InputText";
-import { GroupInput, UploadInfoWrapper } from "./styled";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { UploadContextWrapper } from "../UploadAppDetailWrapper/UploadAppDetailWrapper";
-import StepButtonGroup from "../StepButtonGroup/StepButtonGroup";
-import UploadInformationSchema from "../Schema/UploadInfomationSchema";
+import React, { useContext, useEffect } from 'react';
+import { useForm } from 'react-hook-form';
+import { useSelector } from 'react-redux';
+import SelectController from '../SelctController/SelectController';
+import InputText from '../UploadAppDetail/InputText';
+import { GroupInput, UploadInfoWrapper } from './styled';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { UploadContextWrapper } from '../UploadAppDetailWrapper/UploadAppDetailWrapper';
+import StepButtonGroup from '../StepButtonGroup/StepButtonGroup';
+import UploadInformationSchema from '../Schema/UploadInfomationSchema';
 
 const Methods = [
   {
-    code: "nft",
-    title: "NFT",
+    code: 'nft',
+    title: 'NFT',
   },
   {
-    code: "metaverse",
-    title: "Metaverse",
+    code: 'metaverse',
+    title: 'Metaverse',
   },
   {
-    code: "play-to-earn",
-    title: "Play To Earn",
+    code: 'play-to-earn',
+    title: 'Play To Earn',
   },
 ];
 const AgeLimit = [
   {
-    code: "3",
-    title: "3",
+    code: '3',
+    title: '3',
   },
   {
-    code: "7",
-    title: "7",
+    code: '7',
+    title: '7',
   },
   {
-    code: "12",
-    title: "12",
+    code: '12',
+    title: '12',
   },
   {
-    code: "16",
-    title: "16",
+    code: '16',
+    title: '16',
   },
   {
-    code: "18",
-    title: "18",
+    code: '18',
+    title: '18',
   },
 ];
 
@@ -70,10 +70,10 @@ export default function UploadInformation({ setFinalData, finalData }) {
   });
 
   const onSubmit = (data) => {
-    if (finalData.free === "1" && getValues().price === "") {
-      setError("price", {
-        type: "required",
-        message: "Price is required when you set app is Pay",
+    if (finalData.free === '1' && getValues().price === '') {
+      setError('price', {
+        type: 'required',
+        message: 'Price is required when you set app is Pay',
       });
       return;
     }
@@ -83,54 +83,54 @@ export default function UploadInformation({ setFinalData, finalData }) {
   const FieldContentInput = [
     [
       {
-        type: "input",
-        name: "privacy_policy",
-        title: "Privacy Policy (link) *",
-        placeholder: "Enter The Link",
+        type: 'input',
+        name: 'privacy_policy',
+        title: 'Privacy Policy (link) *',
+        placeholder: 'Enter The Link',
       },
       {
-        type: "input",
-        name: "term_of_policy",
-        title: "Term Policy (link) *",
-        placeholder: "Enter The Link",
+        type: 'input',
+        name: 'term_of_policy',
+        title: 'Term Policy (link) *',
+        placeholder: 'Enter The Link',
       },
     ],
     [
       {
-        type: "input",
-        name: "app_support",
-        title: "App Support (link) *",
-        placeholder: "Enter The Link",
+        type: 'input',
+        name: 'app_support',
+        title: 'App Support (link) *',
+        placeholder: 'Enter The Link',
       },
     ],
   ];
   const FieldContentSelect = [
     [
       {
-        type: "select",
-        name: "age_limit",
+        type: 'select',
+        name: 'age_limit',
         Array: AgeLimit,
-        title: "Age limit",
+        title: 'Age limit',
       },
       {
-        type: "select",
-        name: "country_of_service",
+        type: 'select',
+        name: 'country_of_service',
         Array: languages,
-        title: "country of service",
+        title: 'country of service',
       },
     ],
     [
       {
-        type: "select",
-        name: "type",
+        type: 'select',
+        name: 'type',
         Array: Methods,
-        title: "Type ",
+        title: 'Type ',
       },
       {
-        type: "select",
-        name: "otherlanguages",
+        type: 'select',
+        name: 'otherlanguages',
         Array: languages,
-        title: "other languages",
+        title: 'other languages',
       },
     ],
   ];
@@ -138,8 +138,8 @@ export default function UploadInformation({ setFinalData, finalData }) {
     return FieldContentInput.concat(FieldContentSelect).map((row, index) => {
       return (
         <div key={`row-${index}`} className="row">
-          {row.map((item, index) => {
-            if (item.type === "select") {
+          {row?.map((item, index) => {
+            if (item.type === 'select') {
               return (
                 <div className="field_item" key={`field-${index}`}>
                   <SelectController
@@ -148,17 +148,13 @@ export default function UploadInformation({ setFinalData, finalData }) {
                     title={item.title}
                     ArrOption={item.Array}
                   />
-                  <p className="error_message">
-                    {errors[`${item.name}`]?.message}
-                  </p>
+                  <p className="error_message">{errors[`${item.name}`]?.message}</p>
                 </div>
               );
             } else {
               return (
                 <div
-                  className={`field_item ${
-                    index === row.length * 2 - 2 ? "last_child" : ""
-                  }`}
+                  className={`field_item ${index === row.length * 2 - 2 ? 'last_child' : ''}`}
                   key={`field-${index}`}
                 >
                   <InputText
@@ -176,8 +172,8 @@ export default function UploadInformation({ setFinalData, finalData }) {
     });
   };
   useEffect(() => {
-    setValue("country_of_service", languages[0]?.language);
-    setValue("otherlanguages", languages[0]?.language);
+    setValue('country_of_service', languages[0]?.language);
+    setValue('otherlanguages', languages[0]?.language);
   }, [languages]);
   useEffect(() => {
     reset({ ...finalData });
@@ -185,11 +181,11 @@ export default function UploadInformation({ setFinalData, finalData }) {
 
   useEffect(() => {
     return () => {
-      if (getValues().free === "0") {
+      if (getValues().free === '0') {
         getValues().price = 0;
       }
 
-      console.log("upload information", getValues(), finalData);
+      console.log('upload information', getValues(), finalData);
 
       setFinalData((prevData) => ({ ...Object.assign(prevData, getValues()) }));
     };
@@ -197,7 +193,7 @@ export default function UploadInformation({ setFinalData, finalData }) {
 
   return (
     <div className="">
-      <form onSubmit={handleSubmit(onSubmit)} style={{ marginBottom: "7rem" }}>
+      <form onSubmit={handleSubmit(onSubmit)} style={{ marginBottom: '7rem' }}>
         <UploadInfoWrapper>
           <p className="title">Information</p>
           <GroupInput>

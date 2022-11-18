@@ -13,6 +13,7 @@ export const EditAppSchema = yup
     phone_number: yup
       .string()
       .required('Phone number is required')
+      .max(10, 'Phone number must be 10 digits')
       .matches(/^!*([0-9]!*){10,}$/gi, 'Phone number must be at least 10 digits'),
     full_description: yup
       .string()

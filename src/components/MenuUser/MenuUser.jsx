@@ -91,7 +91,7 @@ const MenuUser = ({ show, setShow }) => {
 
       {/* menu   */}
       <ContentMenu>
-        {listMenu.map((item, index) => {
+        {listMenu?.map((item, index) => {
           if (index === 2) {
             return (
               <div
@@ -149,13 +149,13 @@ const MenuUser = ({ show, setShow }) => {
 export default MenuUser;
 
 const listMenu = [
-  {
-    name: 'Created App',
-    path: '/created-app',
-  },
   // {
-  //   name: "Notifications",
-  //   path: "/friends",
+  //   name: 'Created App',
+  //   path: '/created-app',
+  // },
+  // {
+  //   name: 'My Services',
+  //   path: '/my-services',
   // },
   // {
   //   name: "Setting",

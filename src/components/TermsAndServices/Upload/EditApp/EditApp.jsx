@@ -315,7 +315,7 @@ export default function EditApp() {
                   label: 'Choo App locale to edit',
                   disabled: true,
                 },
-                ...languages.map((item, index) => {
+                ...languages?.map((item, index) => {
                   return {
                     value: item.code,
                     label: item.language,
@@ -331,7 +331,7 @@ export default function EditApp() {
           <>
             <hr />
             <h1>Step 2 : Edit your app</h1>
-            {InputFields.map((row, index) => {
+            {InputFields?.map((row, index) => {
               return (
                 <div className="row" key={index}>
                   {row.map((item, index) => {
@@ -358,10 +358,10 @@ export default function EditApp() {
                 </div>
               );
             })}
-            {SelectField.map((row, index) => {
+            {SelectField?.map((row, index) => {
               return (
                 <div className="row" key={index}>
-                  {row.map((item, index) => {
+                  {row?.map((item, index) => {
                     return (
                       <Controller
                         key={index}
@@ -495,7 +495,7 @@ export default function EditApp() {
                     {!isLoadingDeleteScreenshot ? (
                       <div className="screenshots">
                         {detailAppWithLang?.data?.app?.screenshots ? (
-                          JSON.parse(detailAppWithLang?.data?.app?.screenshots).map(
+                          JSON.parse(detailAppWithLang?.data?.app?.screenshots)?.map(
                             (item, index) => {
                               return (
                                 <div className="image" key={index}>

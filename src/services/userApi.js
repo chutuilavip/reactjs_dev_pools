@@ -1,4 +1,4 @@
-import axiosClient from "./axiosClient";
+import axiosClient from './axiosClient';
 
 const userApi = {
   loginUser: (params) => {
@@ -9,7 +9,7 @@ const userApi = {
   },
 
   checkLogin: (token) => {
-    const url = "/api/auth/check-login";
+    const url = '/api/auth/check-login';
     return axiosClient.post(url, {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -18,24 +18,24 @@ const userApi = {
   },
 
   registerUser: (params) => {
-    const url = "/api/auth/register";
+    const url = '/api/auth/register';
     return axiosClient.post(url, params);
   },
 
   registerPublisher: (data) => {
-    const url = "/api/auth/register-business";
+    const url = '/api/auth/register-business';
     return axiosClient.post(url, data);
   },
   forgotPassword: (data) => {
-    const url = "/api/auth/forget-password";
+    const url = '/api/auth/forget-password';
     return axiosClient.post(url, data);
   },
   resetPassword: (data) => {
-    const url = "/api/auth/reset-password";
+    const url = '/api/auth/reset-password';
     return axiosClient.post(url, data);
   },
   reviewApp: (params, slug) => {
-    console.log("Minhquy");
+    console.log('Minhquy');
     const url = `/api/application/comment/${slug}`;
     return axiosClient.post(url, params);
   },
@@ -59,12 +59,16 @@ const userApi = {
     return axiosClient.post(url, data);
   },
   getLanguagesTranslations: () => {
-    const url = "/api/translations";
+    const url = '/api/translations';
     return axiosClient.get(url);
   },
   buyServiceVideo: (data) => {
-    const url = "api/application/buy-service-video";
+    const url = 'api/application/buy-service-video';
     return axiosClient.post(url, data);
+  },
+  getMyServices: () => {
+    const url = 'api/dev/list-order';
+    return axiosClient.get(url);
   },
 };
 export default userApi;

@@ -74,7 +74,7 @@ function ListAppCreated(_, ref) {
           >
             <NavLink
               onClick={() => setIsModalOpenHistory(true)}
-              to={`/created-app/history-update/${id}`}
+              to={`/for-publishers/created-app/history-update/${id}`}
               style={{ width: '100%', display: 'block' }}
             >
               History
@@ -148,6 +148,7 @@ function ListAppCreated(_, ref) {
           status: status,
           title: item.title,
           action: { slug: item.slug, appId: item.id, appId2: item.appid },
+          key: item.id,
         });
       });
     }

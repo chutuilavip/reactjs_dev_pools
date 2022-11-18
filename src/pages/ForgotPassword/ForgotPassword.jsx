@@ -1,15 +1,15 @@
-import { yupResolver } from "@hookform/resolvers/yup";
-import { Button, Form, Input } from "antd";
-import React from "react";
-import { Controller, useForm } from "react-hook-form";
-import { useDispatch, useSelector } from "react-redux";
-import * as yup from "yup";
-import { forgotPassword } from "../../redux/slice/user.slice";
-import { ForgotPasswordWrapper } from "./styled";
+import { yupResolver } from '@hookform/resolvers/yup';
+import { Button, Form, Input } from 'antd';
+import React from 'react';
+import { Controller, useForm } from 'react-hook-form';
+import { useDispatch, useSelector } from 'react-redux';
+import * as yup from 'yup';
+import { forgotPassword } from '../../redux/slice/user.slice';
+import { ForgotPasswordWrapper } from './styled';
 
 const schema = yup
   .object({
-    email: yup.string().required().email("Invalid email format"),
+    email: yup.string().required().email('Invalid email format'),
   })
   .required();
 export default function ForgotPassword() {
@@ -31,6 +31,7 @@ export default function ForgotPassword() {
 
   return (
     <ForgotPasswordWrapper>
+      <h1 className="section_title">Enter Your Email To Change Password</h1>
       <Form onFinish={handleSubmit(onSubmit)}>
         <Controller
           control={control}

@@ -1,12 +1,12 @@
-import React from "react";
-import CirclePersent from "./CirclePersent";
-import ProgressBar from "./ProgressBar";
-import { RenderStar, WrapCircle, WrapRating } from "./styled";
+import React from 'react';
+import CirclePersent from './CirclePersent';
+import ProgressBar from './ProgressBar';
+import { RenderStar, WrapCircle, WrapRating } from './styled';
 
 const dataPersent = [
-  { title: "Gameplay", per: 75 },
-  { title: "Graphic", per: 85 },
-  { title: "Story", per: 50 },
+  { title: 'Gameplay', per: 75 },
+  { title: 'Graphic', per: 85 },
+  { title: 'Story', per: 50 },
 ];
 
 const dataProgress = [
@@ -34,7 +34,7 @@ const MapRating = ({ infoApp }) => {
       <p className="title_rate">Ratings</p>
       <div className="contents">
         <WrapCircle>
-          {dataPersent.map((item, index) => {
+          {dataPersent?.map((item, index) => {
             return <CirclePersent data={item} key={index} />;
           })}
         </WrapCircle>
@@ -42,7 +42,7 @@ const MapRating = ({ infoApp }) => {
         <div className="line"></div>
 
         <RenderStar>
-          {dataProgress.map((item, index) => {
+          {dataProgress?.map((item, index) => {
             return <ProgressBar data={item} key={index} />;
           })}
         </RenderStar>

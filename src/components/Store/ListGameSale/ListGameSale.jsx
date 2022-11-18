@@ -1,67 +1,67 @@
-import React from "react";
-import styled from "styled-components";
-import imgSale1 from "../../../assets/Store/imgSale1.png";
-import imgSale2 from "../../../assets/Store/imgSale2.png";
-import imgSale3 from "../../../assets/Store/imgSale3.png";
-import imgSale4 from "../../../assets/Store/imgSale4.png";
-import imgSale5 from "../../../assets/Store/imgSale5.png";
-import right from "../../../assets/Store/right.png";
+import React from 'react';
+import styled from 'styled-components';
+import imgSale1 from '../../../assets/Store/imgSale1.png';
+import imgSale2 from '../../../assets/Store/imgSale2.png';
+import imgSale3 from '../../../assets/Store/imgSale3.png';
+import imgSale4 from '../../../assets/Store/imgSale4.png';
+import imgSale5 from '../../../assets/Store/imgSale5.png';
+import right from '../../../assets/Store/right.png';
 
-import GameSale from "./GameSale/GameSale";
+import GameSale from './GameSale/GameSale';
 
 const DataListGameSale = [
   {
     imgGameSale: imgSale1,
-    nameGameSale: "Hirilun",
-    descriptionSale: "Hi-Rez Studios / First Watch",
-    priceSale: "-60%",
-    oldPrice: "$124",
-    newPrice: "$74.4",
+    nameGameSale: 'Hirilun',
+    descriptionSale: 'Hi-Rez Studios / First Watch',
+    priceSale: '-60%',
+    oldPrice: '$124',
+    newPrice: '$74.4',
   },
 
   {
     imgGameSale: imgSale2,
-    nameGameSale: "Hirilun",
-    descriptionSale: "Hi-Rez Studios / First Watch",
-    priceSale: "-60%",
-    oldPrice: "$124",
-    newPrice: "$74.4",
+    nameGameSale: 'Hirilun',
+    descriptionSale: 'Hi-Rez Studios / First Watch',
+    priceSale: '-60%',
+    oldPrice: '$124',
+    newPrice: '$74.4',
   },
 
   {
     imgGameSale: imgSale3,
-    nameGameSale: "Hirilun",
-    descriptionSale: "Hi-Rez Studios / First Watch",
-    priceSale: "-60%",
-    oldPrice: "$124",
-    newPrice: "$74.4",
+    nameGameSale: 'Hirilun',
+    descriptionSale: 'Hi-Rez Studios / First Watch',
+    priceSale: '-60%',
+    oldPrice: '$124',
+    newPrice: '$74.4',
   },
 
   {
     imgGameSale: imgSale4,
-    nameGameSale: "Hirilun",
-    descriptionSale: "Hi-Rez Studios / First Watch",
-    priceSale: "-60%",
-    oldPrice: "$124",
-    newPrice: "$74.4",
+    nameGameSale: 'Hirilun',
+    descriptionSale: 'Hi-Rez Studios / First Watch',
+    priceSale: '-60%',
+    oldPrice: '$124',
+    newPrice: '$74.4',
   },
 
   {
     imgGameSale: imgSale5,
-    nameGameSale: "Hirilun",
-    descriptionSale: "Hi-Rez Studios / First Watch",
-    priceSale: "-60%",
-    oldPrice: "$124",
-    newPrice: "$74.4",
+    nameGameSale: 'Hirilun',
+    descriptionSale: 'Hi-Rez Studios / First Watch',
+    priceSale: '-60%',
+    oldPrice: '$124',
+    newPrice: '$74.4',
   },
 
   {
     imgGameSale: imgSale5,
-    nameGameSale: "Hirilun",
-    descriptionSale: "Hi-Rez Studios / First Watch",
-    priceSale: "-60%",
-    oldPrice: "$124",
-    newPrice: "$74.4",
+    nameGameSale: 'Hirilun',
+    descriptionSale: 'Hi-Rez Studios / First Watch',
+    priceSale: '-60%',
+    oldPrice: '$124',
+    newPrice: '$74.4',
   },
 ];
 const ListGameSale = () => {
@@ -76,7 +76,7 @@ const ListGameSale = () => {
       </div>
 
       <div className="slide_game_sale_map">
-        {DataListGameSale.map((item, index) => (
+        {DataListGameSale?.map((item, index) => (
           <GameSale key={index} data={item} />
         ))}
       </div>

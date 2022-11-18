@@ -11,6 +11,7 @@ export const UploadAplWrapper = styled.div`
   }
   margin: auto;
   margin-bottom: 7rem;
+  margin-top: 7rem;
   display: flex;
   justify-content: space-evenly;
   align-items: center;

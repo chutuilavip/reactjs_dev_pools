@@ -7,12 +7,14 @@ import { URL_API } from '../../../constants/constants.js';
 import { getDefaultAvatarName } from '../../../helpers';
 import Loading from '../../../layout/components/Loading/Loading';
 import { getEditAvatar } from '../../../redux/slice/account.slice';
+import { getBase64 } from '../../../utils.js';
 import { AvatarUser, HeaderInfo, MainAvatar, Onchange, TextInfoUser } from './styled';
 
 const InfoUser = ({ res }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [disabledButton, setDisabledButton] = useState(false);
   const [file, setFile] = useState();
+  const [previewAvatar, setPreviewAvatar] = useState({});
   let formData = new FormData();
   const { t } = useTranslation();
   const dispatch = useDispatch();

@@ -45,8 +45,10 @@ const Deposit = () => {
         footer={null}
       >
         <Form onFinish={handleSubmit} ref={formRef}>
-          <Image src={paypalImage} />
-          <h3 style={{ textAlign: 'center', fontWeight: 'bold', fontSize: '2rem' }}>
+          <Image src={paypalImage} preview={false} style={{ borderRadius: '10px' }} />
+          <h3
+            style={{ textAlign: 'center', fontWeight: 'bold', fontSize: '2rem', margin: '2rem 0' }}
+          >
             Amount you need to deposit {'($)'}
           </h3>
           <Form.Item name="deposit" rules={[{ required: true, message: 'Please input deposit' }]}>

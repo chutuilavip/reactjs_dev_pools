@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from "react";
-import { Outlet } from "react-router-dom";
-import Header from "./components/Header/Header";
-import SideBarLeft from "./components/Sidebar/SideBarLeft";
-import SideBarRight from "./components/Sidebar/SideBarRight";
-import styled from "styled-components";
-import Footer from "./components/Footer/Footer";
-import { useDispatch, useSelector } from "react-redux";
-import { useLocation } from "react-router-dom";
-import { setLayout, setUrlPage } from "../redux/slice/customLayout.slice";
-import PopupSetting from "../components/PopupSetting/PopupSetting";
+import React, { useEffect, useState } from 'react';
+import { Outlet } from 'react-router-dom';
+import Header from './components/Header/Header';
+import SideBarLeft from './components/Sidebar/SideBarLeft';
+import SideBarRight from './components/Sidebar/SideBarRight';
+import styled from 'styled-components';
+import Footer from './components/Footer/Footer';
+import { useDispatch, useSelector } from 'react-redux';
+import { useLocation } from 'react-router-dom';
+import { setLayout, setUrlPage } from '../redux/slice/customLayout.slice';
+import PopupSetting from '../components/PopupSetting/PopupSetting';
 
 const Layout = () => {
   const dispatch = useDispatch();
@@ -16,10 +16,10 @@ const Layout = () => {
   const [stateUrl, setStateUrl] = useState();
 
   const checkUrl =
-    location.pathname === "/nft-game" ||
-    location.pathname === "/metaverse" ||
-    location.pathname === "/play-to-earn" ||
-    location.pathname === "/service";
+    location.pathname === '/nft-game' ||
+    location.pathname === '/metaverse' ||
+    location.pathname === '/play-to-earn' ||
+    location.pathname === '/service';
 
   useEffect(() => {
     if (checkUrl) {
@@ -31,9 +31,7 @@ const Layout = () => {
     setStateUrl(location.pathname);
   }, [location.pathname]);
 
-  const { customLayout, popupSetting } = useSelector(
-    (state) => state.customLayout
-  );
+  const { customLayout, popupSetting } = useSelector((state) => state.customLayout);
 
   return (
     <>
@@ -41,13 +39,13 @@ const Layout = () => {
         <PopupSetting data={popupSetting} />
         <Header data={customLayout} />
         <WrapSideContent>
-          <SideBarLeft data={customLayout} />
+          {/* <SideBarLeft data={customLayout} /> */}
           <WrapFooterContent status={customLayout}>
             <Outlet />
-            <Footer />
           </WrapFooterContent>
-          <SideBarRight data={customLayout} />
+          {/* <SideBarRight data={customLayout} /> */}
         </WrapSideContent>
+        <Footer />
       </WrapLayout>
     </>
   );
@@ -66,7 +64,10 @@ const WrapSideContent = styled.div`
   justify-content: space-between;
 `;
 const WrapFooterContent = styled.div`
-  width: calc(100% - 244px);
+  max-width: 1920px;
+  min-width: 1600px;
+  min-height: calc(100vh - 30rem - 7rem);
+  margin: auto;
   display: flex;
   flex-direction: column;
   justify-content: space-between;

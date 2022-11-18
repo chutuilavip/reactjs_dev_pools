@@ -4,7 +4,7 @@ export const EditAppViewWrapper = styled.div`
   &&& {
     .ant-select:not(.ant-select-customize-input) .ant-select-selector,
     .ant-input {
-      height: 5rem;
+      min-height: 5rem;
       display: flex;
       align-items: center;
       border-radius: 5px;
@@ -61,20 +61,30 @@ export const EditAppViewWrapper = styled.div`
       flex-direction: column;
       padding: 0 1rem;
       margin: 2rem 0;
+      position: relative;
+      border: 1px solid;
+      padding: 2rem;
+      border-radius: 9px;
       textarea {
         height: auto !important;
       }
       .fieldLabel {
+        position: absolute;
+        top: 0%;
+        left: 50%;
+        transform: translate(-50%, -50%);
         background: #ffffff;
-        width: fit-content;
+        width: 90%;
         padding: 1rem 6rem;
         border-radius: 7px;
         border: navajowhite;
         box-shadow: rgb(0 0 0 / 12%) 0px 1px 3px, rgb(0 0 0 / 24%) 0px 1px 2px;
         margin-bottom: 1rem;
       }
-      .input {
+      .input,
+      .ant-input {
         flex: 1;
+        margin: 2rem 0rem 0rem 0rem;
       }
     }
   }

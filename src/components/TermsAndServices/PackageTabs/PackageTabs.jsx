@@ -1,21 +1,16 @@
-import { Button } from "antd";
-import React from "react";
-import PackageButton from "../Button/PackageButton";
-import { PackageTabsWrapper } from "./styled";
+import { Button } from 'antd';
+import React from 'react';
+import PackageButton from '../Button/PackageButton';
+import { PackageTabsWrapper } from './styled';
 
-export default function PackageTabs({
-  selectedTab,
-  setSelectedTab,
-  activeContent,
-  tabContent,
-}) {
+export default function PackageTabs({ selectedTab, setSelectedTab, activeContent, tabContent }) {
   return (
     <PackageTabsWrapper>
-      {tabContent.map((item, index) => {
+      {tabContent?.map((item, index) => {
         return (
           <PackageButton
             key={index}
-            className={`${selectedTab === item.index && "active"} `}
+            className={`${selectedTab === item.index && 'active'} `}
             type="button"
             // onClick={() => setSelectedTab(item.index)}
           >

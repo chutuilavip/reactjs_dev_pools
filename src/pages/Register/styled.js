@@ -7,6 +7,7 @@ const WrapRegister = styled.div`
   align-items: center;
   min-height: 100vh;
   background-color: #131313;
+  margin-top: 7rem;
   .title_form {
     margin-top: 50px;
     font-style: normal;

@@ -1,6 +1,6 @@
-import React from "react";
-import Comment from "../Comment/Comment";
-import { WrapReview } from "./styled";
+import React from 'react';
+import Comment from '../Comment/Comment';
+import { WrapReview } from './styled';
 
 const Review = ({ infoApp }) => {
   const { cmt, user } = infoApp;
@@ -9,7 +9,7 @@ const Review = ({ infoApp }) => {
     <WrapReview>
       <p className="title">Review</p>
       <div className="block_review">
-        {cmt.map((item, index) => {
+        {cmt?.map((item, index) => {
           return <Comment avt={user?.avatar} data={item} key={index} />;
         })}
       </div>

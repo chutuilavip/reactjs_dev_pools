@@ -9,7 +9,7 @@ const FieldList = ({ register, errors }) => {
       {InputData.map((row, index) => {
         return (
           <div className="row" key={`row-${index}`}>
-            {row.map((item, index) => {
+            {row?.map((item, index) => {
               return (
                 <div className="field_item" key={`field-${index}`}>
                   <input

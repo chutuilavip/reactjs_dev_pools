@@ -1,9 +1,13 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const PackageVideoWrapper = styled.div`
   &&& {
     .ant-upload-list-picture {
       display: none;
+    }
+    .ant-form-item-label {
+      width: 30%;
+      text-align: left;
     }
   }
   width: 100rem;
@@ -15,7 +19,7 @@ export const PackageVideoWrapper = styled.div`
     display: flex;
     flex-wrap: wrap;
     label {
-      color: black;
+      color: white;
     }
   }
   .loading_wrapper {

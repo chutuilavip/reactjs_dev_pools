@@ -28,12 +28,12 @@ const UpdateAPKDetail = ({ control, errors, onChange }) => {
       <h1 style={{ background: 'black', color: 'white', borderRadius: '5px', padding: '0 2rem' }}>
         New App version detail
       </h1>
-      {appVersionUpdate.map((item, index) => (
+      {appVersionUpdate?.map((item, index) => (
         <CustomInput
           key={`update-app-version-${index}`}
           fieldProps={item}
           control={control}
-          customOnchange={onChange}
+          customOnchange={item.name === 'app_version' && onChange}
           errors={errors}
           mod={item.mode}
         />

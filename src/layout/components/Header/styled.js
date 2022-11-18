@@ -1,14 +1,15 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 const WrapHeader = styled.div`
   z-index: 999;
-  background-color: ${({ status }) =>
-    status ? "rgba(59,114,254,0.1)" : "#1c212f"};
-  backdrop-filter: ${({ status }) => (status ? "blur(10px)" : "unset")};
+  background-color: ${({ status }) => (status ? 'rgba(59,114,254,0.1)' : '#1c212f')};
+  backdrop-filter: ${({ status }) => (status ? 'blur(10px)' : 'unset')};
   width: 100%;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   border-bottom: 1px solid white;
+  height: 7rem;
+  position: fixed;
   .logo {
     display: flex;
     justify-content: center;
@@ -23,7 +24,7 @@ const WrapHeader = styled.div`
     justify-content: center;
     align-items: center;
     cursor: pointer;
-    pointer-events: ${({ show }) => show && "none"};
+    pointer-events: ${({ show }) => show && 'none'};
   }
   .icon_search {
     cursor: pointer;
@@ -34,8 +35,8 @@ const ListMenu = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 70px;
   height: 100%;
+  width: 100%;
   a {
     display: flex;
     flex-direction: column;
@@ -44,7 +45,11 @@ const ListMenu = styled.div`
     row-gap: 8px;
     height: 100%;
     padding: 0 10px;
-
+    width: 30rem;
+    transition: all 0.5s;
+    &:hover {
+      background: #096dd9;
+    }
     p {
       font-weight: 700;
       font-size: 16px;
@@ -63,9 +68,9 @@ const HeaderMiddle = styled.div`
 
 const StyleSearch = styled.div`
   position: absolute;
-  right: ${({ showSearch }) => (showSearch ? "90px" : "150px")};
-  opacity: ${({ showSearch }) => (showSearch ? "1" : "0")};
-  pointer-events: ${({ showSearch }) => !showSearch && "none"};
+  right: ${({ showSearch }) => (showSearch ? '90px' : '150px')};
+  opacity: ${({ showSearch }) => (showSearch ? '1' : '0')};
+  pointer-events: ${({ showSearch }) => !showSearch && 'none'};
   transition: all 0.25s ease-in-out;
 
   input {

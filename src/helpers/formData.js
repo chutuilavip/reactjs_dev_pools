@@ -54,9 +54,15 @@ export const ConvertToFormDataV2 = (data) => {
       } else {
         formData.append('images[]', data[v]);
       }
-    } else if (v === 'cover' || v === 'apkfile' || v === 'video') {
+    } else if (v === 'cover' || v === 'video') {
       if (typeof data[v] !== 'string') {
         formData.append(v, data[v].file?.originFileObj);
+      } else {
+        formData.append(v, data[v]);
+      }
+    } else if (v === 'apkfile') {
+      if (typeof data[v] !== 'string') {
+        formData.append(v, data[v].originFileObj);
       } else {
         formData.append(v, data[v]);
       }

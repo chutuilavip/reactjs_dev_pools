@@ -1,48 +1,45 @@
-import { Button, Carousel, Empty, Radio } from "antd";
-import React, { Fragment, useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Swiper, SwiperSlide } from "swiper/react";
-import PackageButton from "../../components/TermsAndServices/Button/PackageButton";
-import { PackageButtonWrapper } from "../../components/TermsAndServices/Button/styled";
-import PackageCard from "../../components/TermsAndServices/PackageCard/PackageCard";
-import PackageTabs from "../../components/TermsAndServices/PackageTabs/PackageTabs";
-import {
-  getServiceType,
-  listAppNotService,
-} from "../../redux/slice/game.slice";
-import { WrapTermsAndServices } from "./styled";
-import { Pagination } from "swiper";
-import "swiper/css";
-import "swiper/css/pagination";
+import { Button, Carousel, Empty, Radio } from 'antd';
+import React, { Fragment, useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import PackageButton from '../../components/TermsAndServices/Button/PackageButton';
+import { PackageButtonWrapper } from '../../components/TermsAndServices/Button/styled';
+import PackageCard from '../../components/TermsAndServices/PackageCard/PackageCard';
+import PackageTabs from '../../components/TermsAndServices/PackageTabs/PackageTabs';
+import { getServiceType, listAppNotService } from '../../redux/slice/game.slice';
+import { WrapTermsAndServices } from './styled';
+import { Pagination } from 'swiper';
+import 'swiper/css';
+import 'swiper/css/pagination';
 import {
   setHandleNextTab,
   setHandlePrevTab,
   setSelectedTabStore,
-} from "../../redux/slice/detailApp.slice";
-import PackageVideo from "./PackageVideo/PackageVideo";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
-import { changeStringToAlias } from "../../utils";
-import Loading from "../../layout/components/Loading/Loading";
+} from '../../redux/slice/detailApp.slice';
+import PackageVideo from './PackageVideo/PackageVideo';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { changeStringToAlias } from '../../utils';
+import Loading from '../../layout/components/Loading/Loading';
 export const tabContent = [
   {
     index: 1,
-    content: "1 Feature Image Home Package",
+    content: '1 Feature Image Home Package',
   },
   {
     index: 2,
-    content: "2 Hot game! home package",
+    content: '2 Hot game! home package',
   },
   {
     index: 3,
-    content: "3 Banner NFT Game package",
+    content: '3 Banner NFT Game package',
   },
   {
     index: 4,
-    content: "4 Top game NFT package",
+    content: '4 Top game NFT package',
   },
   {
     index: 5,
-    content: "5 Video Package",
+    content: '5 Video Package',
   },
 ];
 
@@ -63,9 +60,7 @@ const TermsAndServices = () => {
     dispatch(getServiceType());
   }, []);
   useEffect(() => {
-    const item = tabContent.find(
-      (el) => changeStringToAlias(el.content.slice(2)) === params.tabs
-    );
+    const item = tabContent.find((el) => changeStringToAlias(el.content.slice(2)) === params.tabs);
     if (!!item) {
       setSelectedTab(item.index);
     }
@@ -100,29 +95,29 @@ const TermsAndServices = () => {
   };
   const ContentData = {
     banner_home: {
-      id: "banner_home",
-      title: "1 Feature Image Home Package",
-      button_title: "Home Package",
+      id: 'banner_home',
+      title: '1 Feature Image Home Package',
+      button_title: 'Home Package',
     },
     hot_game: {
-      id: "hot_game",
-      title: "2 Hot game! home package",
-      button_title: "Hot Game",
+      id: 'hot_game',
+      title: '2 Hot game! home package',
+      button_title: 'Hot Game',
     },
     banner: {
-      id: "banner",
-      title: "3 Banner NFT Game package",
-      button_title: "Banner",
+      id: 'banner',
+      title: '3 Banner NFT Game package',
+      button_title: 'Banner',
     },
     top_game: {
-      id: "top_game",
-      title: "4 Top game NFT package",
-      button_title: "Top Game",
+      id: 'top_game',
+      title: '4 Top game NFT package',
+      button_title: 'Top Game',
     },
     video: {
-      id: "video",
-      title: "5 Video Package",
-      button_title: "Video",
+      id: 'video',
+      title: '5 Video Package',
+      button_title: 'Video',
     },
   };
   const handleSelectTab = (tabId) => {
@@ -130,7 +125,7 @@ const TermsAndServices = () => {
     setSelectedTab(tabId);
     console.log(element);
     if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
+      element.scrollIntoView({ behavior: 'smooth' });
     }
   };
   console.log(selectedCard);
@@ -144,11 +139,11 @@ const TermsAndServices = () => {
           {/* New UI */}
           <div className="nav">
             <ul className="nav__button">
-              {Object.keys(ContentData).map((item, index) => {
+              {Object.keys(ContentData)?.map((item, index) => {
                 return (
                   <li className={`nav__item `}>
                     <Button
-                      className={`${selectedTab === item ? "active" : ""}`}
+                      className={`${selectedTab === item ? 'active' : ''}`}
                       onClick={() => {
                         handleSelectTab(item);
                       }}
@@ -160,7 +155,7 @@ const TermsAndServices = () => {
               })}
             </ul>
           </div>
-          {Object.keys(ContentData).map((item, index) => {
+          {Object.keys(ContentData)?.map((item, index) => {
             const data = listService?.res?.data[item];
             return (
               <div className="type_service_wrapper" id={item}>
