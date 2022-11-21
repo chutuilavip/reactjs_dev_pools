@@ -183,7 +183,8 @@ export const getMyServices = createAsyncThunk('dev/getMyServices', async (_, thu
     if (res.status >= 400) {
       return thunkAPI.rejectWithValue();
     }
-    return res.res.data;
+    // return res.res.data;
+    return res?.res?.data;
   } catch (err) {
     console.log(err);
   }
