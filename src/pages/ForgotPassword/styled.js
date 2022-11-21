@@ -1,10 +1,11 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const ForgotPasswordWrapper = styled.div`
   background-color: var(--bg-dark);
   padding-top: 10rem;
   height: 100%;
   min-height: 100vh;
+  margin-top: 7rem;
   &&& {
     .ant-row {
       display: block;

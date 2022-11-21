@@ -1,55 +1,55 @@
-import React from "react";
-import { BlockSpecifi, DeviceBlock, WrapSpecification } from "./styled";
-import window from "../../../assets/windown.png";
-import DeviceItem from "./DeviceItem";
+import React from 'react';
+import { BlockSpecifi, DeviceBlock, WrapSpecification } from './styled';
+import window from '../../../assets/windown.png';
+import DeviceItem from './DeviceItem';
 // image
-import os from "../../../assets/Detail/Devices/os.png";
-import login from "../../../assets/Detail/Devices/login.png";
-import wifi from "../../../assets/Detail/Devices/wifi.png";
-import processor from "../../../assets/Detail/Devices/processor.png";
-import storage from "../../../assets/Detail/Devices/storage.png";
-import graphics from "../../../assets/Detail/Devices/graphics.png";
-import memory from "../../../assets/Detail/Devices/memory.png";
-import global from "../../../assets/Detail/Devices/global.png";
+import os from '../../../assets/Detail/Devices/os.png';
+import login from '../../../assets/Detail/Devices/login.png';
+import wifi from '../../../assets/Detail/Devices/wifi.png';
+import processor from '../../../assets/Detail/Devices/processor.png';
+import storage from '../../../assets/Detail/Devices/storage.png';
+import graphics from '../../../assets/Detail/Devices/graphics.png';
+import memory from '../../../assets/Detail/Devices/memory.png';
+import global from '../../../assets/Detail/Devices/global.png';
 
 // img flag
-import china from "../../../assets/Detail/flag/china.png";
-import england from "../../../assets/Detail/flag/england.png";
-import germany from "../../../assets/Detail/flag/germany.png";
-import usa from "../../../assets/Detail/flag/usa.png";
-import vn from "../../../assets/Detail/flag/vn.png";
+import china from '../../../assets/Detail/flag/china.png';
+import england from '../../../assets/Detail/flag/england.png';
+import germany from '../../../assets/Detail/flag/germany.png';
+import usa from '../../../assets/Detail/flag/usa.png';
+import vn from '../../../assets/Detail/flag/vn.png';
 
 const arrDetailMinimum = [
-  { img: os, title: "OS", description: "Window 10 64 bit" },
+  { img: os, title: 'OS', description: 'Window 10 64 bit' },
   {
     img: processor,
-    title: "Processor",
-    description: "Intel Core i5 or AMD equivalent",
+    title: 'Processor',
+    description: 'Intel Core i5 or AMD equivalent',
   },
-  { img: memory, title: "Memory", description: "8 GB RAM" },
-  { img: storage, title: "Storage", description: "2 GB available space" },
+  { img: memory, title: 'Memory', description: '8 GB RAM' },
+  { img: storage, title: 'Storage', description: '2 GB available space' },
   {
     img: graphics,
-    title: "Graphics",
-    description: "NVIDIA GTX 660 or AMD Radeon HD 7950",
+    title: 'Graphics',
+    description: 'NVIDIA GTX 660 or AMD Radeon HD 7950',
   },
-  { img: wifi, title: "Other", description: "Broadband Internet connection" },
-  { img: login, title: "Login", description: "Requires Epic Games account" },
+  { img: wifi, title: 'Other', description: 'Broadband Internet connection' },
+  { img: login, title: 'Login', description: 'Requires Epic Games account' },
 ];
 
 const arrRecommended = [
-  { img: os, title: "OS", description: "Window 10 64 bit" },
+  { img: os, title: 'OS', description: 'Window 10 64 bit' },
   {
     img: processor,
-    title: "Processor",
-    description: "Intel Core i5 or AMD equivalent",
+    title: 'Processor',
+    description: 'Intel Core i5 or AMD equivalent',
   },
-  { img: memory, title: "Memory", description: "8 GB RAM" },
-  { img: storage, title: "Storage", description: "2 GB available space" },
+  { img: memory, title: 'Memory', description: '8 GB RAM' },
+  { img: storage, title: 'Storage', description: '2 GB available space' },
   {
     img: graphics,
-    title: "Graphics",
-    description: "NVIDIA GTX 660 or AMD Radeon HD 7950",
+    title: 'Graphics',
+    description: 'NVIDIA GTX 660 or AMD Radeon HD 7950',
   },
 ];
 
@@ -67,7 +67,7 @@ const Specifications = () => {
           <DeviceBlock>
             <p className="title_block">Minimum</p>
             <div className="item_device">
-              {arrDetailMinimum.map((item, index) => {
+              {arrDetailMinimum?.map((item, index) => {
                 return <DeviceItem data={item} key={index} />;
               })}
             </div>
@@ -76,7 +76,7 @@ const Specifications = () => {
           <DeviceBlock>
             <p className="title_block">Recommended</p>
             <div className="item_device">
-              {arrRecommended.map((item, index) => {
+              {arrRecommended?.map((item, index) => {
                 return <DeviceItem data={item} key={index} />;
               })}
             </div>

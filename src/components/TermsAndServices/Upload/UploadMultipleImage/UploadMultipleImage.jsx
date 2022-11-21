@@ -1,8 +1,8 @@
-import React from "react";
-import { Button, Form, Image, Upload } from "antd";
-import { InboxOutlined } from "@ant-design/icons";
-import { Controller } from "react-hook-form";
-import { URL_API } from "../../../../utils";
+import React from 'react';
+import { Button, Form, Image, Upload } from 'antd';
+import { InboxOutlined } from '@ant-design/icons';
+import { Controller } from 'react-hook-form';
+import { URL_API } from '../../../../utils';
 const { Dragger } = Upload;
 export default function UploadMultipleImage(
   control,
@@ -13,10 +13,10 @@ export default function UploadMultipleImage(
   label
 ) {
   const propsUploadAvatar = {
-    listType: "picture",
-    accept: "image/png, image/jpeg",
+    listType: 'picture',
+    accept: 'image/png, image/jpeg',
     multiple: false,
-    action: "https://www.mocky.io/v2/5cc8019d300000980a055e76",
+    action: 'https://www.mocky.io/v2/5cc8019d300000980a055e76',
     onChange: (info) => {},
     onDrop(e) {},
   };
@@ -36,42 +36,37 @@ export default function UploadMultipleImage(
             <p className="ant-upload-drag-icon">
               <InboxOutlined />
             </p>
-            <p className="ant-upload-text">
-              Click or drag file to this area to upload
-            </p>
+            <p className="ant-upload-text">Click or drag file to this area to upload</p>
             <p className="ant-upload-hint">Upload your new app's screenshot</p>
           </Dragger>
 
           <div className="screenshots-wrapper">
             <p
               style={{
-                textTransform: "uppercase",
-                margin: "3rem 0",
+                textTransform: 'uppercase',
+                margin: '3rem 0',
               }}
             >
-              Current Screenshots:{" "}
+              Current Screenshots:{' '}
             </p>
             <div className="screenshots">
               {defaultImages.length > 0 ? (
-                defaultImages.map((item, index) => {
+                defaultImages?.map((item, index) => {
                   return (
                     <div className="image" key={index}>
                       <Image
                         key={index}
                         className="screenshot"
                         style={{
-                          marginTop: "1rem",
-                          borderRadius: "1rem",
+                          marginTop: '1rem',
+                          borderRadius: '1rem',
                         }}
                         preview={false}
                         src={`${URL_API}${item}`}
                         alt="screenshot"
                       />
 
-                      <Button
-                        type="danger"
-                        onClick={() => onDeleteScreenshot(item)}
-                      >
+                      <Button type="danger" onClick={() => onDeleteScreenshot(item)}>
                         x
                       </Button>
                     </div>

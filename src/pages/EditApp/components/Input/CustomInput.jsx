@@ -10,7 +10,7 @@ const CustomInput = ({ fieldProps, control, errors, customOnchange, mod }) => {
       render={({ field }) => (
         <div className="field-item">
           <div className="field">
-            <label className="fieldLabel">{fieldProps.label} :</label>
+            <label className="fieldLabel">{fieldProps.label}</label>
             {mod === 'area' ? (
               <Input.TextArea
                 rows={10}

@@ -1,10 +1,13 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const WrapTermsAndServices = styled.div`
   &&& {
     .swiper {
-      height: 35rem;
+      min-height: 42rem;
       width: 100%;
+    }
+    .swiper-wrapper {
+      height: 35rem;
     }
     .swiper-pagination-bullet {
       width: 2rem;
@@ -31,19 +34,20 @@ export const WrapTermsAndServices = styled.div`
       width: 100%;
     }
   }
-  background-color: black;
+  background-color: #181818;
   height: 100%;
   display: flex;
   flex-direction: column;
+  margin-top: 7rem;
   .active {
     background-color: #4f3aff !important;
   }
   .type_service_wrapper {
-    scroll-margin-top: 100px;
+    scroll-margin-top: 200px;
   }
   .nav {
     position: sticky;
-    top: 0;
+    top: 7rem;
     z-index: 10;
     width: 100%;
     &__button {
@@ -128,7 +132,7 @@ export const WrapTermsAndServices = styled.div`
   }
 `;
 export const PackageCardWrapper = styled.div`
-  background-color: ${({ status }) => (status ? "#3b72fe" : "#1c212f")};
+  background-color: ${({ status }) => (status ? '#3b72fe' : '#1c212f')};
   cursor: pointer;
   flex: 1 1 30rem;
   padding: 2rem;

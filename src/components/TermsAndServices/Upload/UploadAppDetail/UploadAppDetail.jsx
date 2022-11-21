@@ -1,3 +1,6 @@
+import { ClassicEditor } from '@ckeditor/ckeditor5-build-classic';
+import { CKEditor } from '@ckeditor/ckeditor5-react';
+
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Select } from 'antd';
 import React, { useContext, useEffect, useRef, useState } from 'react';
@@ -45,7 +48,7 @@ const UploadAppDetail = ({ setFinalData, finalData }) => {
   const { handleNextTab } = DetailContext;
   const [isPay, setIsPay] = useState(false);
   const priceRef = useRef();
-  const { categories, languages, isLoading, app_permission, information } = useSelector(
+  const { categories, languages, isLoading, app_permission, information, status } = useSelector(
     (state) => state.detailApp
   );
   const {
@@ -56,6 +59,7 @@ const UploadAppDetail = ({ setFinalData, finalData }) => {
     reset,
     setValue,
     setError,
+    setFocus,
     formState: { errors },
   } = useForm({
     defaultValues: {},
@@ -69,12 +73,14 @@ const UploadAppDetail = ({ setFinalData, finalData }) => {
           type: 'required',
           message: "Price is required when you set app's cost is Pay",
         });
+        setFocus('price');
         return;
       } else if (getValues('price').length > 8) {
         setError('price', {
           type: 'maxLength',
           message: 'Max length of price is 8 digits',
         });
+        setFocus('price');
         return;
       }
     }
@@ -96,7 +102,6 @@ const UploadAppDetail = ({ setFinalData, finalData }) => {
   }, [finalData]);
   useEffect(() => {
     return () => {
-      console.log('dataaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', getValues());
       setFinalData((prevData) => ({
         ...Object.assign(prevData, getValues()),
       }));
@@ -114,14 +119,13 @@ const UploadAppDetail = ({ setFinalData, finalData }) => {
   }, [categories, languages, Cost]);
   console.log(errors);
   const renderOption = (options) => {
-    return options.map((option, index) => {
+    return options?.map((option, index) => {
       return {
         value: option.locale_code || option.id,
         label: option.language || option.title,
       };
     });
   };
-  console.log('app_permissionapp_permission', app_permission);
   return (
     <div className="">
       {isLoading ? (
@@ -223,14 +227,23 @@ const UploadAppDetail = ({ setFinalData, finalData }) => {
                           <Select
                             {...field}
                             onChange={(e) => {
+                              console.log(Number(e));
                               setIsPay(Number(e) === 1);
-                              setError('price');
+                              if (Number(e) === 1) {
+                                console.log('olala');
+                                setError('price', {
+                                  type: 'required',
+                                  message: "'Price is required when app is pay'",
+                                });
+                              } else {
+                                setError('price');
+                              }
                               field.onChange(e);
                             }}
                             className="item_select"
                             defaultValue={Cost[0].code}
                           >
-                            {Cost.map((item, index) => {
+                            {Cost?.map((item, index) => {
                               return (
                                 <Select.Option key={index} value={item.code}>
                                   {item.title}
@@ -252,7 +265,7 @@ const UploadAppDetail = ({ setFinalData, finalData }) => {
                     <div className="field_item">
                       <InputText
                         register={{ ...register('price') }}
-                        title="Price *"
+                        title="Price (Dollar) *"
                         placeho="Enter Price"
                         type="number"
                       />
@@ -292,6 +305,31 @@ const UploadAppDetail = ({ setFinalData, finalData }) => {
                   </div>
                   <p className="error_message">{errors.full_description?.message}</p>
                 </div>
+                {/* <div className="description">
+                  <p>Description 2 *</p>
+
+                  <div className="">
+                    {' '}
+                    <CKEditor
+                      editor={ClassicEditor}
+                      data="<p>Hello from CKEditor 5!</p>"
+                      onReady={(editor) => {
+                        // You can store the "editor" and use when it is needed.
+                        console.log('Editor is ready to use!', editor);
+                      }}
+                      onChange={(event, editor) => {
+                        const data = editor.getData();
+                        console.log({ event, editor, data });
+                      }}
+                      onBlur={(event, editor) => {
+                        console.log('Blur.', editor);
+                      }}
+                      onFocus={(event, editor) => {
+                        console.log('Focus.', editor);
+                      }}
+                    />
+                  </div>
+                </div> */}
               </div>
             </GroupInput>
             <StepButtonGroup />

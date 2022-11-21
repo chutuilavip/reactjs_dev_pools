@@ -45,12 +45,13 @@ const WrapAppDetail = styled.div`
   }
   .description_group {
     display: flex;
+    flex-direction: column;
     justify-content: space-between;
     margin-top: 7rem;
     gap: 7rem;
   }
   .description {
-    width: 90%;
+    width: 100%;
     margin: 0 auto;
     p {
       font-weight: 700;

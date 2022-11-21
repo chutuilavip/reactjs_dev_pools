@@ -41,6 +41,7 @@ export const ListAppCreatedWrapper = styled.div`
       }
     }
   }
+
   .status_active {
     background: #2cbc63;
     clip-path: polygon(10px 0%, 100% 0%, 100% 100%, 10px 100%, 0 50%);

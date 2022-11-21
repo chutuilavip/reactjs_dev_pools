@@ -10,10 +10,14 @@ const initialState = {
   infoUser: {},
   isLoading: false,
   statusCheckWallet: {},
+  myServices: [],
   errors: {
     register: {},
     review: {},
     login: {},
+  },
+  status: {
+    getMyServices: 'idle',
   },
   lang: 'en',
 };
@@ -160,7 +164,6 @@ export const checkWalletAccount = createAsyncThunk(
   async (address, thunkAPI) => {
     try {
       const res = await userApi.checkWallet(address);
-
       if (res.status === 200) {
         toast.info(res.success);
       } else {
@@ -173,7 +176,18 @@ export const checkWalletAccount = createAsyncThunk(
     }
   }
 );
-
+export const getMyServices = createAsyncThunk('dev/getMyServices', async (_, thunkAPI) => {
+  try {
+    const res = await userApi.getMyServices();
+    console.log(res);
+    if (res.status >= 400) {
+      return thunkAPI.rejectWithValue();
+    }
+    return res.res.data;
+  } catch (err) {
+    console.log(err);
+  }
+});
 const userSlice = createSlice({
   name: 'user',
   initialState,
@@ -291,6 +305,22 @@ const userSlice = createSlice({
     },
     [forgotPassword.rejected]: (state) => {
       state.isLoading = false;
+    },
+
+    // Get My services
+
+    [getMyServices.pending]: (state) => {
+      state.isLoading = true;
+      state.status = { ...state.status, getMyServices: 'idle' };
+    },
+    [getMyServices.fulfilled]: (state, { payload }) => {
+      state.isLoading = false;
+      state.myServices = payload;
+      state.status = { ...state.status, getMyServices: 'success' };
+    },
+    [getMyServices.rejected]: (state) => {
+      state.isLoading = false;
+      state.status = { ...state.status, getMyServices: 'fail' };
     },
   },
 });

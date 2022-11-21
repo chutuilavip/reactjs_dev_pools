@@ -22,9 +22,11 @@ const Upload = React.lazy(() => import('../pages/UploadForPublishers/UploadForPu
 const EditApp = React.lazy(() => import('../pages/EditApp/EditAppAPI'));
 const ProfitForUser = React.lazy(() => import('../pages/ProfitUser/ProfitUser'));
 const ResultSearch = React.lazy(() => import('../pages/ResultSearch/ResultSearch'));
+const Statistics = React.lazy(() => import('../pages/Statistics/Statistic'));
 const ListCreatedApp = React.lazy(() =>
   import('../components/Account/ListAppCreated/ListAppCreated')
 );
+const MyServices = React.lazy(() => import('../pages/MyServices/MyServices'));
 export const publicRoutes = [
   { path: '/nft-game', component: NftGame },
   { path: '/metaverse', component: Metaverse },
@@ -51,7 +53,9 @@ export const PrivateRouter = [
   // { path: "/for-publishers/edit-app/:slug", component: EditApp },
   { path: '/for-publishers/edit-app/:slug', component: EditApp },
   { path: '/for-publishers/:option', component: Upload },
-  { path: '/created-app', component: ListCreatedApp },
-  { path: '/created-app/history-update/:id', component: ListCreatedApp },
-  { path: '/created-app/:appId', component: ListCreatedApp },
+  { path: '/for-publishers/created-app', component: ListCreatedApp },
+  { path: '/for-publishers/created-app/history-update/:id', component: ListCreatedApp },
+  { path: '/for-publishers/created-app/:appId', component: ListCreatedApp },
+  { path: '/for-publishers/my-services', component: MyServices },
+  { path: '/statistics', component: Statistics },
 ];

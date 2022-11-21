@@ -148,6 +148,7 @@ const UploadResource = ({ setFinalData, finalData }) => {
   console.log('upload resource', getValues(), finalData);
   return (
     <WrapUploadResource imagesDisplay={images.length >= 10 ? 'none' : ''}>
+      <h1 className="title">Upload Resource</h1>
       <form className="form_upload" onSubmit={handleSubmit(onSubmit)}>
         <div className="upload_item">
           <div className="label">

@@ -8,7 +8,28 @@ import {
 } from '../../../components/TermsAndServices/Upload/EditApp/constant';
 import { ConvertToFormDataV2 } from '../../../helpers/formData';
 import EditAppView from '../EditAppView/EditAppView';
-
+const AgeLimit = [
+  {
+    id: '3',
+    title: '3',
+  },
+  {
+    id: '7',
+    title: '7',
+  },
+  {
+    id: '12',
+    title: '12',
+  },
+  {
+    id: '16',
+    title: '16',
+  },
+  {
+    id: '18',
+    title: '18',
+  },
+];
 const EditAppProcess = ({
   defaultValues = {},
   onInitialValue,
@@ -17,6 +38,7 @@ const EditAppProcess = ({
   permissionAndInfo,
 }) => {
   const form = useForm({
+    mode: 'onChange',
     defaultValues: useMemo(() => {
       return defaultValues;
     }, [defaultValues]),
@@ -48,6 +70,13 @@ const EditAppProcess = ({
         name: 'otherlanguages',
         label: 'Other Languages',
         data: categoryAndLanguage.language,
+      },
+    ],
+    [
+      {
+        name: 'age_limit',
+        label: 'Age Limit',
+        data: AgeLimit,
       },
     ],
   ];
@@ -88,7 +117,7 @@ const EditAppProcess = ({
       form.setFocus('price');
       return;
     }
-    if (form.getValues('app_version') === '' && form.getValues('apkfile').fileList?.[0]) {
+    if (!form.getValues('app_version') && form.getValues('apkfile')) {
       form.setError('app_version', {
         type: 'required',
         message: 'App version is required when you update new file apk',

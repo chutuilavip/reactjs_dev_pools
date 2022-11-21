@@ -13,6 +13,7 @@ export const EditAppSchema = yup
     phone_number: yup
       .string()
       .required('Phone number is required')
+      .max(10, 'Phone number must be 10 digits')
       .matches(/^!*([0-9]!*){10,}$/gi, 'Phone number must be at least 10 digits'),
     full_description: yup
       .string()
@@ -125,7 +126,6 @@ export const EditAppSchema = yup
     images: yup
       .mixed()
       .test('image-type', 'The type must be image/jpeg or image/png', (value) => {
-        console.log('validateeeeeeeeeeeeeeeeeeeeeeeeeeeee', value);
         if (!value || !value.file || value?.fileList?.length === 0) {
           return true;
         }
@@ -202,18 +202,6 @@ export const InputFields = [
       placeholder: 'Enter App Title',
     },
   ],
-  [
-    {
-      name: 'summary',
-      label: 'Summary',
-      placeholder: 'Enter Summary',
-    },
-    {
-      name: 'full_description',
-      label: 'Description',
-      placeholder: 'Enter Description',
-    },
-  ],
 
   [
     {
@@ -284,5 +272,17 @@ export const InputFields = [
       label: 'Email',
       placeholder: 'Enter Email',
     },
+  ],
+  [
+    {
+      name: 'summary',
+      label: 'Summary',
+      placeholder: 'Enter Summary',
+    },
+    // {
+    //   name: 'full_description',
+    //   label: 'Description',
+    //   placeholder: 'Enter Description',
+    // },
   ],
 ];

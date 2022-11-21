@@ -227,7 +227,7 @@ const InfoDetailUser = ({ res }) => {
             </div>
             {/* -------------------------------------- */}
 
-            {fields.map((fieldName, index) => {
+            {fields?.map((fieldName, index) => {
               return (
                 <Fragment key={index}>
                   <div className="grid_item one">{t(`account.${fieldName}`)}</div>

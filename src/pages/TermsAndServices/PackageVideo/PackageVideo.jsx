@@ -1,15 +1,17 @@
-import { Button, Form, Input, Select, Upload } from 'antd';
-import React, { useState, useEffect, useRef } from 'react';
-import { PackageVideoWrapper } from './styled';
 import { UploadOutlined } from '@ant-design/icons';
-import { getBase64 } from '../../../utils';
+import { CKEditor } from '@ckeditor/ckeditor5-react';
+import { Button, Form, Input, Select, Upload } from 'antd';
 import TextArea from 'antd/lib/input/TextArea';
+import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { ConvertToFormData } from '../../../helpers/formData';
+import Loading from '../../../layout/components/Loading/Loading';
 import { buyServiceVideo } from '../../../redux/slice/detailApp.slice';
 import { listAppNotService } from '../../../redux/slice/game.slice';
-import Loading from '../../../layout/components/Loading/Loading';
-
+import { getBase64 } from '../../../utils';
+import { PackageVideoWrapper } from './styled';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import SmallLoading from '../../../layout/components/SmallLoading/SmallLoading';
 export default function PackageVideo({ listAppService, selectedCard, selectedCardContent }) {
   const dispatch = useDispatch();
   const formRef = useRef();
@@ -37,6 +39,7 @@ export default function PackageVideo({ listAppService, selectedCard, selectedCar
     values.poster = values.poster.file.originFileObj;
     values.creator_address = account;
     values.id_service = selectedCard;
+    console.log(values);
     const formData = ConvertToFormData(values);
     dispatch(buyServiceVideo(formData))
       .unwrap()
@@ -61,7 +64,7 @@ export default function PackageVideo({ listAppService, selectedCard, selectedCar
     <PackageVideoWrapper>
       {isLoadingBuyVideoService ? (
         <div className="loading_wrapper" style={{ width: '100%', height: '30rem' }}>
-          <Loading />
+          <SmallLoading />
         </div>
       ) : (
         <Form onFinish={onFinish} ref={formRef}>
@@ -163,6 +166,27 @@ export default function PackageVideo({ listAppService, selectedCard, selectedCar
               <TextArea rows={4} placeholder="Enter video description" maxLength={500} />
             </Form.Item>
 
+            <Form.Item name="description_2" label="Description 2">
+              <CKEditor
+                className="editor"
+                editor={ClassicEditor}
+                data=""
+                onReady={(editor) => {
+                  // You can store the "editor" and use when it is needed.
+                  console.log('Editor is ready to use!', editor);
+                }}
+                onChange={(event, editor) => {
+                  const data = editor.getData();
+                  console.log({ event, editor, data });
+                }}
+                onBlur={(event, editor) => {
+                  console.log('Blur.', editor);
+                }}
+                onFocus={(event, editor) => {
+                  console.log('Focus.', editor);
+                }}
+              />
+            </Form.Item>
             <Form.Item
               name="id"
               label="Select App"
@@ -184,7 +208,7 @@ export default function PackageVideo({ listAppService, selectedCard, selectedCar
             </Form.Item>
           </div>
           <Form.Item>
-            <Button loading={isLoadingBuyVideoService} htmlType="submit">
+            <Button style={{ margin: '2rem' }} loading={isLoadingBuyVideoService} htmlType="submit">
               Submit
             </Button>
           </Form.Item>

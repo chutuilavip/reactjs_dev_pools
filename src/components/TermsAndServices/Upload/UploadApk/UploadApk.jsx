@@ -104,6 +104,7 @@ export default function UploadApk({ setFinalData, finalData }) {
 
   return (
     <UploadAplWrapper>
+      <h1 className="section_title">Upload APK</h1>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="field_item">
           <div className="label">

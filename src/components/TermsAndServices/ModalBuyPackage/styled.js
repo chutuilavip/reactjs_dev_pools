@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const ModalBuyPackageWrapper = styled.div`
   &&& {
@@ -24,7 +24,7 @@ export const ModalBuyPackageWrapper = styled.div`
         justify-content: center;
         align-items: center;
         text-align: center;
-        border: 1px solid black;
+        border: 1px solid white;
         padding: 4rem 0;
         border-radius: 10px;
       }

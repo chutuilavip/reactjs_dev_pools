@@ -14,7 +14,7 @@ const InputSelect = ({ title, ArrOption, valueDefault, register, field, mode }) 
         className="item_select"
         defaultValue={valueDefault}
       >
-        {ArrOption.map((item, index) => {
+        {ArrOption?.map((item, index) => {
           return (
             <Option
               key={index}

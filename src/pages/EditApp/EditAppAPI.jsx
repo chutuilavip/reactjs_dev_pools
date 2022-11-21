@@ -39,6 +39,7 @@ const EditAppAPI = () => {
             summary: data?.summary || '',
             country_of_service: data?.country_of_service || '',
             category: data?.category || '',
+            age_limit: data?.age_limit || '',
             free: data?.free || '',
             price: Number(data?.price).toFixed(0) || '',
             category: data?.category || '',
@@ -87,7 +88,7 @@ const EditAppAPI = () => {
       });
   };
   const redirectToAccount = () => {
-    navigate('/created-app');
+    navigate('/for-publishers/created-app');
   };
   const onSubmit = (data) => {
     dispatch(editApp({ data: data, callBack: redirectToAccount }));

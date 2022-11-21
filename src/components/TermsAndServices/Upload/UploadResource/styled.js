@@ -47,19 +47,17 @@ export const WrapUploadResource = styled.div`
       height: 12rem;
     }
   }
-  width: 90%;
+  width: 100%;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
   gap: 50px;
-
   .title {
     font-weight: 700;
-    font-size: 24px;
+    font-size: 32px;
     line-height: 130%;
-    display: flex;
-    align-items: center;
     letter-spacing: 0.0025em;
+    text-transform: uppercase;
     color: #ffffff;
   }
   .previewAvatar {

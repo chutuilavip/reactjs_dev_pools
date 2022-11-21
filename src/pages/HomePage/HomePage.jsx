@@ -1,8 +1,8 @@
-import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import setting from "../../assets/home/setting.png";
-import logo from "../../assets/home/logo.png";
+import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import setting from '../../assets/home/setting.png';
+import logo from '../../assets/home/logo.png';
 import {
   ContentCenter,
   ContentGame,
@@ -15,12 +15,12 @@ import {
   HeaderRight,
   RecommendGame,
   WrapHomePage,
-} from "./styled";
-import SearchHome from "../../components/SearchHome/SearchHome";
-import GameItem from "../../components/GameItem/GameItem";
-import { getListGameRecommend } from "../../redux/slice/game.slice";
-import Setting from "../../components/Settings/Setting";
-import { checkLogin, logOut } from "../../redux/slice/user.slice";
+} from './styled';
+import SearchHome from '../../components/SearchHome/SearchHome';
+import GameItem from '../../components/GameItem/GameItem';
+import { getListGameRecommend } from '../../redux/slice/game.slice';
+import Setting from '../../components/Settings/Setting';
+import { checkLogin, logOut } from '../../redux/slice/user.slice';
 
 function HomePage() {
   const [show, setShow] = useState(false);
@@ -30,7 +30,7 @@ function HomePage() {
   const user = useSelector((state) => state?.user?.infoUser);
   const listGame = recommendGames?.res?.data;
 
-  const token = JSON.parse(localStorage.getItem("tokens"));
+  const token = JSON.parse(localStorage.getItem('tokens'));
 
   useEffect(() => {
     dispatch(getListGameRecommend());
@@ -43,13 +43,13 @@ function HomePage() {
     <WrapHomePage>
       <HeaderHompage>
         <HeaderLeft>
-          {navbar.map((item, index) => (
+          {navbar?.map((item, index) => (
             <div key={index}>
               {index === 3 ? (
                 <a
                   className="nav_link"
                   href={item.path}
-                  style={{ color: "white", fontWeight: "700" }}
+                  style={{ color: 'white', fontWeight: '700' }}
                   target="blank"
                 >
                   {item.name}
@@ -78,9 +78,9 @@ function HomePage() {
             <>
               <div
                 style={{
-                  color: "#ffffff",
-                  fontWeight: "bold",
-                  marginRight: "30px",
+                  color: '#ffffff',
+                  fontWeight: 'bold',
+                  marginRight: '30px',
                 }}
               >
                 {user?.first_name} {user?.last_name}
@@ -90,7 +90,7 @@ function HomePage() {
                 onClick={() => {
                   dispatch(logOut());
                 }}
-                style={{ cursor: "pointer" }}
+                style={{ cursor: 'pointer' }}
                 className="nav_link"
               >
                 Log Out
@@ -114,7 +114,7 @@ function HomePage() {
         <RecommendGame>
           <HeaderRecommend>
             <span>Recommended</span>
-            <Link to="/nft-game" style={{ color: "white" }}>
+            <Link to="/nft-game" style={{ color: 'white' }}>
               See more &#62;
             </Link>
           </HeaderRecommend>
@@ -129,7 +129,7 @@ function HomePage() {
 
       <FooterHomePage>
         <FooterRight>
-          {navbarRight.map((item, index) => (
+          {navbarRight?.map((item, index) => (
             <div key={index}>
               <Link to={item.path} className="nav_link_b">
                 {item.name}
@@ -138,12 +138,12 @@ function HomePage() {
           ))}
         </FooterRight>
 
-        <div style={{ color: "white" }}>
+        <div style={{ color: 'white' }}>
           <span>COPYRIGT &#169; POOLS. ALL RIGHTS RESERVED</span>
         </div>
 
         <FooterLeft>
-          {navbarLeft.map((item, index) => (
+          {navbarLeft?.map((item, index) => (
             <div key={index}>
               <Link to={item.path} className="nav_link_b">
                 {item.name}
@@ -162,45 +162,45 @@ export default HomePage;
 
 const navbar = [
   {
-    name: "POOLS WEBSITE",
-    path: "/nft-game",
+    name: 'POOLS WEBSITE',
+    path: '/nft-game',
   },
   {
-    name: "POOLS APP",
-    path: "/playstore",
+    name: 'POOLS APP',
+    path: '/playstore',
   },
   {
-    name: "POOLS NFTS",
-    path: "/nft-game",
+    name: 'POOLS NFTS',
+    path: '/nft-game',
   },
   {
-    name: "POOLS MARKET PLACE",
-    path: "https://snailhouse.io/",
+    name: 'POOLS MARKET PLACE',
+    path: 'https://snailhouse.io/',
   },
 ];
 
 const navbarRight = [
   {
-    name: "About",
-    path: "/",
+    name: 'About',
+    path: '/',
   },
   {
-    name: "Tutorial",
-    path: "/",
+    name: 'Tutorial',
+    path: '/',
   },
   {
-    name: "Help",
-    path: "/",
+    name: 'Help',
+    path: '/',
   },
 ];
 
 const navbarLeft = [
   {
-    name: "Privacy",
-    path: "/",
+    name: 'Privacy',
+    path: '/',
   },
   {
-    name: "Terms",
-    path: "/",
+    name: 'Terms',
+    path: '/',
   },
 ];

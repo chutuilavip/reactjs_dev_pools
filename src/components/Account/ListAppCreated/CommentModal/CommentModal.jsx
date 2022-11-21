@@ -1,14 +1,11 @@
 import { Button, Image, Input, Modal, Pagination, Table } from 'antd';
-import React from 'react';
-import { useRef } from 'react';
-import { useState } from 'react';
-import { useEffect } from 'react';
+import moment from 'moment';
+import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { getAllAppComments } from '../../../../redux/slice/detailApp.slice';
 import { URL_API } from '../../../../utils';
 import { ModalCommentWrapper } from './styled';
-import Loading from '../../../../layout/components/Loading/Loading';
 const columns = [
   {
     title: 'User',
@@ -50,6 +47,9 @@ const columns = [
     title: 'Update at',
     dataIndex: 'updated_at',
     key: 'updated_at',
+    render: (updated_at) => {
+      return <span>{moment(updated_at).format('MMMM Do YYYY, h:mm:ss a')}</span>;
+    },
   },
   {
     title: 'Dislike',
@@ -142,24 +142,23 @@ const CommentModal = ({ onOk, onCancel }) => {
       });
     }, 1000);
   };
+  console.log('pagingParamspagingParams', pagingParams);
   //   if (isLoadingGetComment) return <Loading />;
   return (
     <ModalCommentWrapper>
-      <Modal title="App Comment" open={true} onOk={onOk} onCancel={onCancel}>
-        {Number(appComments?.total) !== 0 && (
-          <Input
-            placeholder="Find somethings...."
-            allowClear
-            size="large"
-            onChange={handleSearch}
-            style={{
-              marginBottom: '4rem',
-              width: '50%',
-              marginLeft: 'auto',
-              borderRadius: '5px',
-            }}
-          />
-        )}
+      <Modal title="App Comment" open={true} onOk={onOk} onCancel={onCancel} footer={null}>
+        <Input
+          placeholder="Find somethings...."
+          allowClear
+          size="large"
+          onChange={handleSearch}
+          style={{
+            marginBottom: '4rem',
+            width: '50%',
+            marginLeft: 'auto',
+            borderRadius: '5px',
+          }}
+        />
 
         <div className="pagination_modal">
           {Number(appComments?.total) !== 0 && (
