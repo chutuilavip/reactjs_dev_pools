@@ -67,7 +67,7 @@ const userApi = {
     return axiosClient.post(url, data);
   },
   getMyServices: () => {
-    const url = 'api/dev/list-order';
+    const url = 'api/dev/list-buy-service-of-app';
     return axiosClient.get(url);
   },
 };

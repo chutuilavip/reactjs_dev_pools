@@ -68,7 +68,7 @@ const App = () => {
     }
     dispatch(getLanguagesTranslations());
   }, [account, token]);
-
+  console.log('account', account);
   return (
     <>
       <ToastContainer

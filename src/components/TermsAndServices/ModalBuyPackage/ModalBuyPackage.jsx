@@ -31,6 +31,7 @@ export default function ModalBuyPackage({ selectedCardContent }) {
     }
     setPreviewImage();
     setImg([]);
+    setValue('image_banner', null);
   };
 
   const onSubmit = (data) => {
@@ -64,6 +65,7 @@ export default function ModalBuyPackage({ selectedCardContent }) {
       }
     }
     dispatch(buyService(fd));
+    console.log(data);
   };
   const uploadButton = (
     <div>

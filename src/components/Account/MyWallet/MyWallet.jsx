@@ -35,7 +35,7 @@ const MyWallet = ({ res }) => {
                   Total USD: {item.total_usd ? `$${item.total_usd}` : '$0'}
                 </p>
                 <p style={{ margin: '0 30px' }}>
-                  Total Pools: {item.total_pools ? `$${item.total_pools}` : '$0'}
+                  Total Pools: {item.total_pools ? `(P)${item.total_pools}` : '(P)0'}
                 </p>
                 <p>Total Pending: {item.pending_usd ? `$${item.pending_usd}` : '$0'}</p>
               </div>

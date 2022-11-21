@@ -164,7 +164,6 @@ export const checkWalletAccount = createAsyncThunk(
   async (address, thunkAPI) => {
     try {
       const res = await userApi.checkWallet(address);
-
       if (res.status === 200) {
         toast.info(res.success);
       } else {
@@ -184,7 +183,7 @@ export const getMyServices = createAsyncThunk('dev/getMyServices', async (_, thu
     if (res.status >= 400) {
       return thunkAPI.rejectWithValue();
     }
-    return res.res.data.data;
+    return res.res.data;
   } catch (err) {
     console.log(err);
   }

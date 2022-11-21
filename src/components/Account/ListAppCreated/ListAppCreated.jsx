@@ -51,6 +51,19 @@ function ListAppCreated(_, ref) {
       },
     },
     {
+      title: 'Title',
+      dataIndex: 'title',
+      key: 'title',
+    },
+    {
+      title: 'Status',
+      dataIndex: 'status',
+      key: 'status',
+      render: (status) => {
+        return <p className={`button ${renderStatusClass(status)}`}>{status}</p>;
+      },
+    },
+    {
       title: 'Developer',
       dataIndex: 'developer',
       key: 'developer',
@@ -59,6 +72,17 @@ function ListAppCreated(_, ref) {
       title: 'Installs',
       dataIndex: 'installs',
       key: 'installs',
+    },
+
+    {
+      title: 'Score',
+      dataIndex: 'score',
+      key: 'score',
+    },
+    {
+      title: 'Slug',
+      dataIndex: 'slug',
+      key: 'slug',
     },
     {
       title: 'History Update',
@@ -77,34 +101,11 @@ function ListAppCreated(_, ref) {
               to={`/for-publishers/created-app/history-update/${id}`}
               style={{ width: '100%', display: 'block' }}
             >
-              History
+              Show more
             </NavLink>
           </Button>
         );
       },
-    },
-    {
-      title: 'Score',
-      dataIndex: 'score',
-      key: 'score',
-    },
-    {
-      title: 'Slug',
-      dataIndex: 'slug',
-      key: 'slug',
-    },
-    {
-      title: 'Status',
-      dataIndex: 'status',
-      key: 'status',
-      render: (status) => {
-        return <p className={`button ${renderStatusClass(status)}`}>{status}</p>;
-      },
-    },
-    {
-      title: 'Title',
-      dataIndex: 'title',
-      key: 'title',
     },
     {
       title: 'Action',

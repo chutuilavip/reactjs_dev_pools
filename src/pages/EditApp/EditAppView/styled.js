@@ -1,6 +1,52 @@
 import styled from 'styled-components';
 
 export const EditAppViewWrapper = styled.div`
+  .description {
+    width: 100%;
+    margin: 0 auto;
+    border: 1px solid black;
+    padding: 2rem;
+    border-radius: 10px;
+    p {
+      font-weight: 700;
+      font-size: 24px;
+      line-height: 130%;
+      letter-spacing: 0.0025em;
+      color: black;
+      margin-bottom: 2rem;
+      text-align: left;
+    }
+    .textarea {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      textarea {
+        width: 100%;
+        padding: 10px;
+        color: black;
+        min-height: 120px;
+        ::placeholder {
+          font-weight: 400;
+          font-size: 20px;
+          color: black;
+        }
+      }
+      .bottom_des {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        p,
+        span {
+          font-style: italic;
+          font-weight: 400;
+          font-size: 12px;
+          line-height: 130%;
+          letter-spacing: 0.0025em;
+          color: black;
+        }
+      }
+    }
+  }
   &&& {
     .ant-select:not(.ant-select-customize-input) .ant-select-selector,
     .ant-input {
@@ -74,11 +120,11 @@ export const EditAppViewWrapper = styled.div`
         left: 50%;
         transform: translate(-50%, -50%);
         background: #ffffff;
-        width: 90%;
+        width: max-content;
         padding: 1rem 6rem;
         border-radius: 7px;
         border: navajowhite;
-        box-shadow: rgb(0 0 0 / 12%) 0px 1px 3px, rgb(0 0 0 / 24%) 0px 1px 2px;
+        /* box-shadow: rgb(0 0 0 / 12%) 0px 1px 3px, rgb(0 0 0 / 24%) 0px 1px 2px; */
         margin-bottom: 1rem;
       }
       .input,

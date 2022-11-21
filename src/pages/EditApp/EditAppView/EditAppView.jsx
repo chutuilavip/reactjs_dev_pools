@@ -11,7 +11,8 @@ import CustomSelect from '../components/Select/CustomSelect';
 import SelectList from '../components/SelectList/SelectList';
 import UploadResource from '../components/UploadResource/UploadResource';
 import { EditAppViewWrapper } from './styled';
-
+import { CKEditor } from '@ckeditor/ckeditor5-react';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 const EditAppView = (props) => {
   const {
     form,
@@ -28,6 +29,7 @@ const EditAppView = (props) => {
     setValue,
     control,
     setFocus,
+    register,
     handleSubmit,
     formState: { errors, isSubmitting },
   } = form;
@@ -57,9 +59,34 @@ const EditAppView = (props) => {
     }
   }, [errors]);
   console.log(errors);
+  useEffect(() => {
+    ClassicEditor.create(document.querySelector('#editor'), {
+      removePlugins: ['Heading', 'Link'],
+      toolbar: ['bold', 'italic', 'bulletedList', 'numberedList', 'blockQuote'],
+    }).catch((error) => {
+      console.log(error);
+    });
+  }, []);
   return (
     <EditAppViewWrapper>
       <div className="container">
+        {/* <div className="">
+          <CKEditor
+            id="editor"
+            editor={ClassicEditor}
+            data={getValues('full_description')}
+            onChange={(event, editor) => {
+              const data = editor.getData();
+              setValue('full_description', data);
+            }}
+            onBlur={(event, editor) => {
+              console.log('Blur.', editor);
+            }}
+            onFocus={(event, editor) => {
+              console.log('Focus.', editor);
+            }}
+          />
+        </div> */}
         <h1 style={{ textAlign: 'center' }}>EDIT APP</h1>{' '}
         <form onSubmit={handleSubmit(handlesubmitProcess)}>
           <div className="row">
@@ -94,6 +121,21 @@ const EditAppView = (props) => {
             )}
           </div>
           <InputList inputList={InputFields} control={control} errors={errors} />
+          <div className="description">
+            <p>Description *</p>
+            <div className="textarea">
+              <textarea
+                {...register('full_description')}
+                placeholder="Enter Description"
+                maxLength={4000}
+              ></textarea>
+              <div className="bottom_des">
+                <p>Promote your app with a description to attract users</p>
+                <span>max 4000</span>
+              </div>
+            </div>
+            <p className="error_message">{errors.full_description?.message}</p>
+          </div>
           <UploadResource
             setValue={setValue}
             control={control}

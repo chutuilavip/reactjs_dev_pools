@@ -265,7 +265,7 @@ const UploadAppDetail = ({ setFinalData, finalData }) => {
                     <div className="field_item">
                       <InputText
                         register={{ ...register('price') }}
-                        title="Price *"
+                        title="Price (Dollar) *"
                         placeho="Enter Price"
                         type="number"
                       />
@@ -305,7 +305,7 @@ const UploadAppDetail = ({ setFinalData, finalData }) => {
                   </div>
                   <p className="error_message">{errors.full_description?.message}</p>
                 </div>
-                <div className="description">
+                {/* <div className="description">
                   <p>Description 2 *</p>
 
                   <div className="">
@@ -329,7 +329,7 @@ const UploadAppDetail = ({ setFinalData, finalData }) => {
                       }}
                     />
                   </div>
-                </div>
+                </div> */}
               </div>
             </GroupInput>
             <StepButtonGroup />
