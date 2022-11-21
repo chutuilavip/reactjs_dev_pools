@@ -1,6 +1,6 @@
 import React from 'react';
 import { URL_API } from '../../../../../utils';
-import { hintUploadAPK } from '../../../constant';
+import { hintUploadAPK, hintUploadVideo } from '../../../constant';
 import UploadFile from '../../UploadFile/UploadFile';
 
 const UploadVideo = ({ control, errors, onChange, previewVideo, video_init }) => {
@@ -9,7 +9,7 @@ const UploadVideo = ({ control, errors, onChange, previewVideo, video_init }) =>
     <div className="upload_resource__item upload_video">
       <UploadFile
         control={control}
-        hints={hintUploadAPK}
+        hints={hintUploadVideo}
         errMessage={errors?.video?.message}
         name="video"
         label="Upload Video"

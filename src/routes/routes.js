@@ -57,5 +57,6 @@ export const PrivateRouter = [
   { path: '/for-publishers/created-app/history-update/:id', component: ListCreatedApp },
   { path: '/for-publishers/created-app/:appId', component: ListCreatedApp },
   { path: '/for-publishers/my-services', component: MyServices },
+  { path: '/for-publishers/my-services/:appId/:serviceId', component: MyServices },
   { path: '/statistics', component: Statistics },
 ];

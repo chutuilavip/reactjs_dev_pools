@@ -68,6 +68,7 @@ const userApi = {
   },
   getMyServices: () => {
     const url = 'api/dev/list-buy-service-of-app';
+    // const url = 'api/dev/list-order';
     return axiosClient.get(url);
   },
 };

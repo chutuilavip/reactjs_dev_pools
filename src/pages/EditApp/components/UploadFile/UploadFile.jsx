@@ -27,7 +27,7 @@ const UploadFile = ({ errMessage, control, hints, name, label, accept, onChange 
               <InboxOutlined />
             </p>
             <p className="ant-upload-text">Click or drag file to this area to upload</p>
-            <p className="ant-upload-hint">Upload your new apk</p>
+            <p className="ant-upload-hint">Upload your new file</p>
           </Dragger>
           <div className="note">
             {hints?.map((item, index) => (
