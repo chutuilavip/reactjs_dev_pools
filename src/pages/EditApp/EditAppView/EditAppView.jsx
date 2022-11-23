@@ -13,6 +13,13 @@ import UploadResource from '../components/UploadResource/UploadResource';
 import { EditAppViewWrapper } from './styled';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import { editorConfig } from './CKeditorConfig';
+ClassicEditor.create(document.querySelector('#editor'), {
+  removePlugins: ['Heading'],
+  toolbar: ['bold', 'italic', 'bulletedList', 'numberedList', 'blockQuote', 'link'],
+}).catch((error) => {
+  console.log(error);
+});
 const EditAppView = (props) => {
   const {
     form,
@@ -58,20 +65,14 @@ const EditAppView = (props) => {
       }
     }
   }, [errors]);
-  console.log(errors);
-  useEffect(() => {
-    ClassicEditor.create(document.querySelector('#editor'), {
-      removePlugins: ['Heading', 'Link'],
-      toolbar: ['bold', 'italic', 'bulletedList', 'numberedList', 'blockQuote'],
-    }).catch((error) => {
-      console.log(error);
-    });
-  }, []);
+
   return (
     <EditAppViewWrapper>
       <div className="container">
         {/* <div className="">
           <CKEditor
+            // config={{ ckfinder: null }}
+            config={editorConfig}
             id="editor"
             editor={ClassicEditor}
             data={getValues('full_description')}

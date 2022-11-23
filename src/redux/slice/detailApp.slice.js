@@ -47,7 +47,7 @@ export const editApp = createAsyncThunk('editApp', async ({ callBack, data }) =>
     const res = await appApi.editApp(data);
     console.log(res.status);
     if (res.status === 200) {
-      toast.success('Edit app successfully');
+      toast.success('Edit app successfully, Please waiting for admin approve your update');
       callBack();
       return res;
     } else if (res.status >= 400) {

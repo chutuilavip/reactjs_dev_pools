@@ -52,13 +52,11 @@
   width: fit-content !important;
   width: 520px;
   transform-origin: -189.266px 669px;
-  -webkit-backdrop-filter: blur(19px);
-  backdrop-filter: blur(17px);
   border-radius: 13px;
   overflow: hidden;
   box-shadow: 0 3px 6px -4px rgb(0 0 0 / 12%), 0 6px 16px 0 rgb(0 0 0 / 8%),
     0 9px 28px 8px rgb(0 0 0 / 5%);
-  background: #ffffff6b;
+  background: white;
 }
 .ant-select-arrow {
   color: white;
@@ -80,19 +78,18 @@
   width: 5rem;
   border-radius: 50%;
 }
-.ant-modal-header {
-  background-color: transparent;
-}
+
 .ant-modal-title {
-  color: white;
+  color: black;
   text-transform: uppercase;
   text-align: center;
   font-size: 3rem;
-  margin: 0 2rem 2rem 2rem;
+  margin: 2rem;
 }
 .ant-modal-body {
   max-height: 66vh;
-  overflow-y: scroll;
+  min-width: 50rem;
+  /* overflow-y: scroll; */
 }
 .ant-modal-body {
   -ms-overflow-style: none;
@@ -101,7 +98,8 @@
 }
 
 .ant-modal-body::-webkit-scrollbar {
-  display: inline-block;
+  display: none;
+  width: 1px;
 }
 .ant-modal-body p {
   color: black;
@@ -251,7 +249,7 @@ p {
   background-color: var(--textGray) !important;
 }
 .upload_avatar_btn {
-  width: 40rem;
+  width: 50rem;
 }
 .ant-tooltip-inner {
   display: none;

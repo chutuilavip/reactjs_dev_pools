@@ -1,25 +1,14 @@
-import { Button, Carousel, Empty, Radio } from 'antd';
 import React, { Fragment, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import PackageButton from '../../components/TermsAndServices/Button/PackageButton';
-import { PackageButtonWrapper } from '../../components/TermsAndServices/Button/styled';
-import PackageCard from '../../components/TermsAndServices/PackageCard/PackageCard';
-import PackageTabs from '../../components/TermsAndServices/PackageTabs/PackageTabs';
-import { getServiceType, listAppNotService } from '../../redux/slice/game.slice';
-import { WrapTermsAndServices } from './styled';
+import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { Pagination } from 'swiper';
 import 'swiper/css';
 import 'swiper/css/pagination';
-import {
-  setHandleNextTab,
-  setHandlePrevTab,
-  setSelectedTabStore,
-} from '../../redux/slice/detailApp.slice';
-import PackageVideo from './PackageVideo/PackageVideo';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import { changeStringToAlias } from '../../utils';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import PackageCard from '../../components/TermsAndServices/PackageCard/PackageCard';
 import Loading from '../../layout/components/Loading/Loading';
+import { getServiceType } from '../../redux/slice/game.slice';
+import { WrapTermsAndServices } from './styled';
 export const tabContent = [
   {
     index: 1,
@@ -46,46 +35,25 @@ export const tabContent = [
 const TermsAndServices = () => {
   const [selectedCard, setSelectedCard] = useState();
 
-  const [selectedTab, setSelectedTab] = useState();
-
   const { listService, isLoading } = useSelector((state) => state.listGame);
 
   const navigate = useNavigate();
   const params = useParams();
+  const location = useLocation();
   const dispatch = useDispatch();
-
   useEffect(() => {
-    dispatch(setHandlePrevTab(handlePrevTab));
-    dispatch(setHandleNextTab(handleNextTab));
     dispatch(getServiceType());
   }, []);
   useEffect(() => {
-    const item = tabContent.find((el) => changeStringToAlias(el.content.slice(2)) === params.tabs);
-    if (!!item) {
-      setSelectedTab(item.index);
+    const hash = location.hash;
+    if (hash) {
+      const element = document.querySelector(`${hash}`);
+      console.log(element, hash);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
     }
-  }, []);
-  useEffect(() => {
-    dispatch(setSelectedTabStore(selectedTab));
-  }, [selectedTab]);
-
-  const handleNextTab = () => {
-    setSelectedTab((selectedTab) => {
-      if (selectedTab < tabContent.length - 1) {
-        return selectedTab + 1;
-      }
-      return tabContent[tabContent.length - 1].index;
-    });
-  };
-
-  const handlePrevTab = () => {
-    setSelectedTab((selectedTab) => {
-      if (selectedTab > 1) {
-        return selectedTab - 1;
-      }
-      return 1;
-    });
-  };
+  }, [location]);
 
   const pagination = {
     clickable: true,
@@ -120,15 +88,7 @@ const TermsAndServices = () => {
       button_title: 'Video',
     },
   };
-  const handleSelectTab = (tabId) => {
-    const element = document.querySelector(`#${tabId}`);
-    setSelectedTab(tabId);
-    console.log(element);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
-  console.log(selectedCard);
+
   return (
     <Fragment>
       {isLoading ? (
@@ -141,15 +101,13 @@ const TermsAndServices = () => {
             <ul className="nav__button">
               {Object.keys(ContentData)?.map((item, index) => {
                 return (
-                  <li className={`nav__item `}>
-                    <Button
-                      className={`${selectedTab === item ? 'active' : ''}`}
-                      onClick={() => {
-                        handleSelectTab(item);
-                      }}
+                  <li className={`nav__item `} key={`nav-item-${index}`}>
+                    <Link
+                      to={`/terms-and-services/#${item}`}
+                      className={`${location.hash?.slice(1) === item ? 'active' : ''}`}
                     >
                       {ContentData[item].button_title}
-                    </Button>
+                    </Link>
                   </li>
                 );
               })}
@@ -158,7 +116,7 @@ const TermsAndServices = () => {
           {Object.keys(ContentData)?.map((item, index) => {
             const data = listService?.res?.data[item];
             return (
-              <div className="type_service_wrapper" id={item}>
+              <div className="type_service_wrapper" id={item} key={`service-${index}`}>
                 <h1> {ContentData[item].title}</h1>
                 <Swiper
                   spaceBetween={40}
@@ -170,7 +128,6 @@ const TermsAndServices = () => {
                     return (
                       <SwiperSlide key={index}>
                         <PackageCard
-                          selectedTab={selectedTab}
                           setSelectedCard={setSelectedCard}
                           selectedCard={selectedCard}
                           cardContent={item}

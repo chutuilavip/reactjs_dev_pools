@@ -18,8 +18,26 @@ export const ListServicesWrapper = styled.div`
     .table-row-dark {
       background-color: #f3faff;
     }
+    .ant-table-thead > tr {
+      th {
+        text-align: center;
+      }
+      &:first-child {
+        th {
+          &:first-child {
+            text-align: left;
+          }
+        }
+      }
+    }
   }
-
+  .not_exists_service {
+    border: 1px solid red;
+    color: red;
+    text-align: center;
+    padding: 1rem;
+    border-radius: 5px;
+  }
   .button {
     transition: all 0.5s;
     color: white;

@@ -9,12 +9,18 @@ const ServiceModal = ({ data }) => {
 
   return (
     <div>
-      <p>Expired Day : {infoOrder[0].configservice.title}</p>
-      <p>Price : {infoOrder[0].configservice.price}</p>
-      <p>View : {infoOrder[0].configservice.views}</p>
-      <p>Detail : {infoOrder[0].detail}</p>
-      <p>Type : {infoOrder[0].type}</p>
-      <p>Payment : {infoOrder[0].payments}</p>
+      {infoOrder ? (
+        <>
+          <p>Expired Day : {infoOrder[0].configservice.title}</p>
+          <p>Price : {infoOrder[0].configservice.price}</p>
+          <p>View : {infoOrder[0].configservice.views}</p>
+          <p>Detail : {infoOrder[0].detail}</p>
+          <p>Type : {infoOrder[0].type}</p>
+          <p>Payment : {infoOrder[0].payments}</p>
+        </>
+      ) : (
+        'No data'
+      )}
     </div>
   );
 };

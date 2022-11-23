@@ -62,8 +62,7 @@ const App = () => {
 
   //Check connect wallet with account
   useEffect(() => {
-    if (token) {
-      console.log(token);
+    if (token && account !== 'empty') {
       dispatch(checkWalletAccount({ address: account, add: 1 }));
     }
     dispatch(getLanguagesTranslations());

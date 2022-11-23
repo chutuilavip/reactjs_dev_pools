@@ -43,13 +43,10 @@ const ListServices = ({ myServices }) => {
           title: 'Status',
           dataIndex: 'banner_home_status',
           key: 'banner_home_status',
+          width: '10%',
           render: (banner_home_status) => {
             if (!banner_home_status) {
-              return (
-                <p style={{ border: '1px solid black', padding: '1rem', borderRadius: '5px' }}>
-                  Haven't Bought
-                </p>
-              );
+              return <p className="not_exists_service">Not Exists</p>;
             }
             return (
               <p className={`button status_${banner_home_status?.toString().toLowerCase()}`}>
@@ -65,7 +62,17 @@ const ListServices = ({ myServices }) => {
           render: (banner_home_detail) => {
             console.log(banner_home_detail);
             if (!banner_home_detail.content) {
-              return null;
+              return (
+                <Button
+                  type="primary"
+                  onClick={() => {
+                    navigate(`/terms-and-services/#banner_home`);
+                  }}
+                  style={{ height: '4.2rem' }}
+                >
+                  Buy Services
+                </Button>
+              );
             }
             return (
               <Button
@@ -91,13 +98,10 @@ const ListServices = ({ myServices }) => {
           title: 'Status',
           dataIndex: 'banner_status',
           key: 'banner_status',
+          width: '10%',
           render: (banner_status) => {
             if (!banner_status) {
-              return (
-                <p style={{ border: '1px solid black', padding: '1rem', borderRadius: '5px' }}>
-                  Haven't Bought
-                </p>
-              );
+              return <p className="not_exists_service">Not Exists</p>;
             }
             return (
               <p className={`button status_${banner_status?.toString().toLowerCase()}`}>
@@ -112,7 +116,17 @@ const ListServices = ({ myServices }) => {
           key: 'banner_detail',
           render: (banner_detail) => {
             if (!banner_detail.content) {
-              return null;
+              return (
+                <Button
+                  type="primary"
+                  onClick={() => {
+                    navigate(`/terms-and-services/#banner`);
+                  }}
+                  style={{ height: '4.2rem' }}
+                >
+                  Buy Services
+                </Button>
+              );
             }
             return (
               <Button
@@ -138,13 +152,10 @@ const ListServices = ({ myServices }) => {
           title: 'Status',
           dataIndex: 'top_game_status',
           key: 'top_game_status',
+          width: '10%',
           render: (top_game_status) => {
             if (!top_game_status) {
-              return (
-                <p style={{ border: '1px solid black', padding: '1rem', borderRadius: '5px' }}>
-                  Haven't Bought
-                </p>
-              );
+              return <p className="not_exists_service">Not Exists</p>;
             }
             return (
               <p className={`button status_${top_game_status?.toString().toLowerCase()}`}>
@@ -159,7 +170,17 @@ const ListServices = ({ myServices }) => {
           key: 'top_game_detail',
           render: (top_game_detail) => {
             if (!top_game_detail.content) {
-              return null;
+              return (
+                <Button
+                  type="primary"
+                  onClick={() => {
+                    navigate(`/terms-and-services/#top_game`);
+                  }}
+                  style={{ height: '4.2rem' }}
+                >
+                  Buy Services
+                </Button>
+              );
             }
             return (
               <Button
@@ -185,13 +206,10 @@ const ListServices = ({ myServices }) => {
           title: 'Status',
           dataIndex: 'hot_game_status',
           key: 'hot_game_status',
+          width: '10%',
           render: (hot_game_status) => {
             if (!hot_game_status) {
-              return (
-                <p style={{ border: '1px solid black', padding: '1rem', borderRadius: '5px' }}>
-                  Haven't Bought
-                </p>
-              );
+              return <p className="not_exists_service">Not Exists</p>;
             }
             return (
               <p className={`button status_${hot_game_status?.toString().toLowerCase()}`}>
@@ -206,7 +224,17 @@ const ListServices = ({ myServices }) => {
           key: 'hot_game_detail',
           render: (hot_game_detail) => {
             if (!hot_game_detail.content) {
-              return null;
+              return (
+                <Button
+                  type="primary"
+                  onClick={() => {
+                    navigate(`/terms-and-services/#hot_game`);
+                  }}
+                  style={{ height: '4.2rem' }}
+                >
+                  Buy Services
+                </Button>
+              );
             }
             return (
               <Button

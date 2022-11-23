@@ -20,6 +20,11 @@ export const ForgotPasswordWrapper = styled.div`
     align-items: center;
     width: 30%;
     margin: 0 auto;
+    .btn_group {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+    }
     input {
       padding: 1rem 2rem;
       width: 100%;
