@@ -19,6 +19,7 @@ import { ConvertToFormData } from '../../helpers/formData';
 import { variants } from '../../helpers/motion';
 import { registerPublisher } from '../../redux/slice/user.slice';
 import FieldList from './components/FieldList/FieldList';
+import RegisterHint from './components/FieldList/Hint/RegisterHint';
 import { schema } from './registerItul';
 import { FormRegis, StepOne, WrapRegister } from './styled';
 const arrWallet = [
@@ -43,6 +44,7 @@ const Register = () => {
     getValues,
     formState: { errors },
   } = useForm({
+    mode: 'onChange',
     resolver: yupResolver(schema),
   });
   const dispatch = useDispatch();
@@ -66,9 +68,18 @@ const Register = () => {
         <FormRegis onSubmit={handleSubmit(onSubmit)} height={'100%'}>
           <StepOne status={step}>
             <FieldList register={register} errors={errors} />
-
+            <RegisterHint />
             <Button loading={isLoading} htmlType="submit" className="btn_form">
               Submit
+            </Button>
+            <Button
+              htmlType="button"
+              className="btn_form"
+              onClick={() => {
+                navigate('/login');
+              }}
+            >
+              Go to login
             </Button>
           </StepOne>
         </FormRegis>

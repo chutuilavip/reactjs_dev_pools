@@ -1,10 +1,25 @@
 import moment from 'moment';
 import React from 'react';
 import { CardHistoryWrapper } from './styled';
-
+import { FcApproval, CiCircleRemove } from 'react-icons/fa';
 const HistoryCard = ({ data }) => {
   return (
     <CardHistoryWrapper>
+      <div
+        className={`status ${
+          Number(data.status) === 0
+            ? 'rejected'
+            : Number(data.status) === 1
+            ? 'approved'
+            : 'pending'
+        }`}
+      >
+        {Number(data.status) === 0
+          ? 'Rejected'
+          : Number(data.status) === 1
+          ? 'Approved'
+          : 'Pending'}
+      </div>
       <h1>
         <span className="">Update At</span>
         <span className="detail"> {moment(data.updated_at).format('MMMM Do YYYY, h:mm:ss a')}</span>

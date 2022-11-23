@@ -65,12 +65,17 @@ export const WrapTermsAndServices = styled.div`
           background: #3b9dff;
         }
       }
-      button {
+      button,
+      a {
         border: none;
         width: 100%;
         height: 100%;
+        display: flex;
+        text-align: center;
         background: var(--bg-blue);
         color: white;
+        justify-content: center;
+        align-items: center;
       }
     }
   }

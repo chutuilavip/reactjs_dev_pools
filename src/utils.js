@@ -17,8 +17,6 @@ export const getBase64 = (file) =>
     reader.onerror = (error) => reject(error);
   });
 export const changeStringToAlias = (string) => {
-  console.log(string);
-  console.log(string.toLowerCase().replaceAll(' ', '-'));
   return string.toLowerCase().replaceAll(' ', '-');
 };
 export const URL_API = process.env.REACT_APP_URL_API;

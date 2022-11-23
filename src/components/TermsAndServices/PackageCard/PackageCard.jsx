@@ -23,7 +23,6 @@ export default function PackageCard({
   const [idBuy, setIdBuy] = useState();
   const arrService = useSelector((state) => state.listGame.listService);
   const listAppService = useSelector((state) => state.listGame.dataListAppNotService);
-  console.log('cardContentcardContent', cardContent);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isModalVideoOpen, setIsModalVideoOpen] = useState(false);
   const dispatch = useDispatch();
@@ -43,7 +42,6 @@ export default function PackageCard({
   const handleCancelVideoModal = () => {
     setIsModalVideoOpen(false);
   };
-  console.log(cardContent);
   return (
     <PackageCardWrapper>
       <Modal

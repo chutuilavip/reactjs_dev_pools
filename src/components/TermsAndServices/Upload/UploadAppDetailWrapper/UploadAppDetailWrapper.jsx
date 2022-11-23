@@ -1,5 +1,6 @@
 import React, { createContext, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { Navigate, useNavigate } from 'react-router-dom';
 import { getCategoriesAndLanguage, uploadContent } from '../../../../redux/slice/detailApp.slice';
 import PackageButton from '../../Button/PackageButton';
 import PackageTabs from '../../PackageTabs/PackageTabs';
@@ -12,6 +13,7 @@ import { WrapperAppDetail } from './styled';
 export const UploadContextWrapper = createContext();
 export default function UploadAppDetailWrapper() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [selectedTab, setSelectedTab] = useState(1);
   const [finalData, setFinalData] = useState({});
   const [isDisabledPrev, setIsDisabledPrev] = useState(false);
@@ -61,9 +63,11 @@ export default function UploadAppDetailWrapper() {
       });
     } else return;
   };
-
+  const gotoListCreatedApp = () => {
+    navigate('/for-publishers/created-app');
+  };
   const submitForm = (formData) => {
-    dispatch(uploadContent({ formData, callback: () => 1 }));
+    dispatch(uploadContent({ formData, callback: gotoListCreatedApp }));
   };
 
   const value = {

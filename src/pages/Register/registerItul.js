@@ -61,11 +61,15 @@ export const schema = yup
 
     password: yup
       .string()
+      .matches(
+        /^(?=.*[A-Z])(?=.*[!@#$&*.()%*])(?=.*[0-9])(?=.*[a-z]).{8,100}$/gi,
+        "Password must be too weak, Please read password's requirements for more details"
+      )
       .required('Password is required')
       .min(8, 'Password must be at least 8 characters'),
     password_confirmation: yup
       .string()
-      .required()
+      .required('Password confirm is required')
       .oneOf([yup.ref('password'), null], 'Password confirm does not match'),
   })
   .required();

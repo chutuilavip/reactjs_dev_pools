@@ -74,7 +74,7 @@ const StepOne = styled.div`
   .field_item {
     display: flex;
     flex-direction: column;
-    height: 10rem;
+    height: auto;
     width: 100%;
   }
 `;

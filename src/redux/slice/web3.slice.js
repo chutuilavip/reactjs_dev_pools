@@ -3,7 +3,7 @@ import Web3 from 'web3';
 
 const initialState = {
   isLoading: true,
-  account: '',
+  account: 'empty',
   balance: 0,
 };
 
@@ -18,7 +18,15 @@ export const getAccountWeb3 = async () => {
       return accounts[0];
     }
   } else {
-    alert('Install metamask extension !');
+    if (window.confirm('Install metamask extension')) {
+      window.open(
+        ' https://chrome.google.com/webstore/detail/metamask/nkbihfbeogaeaoehlefnkodbefgpgknn',
+        '_blank'
+      );
+    }
+    // alert(
+    //   'Install metamask extension !\nLink: https://chrome.google.com/webstore/detail/metamask/nkbihfbeogaeaoehlefnkodbefgpgknn'
+    // );
   }
 };
 

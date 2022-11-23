@@ -93,7 +93,7 @@ function ListAppCreated(_, ref) {
           <Button
             type="primary"
             className="button"
-            style={{ width: '90%' }}
+            style={{ width: '90%', padding: 0 }}
             // onClick={() => setIsModalOpenHistory(true)}
           >
             <NavLink

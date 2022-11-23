@@ -7,6 +7,7 @@ import { URL_API } from '../../../constants/constants.js';
 import { getDefaultAvatarName } from '../../../helpers';
 import Loading from '../../../layout/components/Loading/Loading';
 import { getEditAvatar } from '../../../redux/slice/account.slice';
+import ImgCrop from 'antd-img-crop';
 import { getBase64 } from '../../../utils.js';
 import { AvatarUser, HeaderInfo, MainAvatar, Onchange, TextInfoUser } from './styled';
 
@@ -98,19 +99,21 @@ const InfoUser = ({ res }) => {
         onOk={handleChangeAvt}
         onCancel={handleCancel}
       >
-        <Upload
-          action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-          listType="picture"
-          // defaultFileList={[...fileList]}
-          maxCount={1}
-          beforeUpload={beforeUpload}
-          accept="image/png, image/jpeg"
-          onChange={handleChange}
-        >
-          <Button className="upload_avatar_btn" icon={<UploadOutlined />}>
-            Upload
-          </Button>
-        </Upload>
+        <ImgCrop rotate>
+          <Upload
+            action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+            listType="picture"
+            // defaultFileList={[...fileList]}
+            maxCount={1}
+            beforeUpload={beforeUpload}
+            accept="image/png, image/jpeg"
+            onChange={handleChange}
+          >
+            <Button className="upload_avatar_btn" icon={<UploadOutlined />}>
+              Upload
+            </Button>
+          </Upload>
+        </ImgCrop>
       </Modal>
     </MainAvatar>
   );

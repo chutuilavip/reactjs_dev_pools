@@ -51,7 +51,10 @@ const Deposit = () => {
           >
             Amount you need to deposit {'($)'}
           </h3>
-          <Form.Item name="deposit" rules={[{ required: true, message: 'Please input deposit' }]}>
+          <Form.Item
+            name="deposit"
+            rules={[{ required: true, message: 'Please input valid deposit' }]}
+          >
             <Input placeholder="Enter money" type="number" />
           </Form.Item>
           <Form.Item>

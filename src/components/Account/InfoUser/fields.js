@@ -8,7 +8,7 @@ const fields = [
   'release_details',
   'product_and_services',
   'products_url',
-  'year_established',
-  'application_catalog',
+  // 'year_established',
+  // 'application_catalog',
 ];
 export default fields;
